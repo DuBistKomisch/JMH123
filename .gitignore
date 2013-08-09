@@ -5,9 +5,12 @@
 *.war
 *.ear
 
-/ACME_Bank_Client/dist/
-/ACME_BankingSystem/ACME_BankingSystem-ejb/dist/
-/ACME_BankingSystem/ACME_BankingSystem-war/dist/
-
-/ACME_Bank_Client/nbproject/private/
-/ACME_BankingSystem/nbproject/private/
+#ant specific
+dist/
+build/
+ 
+#netbeans specific
+core
+nbproject/*
+!nbproject/project.properties
+!nbproject/project.xml
