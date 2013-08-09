@@ -4,6 +4,10 @@
 *.jar
 *.war
 *.ear
-/ACME_BankingSystem/ACME_BankingSystem-ejb/dist/
+
 /ACME_Bank_Client/dist/
+/ACME_BankingSystem/ACME_BankingSystem-ejb/dist/
 /ACME_BankingSystem/ACME_BankingSystem-war/dist/
+
+/ACME_Bank_Client/nbproject/private/
+/ACME_BankingSystem/nbproject/private/
