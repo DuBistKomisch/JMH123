@@ -18,3 +18,9 @@ ACME_Bank_Client/nbproject/*
 ACME_BankingSystem/nbproject/*
 !ACME_BankingSystem/nbproject/project.properties
 !ACME_BankingSystem/nbproject/project.xml
+ACME_BankingSystem/ACME_BankingSystem-ejb/nbproject/*
+!ACME_BankingSystem/ACME_BankingSystem-ejb/nbproject/project.properties
+!ACME_BankingSystem/ACME_BankingSystem-ejb/nbproject/project.xml
+ACME_BankingSystem/ACME_BankingSystem-war/nbproject/*
+!ACME_BankingSystem/ACME_BankingSystem-war/nbproject/project.properties
+!ACME_BankingSystem/ACME_BankingSystem-war/nbproject/project.xml
