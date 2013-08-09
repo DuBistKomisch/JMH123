@@ -6,11 +6,15 @@
 *.ear
 
 #ant specific
-dist/
-build/
+ACME_Bank_Client/dist/
+ACME_Bank_Client/build/
+ACME_BankingSystem/dist/
+ACME_BankingSystem/build/
  
 #netbeans specific
-core
-nbproject/*
-!nbproject/project.properties
-!nbproject/project.xml
+ACME_Bank_Client/nbproject/*
+!ACME_Bank_Client/nbproject/project.properties
+!ACME_Bank_Client/nbproject/project.xml
+ACME_BankingSystem/nbproject/*
+!ACME_BankingSystem/nbproject/project.properties
+!ACME_BankingSystem/nbproject/project.xml
