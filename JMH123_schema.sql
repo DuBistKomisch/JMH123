@@ -1,7 +1,8 @@
-DROP TABLE JMH123.Employee;
-DROP TABLE JMH123.CUSTOMER;
-DROP TABLE JMH123.SAVINGS;
+
 DROP TABLE JMH123.Transactions;
+DROP TABLE JMH123.Employee;
+DROP TABLE JMH123.SAVINGS;
+DROP TABLE JMH123.CUSTOMER;
 
 DROP SCHEMA JMH123 RESTRICT;
 
@@ -25,5 +26,7 @@ S_DateTimeCreated timestamp, FOREIGN KEY (C_ID) REFERENCES JMH123.Customer(C_ID)
 CREATE TABLE JMH123.Transactions(
 T_ID varchar(5) Not null PRIMARY KEY, AccNum varchar(255), Amount decimal(6,2),
 Description varchar(255), AccNum2 varchar(255), E_ID varchar(5),
-T_DateTimeCreated timestamp, FOREIGN KEY (AccNum) REFERENCES JMH123.Savings(AccNum)
+T_DateTimeCreated timestamp, FOREIGN KEY (E_ID) REFERENCES JMH123.Employee(E_ID),
+FOREIGN KEY (AccNum) REFERENCES JMH123.Savings(AccNum)
 );
+
