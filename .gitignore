@@ -24,3 +24,10 @@ ACME_BankingSystem/ACME_BankingSystem-ejb/nbproject/*
 ACME_BankingSystem/ACME_BankingSystem-war/nbproject/*
 !ACME_BankingSystem/ACME_BankingSystem-war/nbproject/project.properties
 !ACME_BankingSystem/ACME_BankingSystem-war/nbproject/project.xml
+/BeansLib/nbproject/private/
+/BeansLib/build/
+/ACME_BankingSystem/ACME_BankingSystem-war/build/
+/ACME_BankingSystem/ACME_BankingSystem-war/dist/
+/BeansLib/dist/
+/ACME_BankingSystem/ACME_BankingSystem-ejb/build/
+/ACME_BankingSystem/ACME_BankingSystem-ejb/dist/
