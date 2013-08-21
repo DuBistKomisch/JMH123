@@ -5,6 +5,7 @@
 package acme_bank_client;
 
 import Beans.Create_CustomerRemote;
+import Beans.Delete_CustomerRemote;
 import javax.ejb.EJB;
 
 
@@ -15,7 +16,7 @@ import javax.ejb.EJB;
 public class Main {
     @EJB
     private static Create_CustomerRemote create_Customer;
-
+    private static Delete_CustomerRemote delete_Customer;
     /**
      * @param args the command line arguments
      */
@@ -23,6 +24,7 @@ public class Main {
         // TODO code application logic here
         
     create_Customer.addCustomer(“First Name”, “Last Name”, new Date(2013,01,01), “Address”);
+    delete_Customer.removeCustomer(C111);
         
     }
 }

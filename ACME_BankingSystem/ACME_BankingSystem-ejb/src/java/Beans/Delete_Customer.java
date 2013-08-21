@@ -8,8 +8,7 @@ import data_access.Customer;
 import data_access.CustomerDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
-import javax.sql.DataSource;
+import javax.activation.DataSource;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
@@ -20,13 +19,11 @@ import javax.ejb.Stateless;
  * @author Howard Tseng
  */
 @Stateless
-public class Create_Customer implements Create_CustomerRemote {
+public class Delete_Customer implements Delete_CustomerRemote {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-   //To change body of generated methods, choose Tools | Templates.
-    
-    
+
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
     
@@ -49,21 +46,17 @@ public class Create_Customer implements Create_CustomerRemote {
     sqle.printStackTrace();
     }
 }
-    
-    
-    
+
     @Override
-    public void addCustomer(String firstname, String lastname, Date dob, String address) {
-        try {
+    public void removeCustomer(String C_ID) {
+     try {
         CustomerDAO dao = new RDBCustomerDAO(connection);
-        Customer customer = new Customer(firstname, lastname, dob, address);
-        dao.createCustomer(customer);
+        Customer customer = new Customer(C_ID);
+        dao.deleteCustomer(customer);
         } catch (Exception e) {
         System.out.println("Could not create customer.");
         e.printStackTrace();
-     }
+     }  
     }
-    
-    
     
 }
