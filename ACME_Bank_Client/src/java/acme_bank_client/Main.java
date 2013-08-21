@@ -23,7 +23,7 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         
-    create_Customer.addCustomer(“First Name”, “Last Name”, new Date(2013,01,01), “Address”);
+    create_Customer.addCustomer("First Name", "Last Name", new Date(2013,01,01), "Address");
     delete_Customer.removeCustomer(C111);
         
     }

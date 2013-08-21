@@ -9,8 +9,8 @@ package data_access;
  * @author morga_000
  */
 public interface CustomerDAO {
-    public void createCustomer(Customer customer);
-    public Customer readCustomer(int C_ID);
+   public void createCustomer(Customer customer);
+    public Customer readCustomer(Integer C_ID);
     public void updateCustomer(Customer customer);
     public void deleteCustomer(Customer customer);
 }
