@@ -6,7 +6,7 @@ package Beans;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import javax.activation.DataSource;
+import javax.sql.DataSource;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;

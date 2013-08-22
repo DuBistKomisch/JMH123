@@ -56,13 +56,14 @@ public class Create_Customer implements Create_CustomerRemote {
     @Override
     public void addCustomer(String firstname, String lastname, Date dob, String address) {
         try {
-        CustomerDAO dao = new RDBCustomerDAO(connection);
-        Customer customer = new Customer(firstname, lastname, (java.sql.Date) dob, address);
-        dao.createCustomer(customer);
+            java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
+            CustomerDAO dao = new RDBCustomerDAO(connection);
+            Customer customer = new Customer(firstname, lastname, sqlDob, address);
+            dao.createCustomer(customer);
         } catch (Exception e) {
-        System.out.println("Could not create customer.");
-        e.printStackTrace();
-     }
+            System.out.println("Could not create customer.");
+            e.printStackTrace();
+        }
     }
     
     

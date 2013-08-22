@@ -31,7 +31,7 @@ public class RDBCustomerDAO implements CustomerDAO {
             sqlStatement.executeUpdate();
             ResultSet result = sqlStatement.getGeneratedKeys();
             result.next();
-            customer.setC_ID(result.getInt("C_ID"));
+            customer.setC_ID(result.getInt(1));
             System.out.print("Customer has been created with id: " + customer.getC_ID().toString());
         } catch (SQLException sqlException) {
             System.out.println("Could not add new customer.");

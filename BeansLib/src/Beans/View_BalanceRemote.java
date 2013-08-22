@@ -12,5 +12,5 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface View_BalanceRemote {
-    public void ViewBalance(double balance);
+//    public void ViewBalance();
 }
