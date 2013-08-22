@@ -9,9 +9,9 @@ package data_access;
  * @author morga_000
  */
 import java.sql.*;
-import java.sql.Date;
+import java.util.ArrayList;
 
-public class RDBCustomerDAO implements CustomerDAO{
+public class RDBCustomerDAO implements CustomerDAO {
     private Connection dbConnection = null;
     
     public RDBCustomerDAO(Connection connection) {
@@ -31,7 +31,7 @@ public class RDBCustomerDAO implements CustomerDAO{
             sqlStatement.executeUpdate();
             ResultSet result = sqlStatement.getGeneratedKeys();
             result.next();
-            customer.setC_ID(result.getInt(1));
+            customer.setC_ID(result.getInt("C_ID"));
             System.out.print("Customer has been created with id: " + customer.getC_ID().toString());
         } catch (SQLException sqlException) {
             System.out.println("Could not add new customer.");
@@ -45,14 +45,15 @@ public class RDBCustomerDAO implements CustomerDAO{
 
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
-                    "SELECT * FROM JMH123.CUSTOMERS WHERE C_ID = ?");
+                    "SELECT * FROM JMH123.CUSTOMERS WHERE C_ID = ?", Statement.RETURN_GENERATED_KEYS);
             sqlStatement.setString(1, C_ID.toString());
             ResultSet res = sqlStatement.executeQuery();
-
-            result.setFirstName(res.getString("C_FirstName"));
-            result.setLastName(res.getString("C_LastName"));
-            result.setDateOfBirth(res.getDate("DAO"));
-            result.setAddress(res.getString("Address"));
+            if (res.next()) {
+                result.setFirstName(res.getString(2));
+                result.setLastName(res.getString(3));
+                result.setDateOfBirth(res.getDate(4));
+                result.setAddress(res.getString(5));
+            }
         } catch (SQLException sqlException) {
             System.out.println("Could not retrieve customer.");
             sqlException.printStackTrace();
@@ -85,8 +86,34 @@ public class RDBCustomerDAO implements CustomerDAO{
                     "DELETE FROM JMH123.CUSTOMERS WHERE C_ID = ?");
             sqlStatement.setString(1, customer.getC_ID().toString());
         } catch (SQLException sqlException) {
-            System.out.println("Could not retrieve customer.");
+            System.out.println("Could not delete customer.");
             sqlException.printStackTrace();
         }
+    }
+    
+    @Override
+    public ArrayList<Customer>  getAllCustomer() {
+        ArrayList<Customer> result = new ArrayList<>();
+        
+        try {
+            PreparedStatement sqlStatement = dbConnection.prepareStatement(
+                    "SELECT * FROM JMH123.CUSTOMERS", Statement.RETURN_GENERATED_KEYS);
+            ResultSet res = sqlStatement.executeQuery();
+            while (res.next()) {
+                Customer    cust = new Customer(null, null, null, null);
+                
+                cust.setFirstName(res.getString(2));
+                cust.setLastName(res.getString(3));
+                cust.setDateOfBirth(res.getDate(4));
+                cust.setAddress(res.getString(5));
+                result.add(cust);
+            }
+        } catch (SQLException sqlException) {
+            System.out.println("Could not retrieve customer.");
+            sqlException.printStackTrace();
+            result = null;
+        }
+        
+        return result;
     }
 }
