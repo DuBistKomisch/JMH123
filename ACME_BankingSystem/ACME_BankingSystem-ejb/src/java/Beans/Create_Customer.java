@@ -57,7 +57,7 @@ public class Create_Customer implements Create_CustomerRemote {
     public void addCustomer(String firstname, String lastname, Date dob, String address) {
         try {
         CustomerDAO dao = new RDBCustomerDAO(connection);
-        Customer customer = new Customer(firstname, lastname, dob, address);
+        Customer customer = new Customer(firstname, lastname, (java.sql.Date) dob, address);
         dao.createCustomer(customer);
         } catch (Exception e) {
         System.out.println("Could not create customer.");

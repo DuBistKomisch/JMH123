@@ -8,19 +8,20 @@ import data_access.Customer;
 import data_access.CustomerDAO;
 import data_access.RDBCustomerDAO;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.SQLException;
-import javax.sql.DataSource;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 
 /**
  *
  * @author Howard Tseng
  */
 @Stateless
-public class Delete_Customer implements Delete_CustomerRemote {
+public class Update_Customer implements Update_CustomerRemote {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -29,7 +30,6 @@ public class Delete_Customer implements Delete_CustomerRemote {
     private DataSource dataSource;
     
     private Connection connection;
-    private Customer customer;
 
     @PostConstruct
     public void initialize() {
@@ -48,17 +48,17 @@ public class Delete_Customer implements Delete_CustomerRemote {
     sqle.printStackTrace();
     }
 }
-
     @Override
-    public void removeCustomer(Integer C_ID) {
-     try {
+    public void changeCustomerDetail(String firstname, String lastname, Date dob, String address, Integer C_ID) {
+    try {
         CustomerDAO dao = new RDBCustomerDAO(connection);
-       Customer customer = new Customer(C_ID);
-        dao.deleteCustomer(customer);
+        Customer customer = new Customer(firstname, lastname, (java.sql.Date) dob, address, C_ID);
+        dao.updateCustomer(customer);
         } catch (Exception e) {
-        System.out.println("Could not delete customer.");
+        System.out.println("Could not re-update customer.");
         e.printStackTrace();
-     }  
+     }
+        
     }
     
 }

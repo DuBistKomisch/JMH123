@@ -9,27 +9,26 @@ import data_access.CustomerDAO;
 import data_access.RDBCustomerDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
-import javax.sql.DataSource;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 
 /**
  *
  * @author Howard Tseng
  */
 @Stateless
-public class Delete_Customer implements Delete_CustomerRemote {
+public class View_Customer implements View_CustomerRemote {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
-    @Resource(lookup = "jdbc/acmeDBDatasource")
+     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
     
     private Connection connection;
-    private Customer customer;
 
     @PostConstruct
     public void initialize() {
@@ -50,15 +49,20 @@ public class Delete_Customer implements Delete_CustomerRemote {
 }
 
     @Override
-    public void removeCustomer(Integer C_ID) {
-     try {
+    public void seeCustomer(Integer C_ID) {
+        Customer text;
+        try {
         CustomerDAO dao = new RDBCustomerDAO(connection);
-       Customer customer = new Customer(C_ID);
-        dao.deleteCustomer(customer);
+       // Customer customer = new Customer(C_ID);
+        text = dao.readCustomer(C_ID);
+        System.out.println(text.getC_ID().toString() + text.getFirstName().toString()
+                + text.getLastName().toString() + text.getDateOfBirth().toString()
+                + text.getAddress().toString());
         } catch (Exception e) {
-        System.out.println("Could not delete customer.");
+        System.out.println("Could not show customer details.");
         e.printStackTrace();
-     }  
+     }
     }
+    
     
 }

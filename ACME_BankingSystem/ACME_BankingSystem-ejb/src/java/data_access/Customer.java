@@ -26,7 +26,19 @@ public class Customer {
         this.DOB = dateOfBirth;
         this.Address = address;
     }
+    
+    public Customer(Integer C_ID){
+        this.C_ID = C_ID;
+    }
 
+    public Customer(String firstName, String lastName, Date dateOfBirth, String address, Integer C_ID) {
+        this.C_FirstName = firstName;
+        this.C_LastName = lastName;
+        this.DOB = dateOfBirth;
+        this.Address = address;
+        this.C_ID = C_ID;
+    }
+    
     public Integer getC_ID() {
         return C_ID;
     }

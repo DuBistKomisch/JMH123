@@ -4,6 +4,7 @@
  */
 package Beans;
 
+import java.util.Date;
 import javax.ejb.Remote;
 
 /**
@@ -11,6 +12,6 @@ import javax.ejb.Remote;
  * @author Howard Tseng
  */
 @Remote
-public interface Delete_CustomerRemote {
-    public void removeCustomer(Integer C_ID);
+public interface Update_CustomerRemote {
+    public void changeCustomerDetail(String firstname, String lastname, Date dob, String address, Integer C_ID);
 }
