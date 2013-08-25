@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package acme_bank_client;
 
 import java.io.BufferedReader;
@@ -16,7 +12,6 @@ import java.io.InputStreamReader;
 //import Beans.Update_CustomerRemote;
 
 /**
- *
  * @author morga_000, jake
  */
 public class Main {
@@ -36,25 +31,31 @@ public class Main {
         //delete_Customer.removeCustomer(111);
         
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String line, parts[];
+        String line;
         
+        // welcome
         System.out.println();
         System.out.println("Welcome to JMH123 ACME Banking System");
-        System.out.println("-------------------------------------");
-        System.out.println();
         
         while (true)
         {
+            // get login
+            System.out.println();
             System.out.println("Please log in with your employee credentials");
             System.out.println();
             System.out.print("Employee ID: ");
-            line = br.readLine(); // TODO
+            line = br.readLine();
             System.out.print("Password: ");
-            line = br.readLine(); // TODO
+            line = br.readLine();
+            // TODO validate and login
             
-            while (true)
+            boolean logout = false;
+            while (!logout)
             {
-                System.out.println("");
+                int ops = 0; // TODO get operations
+                
+                // print menu
+                System.out.println();
                 System.out.println("Main Menu:");
                 System.out.println(" 1. Create Customer");
                 System.out.println(" 2. Open Savings Account");
@@ -62,10 +63,43 @@ public class Main {
                 System.out.println(" 4. Make Withdrawal");
                 System.out.println(" 5. View Balance");
                 System.out.println(" 6. Log Out");
-                System.out.println("(operations performed: N/10)");
-                System.out.println("");
+                System.out.println("(operations performed: " + ops + "/10)");
+                
+                // get selected option
+                System.out.println();
                 System.out.print("Select option: ");
-                line = br.readLine(); // TODO
+                line = br.readLine();
+                System.out.println();
+                int option;
+                try {
+                    option = Integer.parseInt(line);
+                } catch (Exception ex) {
+                    System.out.println("Invalid option.");
+                    continue;
+                }
+                
+                // do selection
+                switch (option)
+                {
+                    case 1: // Create Customer
+                        break;
+                    case 2: // Open Savings Account
+                        break;
+                    case 3: // Make Deposit
+                        break;
+                    case 4: // Make Withdrawal
+                        break;
+                    case 5: // View Balance
+                        break;
+                    case 6: // Log Out
+                        System.out.println("Bye.");
+                        // TODO logout
+                        logout = true;
+                        break;
+                    default:
+                        System.out.println("Invalid option.");
+                        break;
+                }
             }
         }
     }
