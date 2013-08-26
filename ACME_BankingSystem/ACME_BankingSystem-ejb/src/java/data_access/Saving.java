@@ -42,7 +42,7 @@ public class Saving {
         emp = E_ID(); 
     }*/
     
-    public Saving(String ACCNUM, Integer BALANCE)
+    public Saving(int C_ID, String ACCNUM, Integer BALANCE)
     {
         this.C_ID = C_ID;
         this.ACCNUM = ACCNUM;

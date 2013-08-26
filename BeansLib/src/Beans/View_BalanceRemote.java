@@ -4,6 +4,7 @@
  */
 package Beans;
 
+import java.util.ArrayList;
 import javax.ejb.Remote;
 
 /**
@@ -12,5 +13,5 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface View_BalanceRemote {
-   public void ViewBalance(Integer C_ID);
+   public ArrayList ViewBalance(Integer C_ID);
 }

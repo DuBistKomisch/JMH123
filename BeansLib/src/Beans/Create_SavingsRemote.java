@@ -12,5 +12,5 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface Create_SavingsRemote {
-    public void createSaving(Integer C_ID, String ACCNUM, Integer BALANCE);
+    public void createSaving(Integer C_ID, String ACCNUM);
 }
