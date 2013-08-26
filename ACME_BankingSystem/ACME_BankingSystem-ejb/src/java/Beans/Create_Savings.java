@@ -12,19 +12,18 @@ import data_access.Saving;
 import data_access.SavingDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.sql.DataSource;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 
 /**
  *
  * @author Howard Tseng
  */
 @Stateless
-public class View_Balance implements View_BalanceRemote {
+public class Create_Savings implements Create_SavingsRemote {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
@@ -33,7 +32,7 @@ public class View_Balance implements View_BalanceRemote {
     private DataSource dataSource;
     
     private Connection connection;
-    
+
     @PostConstruct
     public void initialize() {
     try {
@@ -46,27 +45,25 @@ public class View_Balance implements View_BalanceRemote {
     @PreDestroy
     public void close() {
     try {
-    connection.close();
+        connection.close();
     } catch (SQLException sqle) {
-    sqle.printStackTrace();
-    }
+        sqle.printStackTrace();
+        }
     }
 
     @Override
-    public void ViewBalance(Integer C_ID) { 
-        ArrayList<Saving> text = new ArrayList();
-        try {
-          //  java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
-            SavingDAO dao = new RDBSavingDAO(connection);
-            Saving saving = new Saving(C_ID);
-            text = dao.getUserAccount(saving);
-            System.out.println(text.toString());
-            
-        } catch (Exception e) {
-            System.out.println("Could not create customer.");
-            e.printStackTrace();
-        }
+    public void createSaving(Integer C_ID, String ACCNUM, Integer BALANCE) {
+     try {
+           // java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
+            CustomerDAO dao = new RDBCustomerDAO(connection);
+            Customer customer = new Customer(C_ID/* sqlDob,*/);
+          SavingDAO daoS = new RDBSavingDAO(connection);
+          Saving saving = new Saving(ACCNUM, BALANCE);
+          daoS.createSaving(customer,saving);
+    } catch (Exception e) {
+          System.out.println("Could not create customer.");
+          e.printStackTrace();
     }
-    
+}
     
 }

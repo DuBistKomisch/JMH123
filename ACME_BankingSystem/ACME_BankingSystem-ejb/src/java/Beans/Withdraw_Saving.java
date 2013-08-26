@@ -4,36 +4,32 @@
  */
 package Beans;
 
-import data_access.Customer;
-import data_access.CustomerDAO;
-import data_access.RDBCustomerDAO;
+import data_access.Employee;
+import data_access.EmployeeDAO;
+import data_access.RDBEmployeeDAO;
 import data_access.RDBSavingDAO;
 import data_access.Saving;
 import data_access.SavingDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.sql.DataSource;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.sql.DataSource;
 
 /**
  *
  * @author Howard Tseng
  */
 @Stateless
-public class View_Balance implements View_BalanceRemote {
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+public class Withdraw_Saving implements Withdraw_SavingRemote {
 
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
     
     private Connection connection;
-    
+
     @PostConstruct
     public void initialize() {
     try {
@@ -46,27 +42,25 @@ public class View_Balance implements View_BalanceRemote {
     @PreDestroy
     public void close() {
     try {
-    connection.close();
+        connection.close();
     } catch (SQLException sqle) {
-    sqle.printStackTrace();
-    }
-    }
-
-    @Override
-    public void ViewBalance(Integer C_ID) { 
-        ArrayList<Saving> text = new ArrayList();
-        try {
-          //  java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
-            SavingDAO dao = new RDBSavingDAO(connection);
-            Saving saving = new Saving(C_ID);
-            text = dao.getUserAccount(saving);
-            System.out.println(text.toString());
-            
-        } catch (Exception e) {
-            System.out.println("Could not create customer.");
-            e.printStackTrace();
+        sqle.printStackTrace();
         }
     }
     
-    
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    public void takeBalance(Integer E_ID, String ACCNUM, Integer BALANCE, String desc){
+         try {
+            //java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
+            SavingDAO dao = new RDBSavingDAO(connection);
+            Saving saving = new Saving( ACCNUM);
+            EmployeeDAO daoE = new RDBEmployeeDAO(connection);
+            Employee employee = new Employee(E_ID);
+            dao.withdraw(employee,saving, BALANCE, desc);
+        } catch (Exception e) {
+            System.out.println("Could not Withdraw Balance");
+            e.printStackTrace();
+        }
+    }
 }

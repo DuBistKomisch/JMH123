@@ -14,6 +14,13 @@ public class Employee {
     private String E_LASTNAME;
     private String E_PASSWORD;
     
+    public Employee(){
+        
+    }
+    
+    public Employee(Integer E_ID){
+        this.E_ID = E_ID;
+    }
     public void     setE_ID(Integer E_ID) {
         this.E_ID = E_ID;
     }
