@@ -24,7 +24,6 @@ public class Main {
     private static Withdraw_SavingRemote withdraw_Saving;
     @EJB
     private static View_BalanceRemote view_Balance;
-    
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**

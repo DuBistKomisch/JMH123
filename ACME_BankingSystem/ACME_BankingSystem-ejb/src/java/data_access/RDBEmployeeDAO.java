@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package data_access;
 
 import java.sql.Connection;
@@ -15,12 +11,13 @@ import java.sql.Statement;
  *
  * @author morga_000
  */
-public class RDBEmployeeDAO implements EmployeeDAO{
-        private Connection dbConnection = null;
-    
+public class RDBEmployeeDAO implements EmployeeDAO {
+
+    private Connection dbConnection = null;
+
     public RDBEmployeeDAO(Connection connection) {
         this.dbConnection = connection;
-    }    
+    }
 
     @Override
     public void createEmployee(Employee employee) {
@@ -41,10 +38,10 @@ public class RDBEmployeeDAO implements EmployeeDAO{
             sqlException.printStackTrace();
         }
     }
-    
+
     @Override
-    public Employee readEmployee(Integer E_ID){
-        Employee    result = new Employee();
+    public Employee readEmployee(Integer E_ID) {
+        Employee result = new Employee();
 
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
@@ -60,7 +57,7 @@ public class RDBEmployeeDAO implements EmployeeDAO{
             sqlException.printStackTrace();
             result = null;
         }
-        
+
         return result;
     }
 
@@ -79,7 +76,7 @@ public class RDBEmployeeDAO implements EmployeeDAO{
             sqlException.printStackTrace();
         }
     }
-    
+
     @Override
     public void deleteEmployee(Employee employee) {
         try {
@@ -92,11 +89,11 @@ public class RDBEmployeeDAO implements EmployeeDAO{
             sqlException.printStackTrace();
         }
     }
-    
+
     @Override
     public Employee loginEmployee(String E_FIRSTNAME, String E_LASTNAME, String PASSWORD) {
-        Employee    result = new Employee();
-        
+        Employee result = new Employee();
+
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.EMPLOYEES WHERE E_FIRSTNAME = ? AND E_LASTNAME = ? AND E_PASSWORD = ?");
@@ -113,8 +110,8 @@ public class RDBEmployeeDAO implements EmployeeDAO{
                 result = null;
             }
         } catch (SQLException sqlException) {
-           System.out.println("Could not log employee.");
-           sqlException.printStackTrace();
+            System.out.println("Could not log employee.");
+            sqlException.printStackTrace();
         }
         return result;
     }

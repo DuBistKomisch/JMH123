@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Beans;
 
 import data_access.Customer;
@@ -28,46 +24,40 @@ import javax.sql.DataSource;
 @Stateless
 public class Deposit_Saving implements Deposit_SavingRemote {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
-    
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
-    
     private Connection connection;
 
     @PostConstruct
     public void initialize() {
-    try {
-    connection = dataSource.getConnection();
-    } catch (SQLException sqle) {
-    sqle.printStackTrace();
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
         }
     }
-    
+
     @PreDestroy
     public void close() {
-    try {
-        connection.close();
-    } catch (SQLException sqle) {
-        sqle.printStackTrace();
+        try {
+            connection.close();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
         }
     }
 
     @Override
     public void InputBalance(Integer E_ID, String ACCNUM, Integer BALANCE, String desc) {
-         try {
+        try {
             //java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
             SavingDAO dao = new RDBSavingDAO(connection);
-            Saving saving = new Saving( ACCNUM);
+            Saving saving = new Saving(ACCNUM);
             EmployeeDAO daoE = new RDBEmployeeDAO(connection);
             Employee employee = new Employee(E_ID);
-            dao.deposit(employee,saving, BALANCE, desc);
+            dao.deposit(employee, saving, BALANCE, desc);
         } catch (Exception e) {
             System.out.println("Could not Deposit Balance");
             e.printStackTrace();
         }
     }
-
 }

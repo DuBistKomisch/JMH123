@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Beans;
 
 import data_access.Customer;
@@ -23,36 +19,28 @@ import javax.ejb.Stateless;
 @Stateless
 public class Create_Customer implements Create_CustomerRemote {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-   //To change body of generated methods, choose Tools | Templates.
-    
-    
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
-    
     private Connection connection;
 
     @PostConstruct
     public void initialize() {
-    try {
-    connection = dataSource.getConnection();
-    } catch (SQLException sqle) {
-    sqle.printStackTrace();
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
         }
     }
-    
+
     @PreDestroy
     public void close() {
-    try {
-    connection.close();
-    } catch (SQLException sqle) {
-    sqle.printStackTrace();
+        try {
+            connection.close();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
     }
-}
-    
-    
-    
+
     @Override
     public void addCustomer(String firstname, String lastname, Date dob, String address) {
         try {
@@ -65,7 +53,4 @@ public class Create_Customer implements Create_CustomerRemote {
             e.printStackTrace();
         }
     }
-    
-    
-    
 }

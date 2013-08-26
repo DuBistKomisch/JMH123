@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package data_access;
 
 /**
@@ -12,13 +8,12 @@ import java.util.Calendar;
 import java.sql.Date;
 
 public class Customer {
+
     private Integer C_ID;
     private String C_FirstName;
     private String C_LastName;
     private Date DOB;
     private String Address;
-
-    
 
     public Customer(String firstName, String lastName, Date dateOfBirth, String address) {
         this.C_FirstName = firstName;
@@ -26,8 +21,8 @@ public class Customer {
         this.DOB = dateOfBirth;
         this.Address = address;
     }
-    
-    public Customer(Integer C_ID){
+
+    public Customer(Integer C_ID) {
         this.C_ID = C_ID;
     }
 
@@ -38,7 +33,7 @@ public class Customer {
         this.Address = address;
         this.C_ID = C_ID;
     }
-    
+
     public Integer getC_ID() {
         return C_ID;
     }
