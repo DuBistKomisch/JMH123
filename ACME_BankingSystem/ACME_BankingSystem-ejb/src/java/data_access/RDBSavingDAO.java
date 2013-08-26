@@ -59,16 +59,16 @@ public class RDBSavingDAO implements SavingDAO {
     }
     
     @Override
-    public ArrayList<Saving>    getUserAccount(Customer customer) {
+    public ArrayList<Saving>    getUserAccount(Saving saving) {
         ArrayList<Saving>   res = new ArrayList<>();
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                 "SELECT * FROM JMH123.SAVINGS WHERE C_ID = ?");
-            sqlStatement.setInt(1, customer.getC_ID());
+            sqlStatement.setInt(1, saving.getC_ID());
             ResultSet result = sqlStatement.executeQuery();
             while (result.next()) {
                 Saving acc = new Saving();
-                acc.setC_ID(customer.getC_ID());
+                acc.setC_ID(saving.getC_ID());
                 acc.setACCNUM(result.getString("ACCNUM"));
                 acc.setBALANCE(result.getInt("BALANCE"));
                 acc.setCREATIONTIME(result.getDate("S_DATETIMECREATED"));

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public interface SavingDAO {
    public void createSaving(Customer customer, Saving saving) throws Exception;
    public void deleteSaving(Saving saving);
-   public ArrayList<Saving> getUserAccount(Customer customer);
+   public ArrayList<Saving> getUserAccount(Saving saving);
    public void withdraw(Employee emp, Saving acc, Integer amount, String desc) throws Exception;
    public void deposit(Employee emp, Saving acc, Integer amount, String desc) throws Exception;
 }

@@ -11,6 +11,6 @@ import javax.ejb.Remote;
  * @author Howard Tseng
  */
 @Remote
-public interface View_BalanceRemote {
-   public void ViewBalance(Integer C_ID);
+public interface Deposit_SavingRemote {
+    public void InputBalance(Integer E_ID, String ACCNUM, Integer BALANCE, String desc);
 }
