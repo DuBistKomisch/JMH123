@@ -155,4 +155,30 @@ public class RDBSavingDAO implements SavingDAO {
             throw new Exception("Sql error");
         }
     }
+    
+    @Override
+    public ArrayList<Saving>    getTransHistory(Saving saving) {
+        ArrayList<Saving>   res = new ArrayList<>();
+        try {
+            PreparedStatement sqlStatement = dbConnection.prepareStatement(
+                "SELECT * FROM JMH123.Transactions WHERE ACCNUM = ?");
+            sqlStatement.setString(1, saving.getACCNUM());
+            ResultSet result = sqlStatement.executeQuery();
+            while (result.next()) {
+                Saving acc = new Saving();
+                //acc.setC_ID(saving.getC_ID());
+                acc.setACCNUM(result.getString("ACCNUM"));
+                acc.setBALANCE(result.getInt("BALANCE"));
+                acc.setCREATIONTIME(result.getDate("S_DATETIMECREATED"));
+                acc.setDesc("Description");
+                res.add(acc);
+            }
+        } catch (SQLException sqle) {
+            System.out.println("Impossible to retrieve any Transaction History for this customer");
+            sqle.printStackTrace();
+            res = null;
+        }
+        
+        return res;
+    }
 }
