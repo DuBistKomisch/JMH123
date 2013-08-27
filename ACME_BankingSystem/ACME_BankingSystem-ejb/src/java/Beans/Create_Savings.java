@@ -43,7 +43,6 @@ public class Create_Savings implements Create_SavingsRemote {
     @Override
     public void createSaving(Integer C_ID, String ACCNUM) {
         try {
-            // java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
             SavingDAO daoS = new RDBSavingDAO(connection);
             Saving saving = new Saving(C_ID, ACCNUM, 0);
             daoS.createSaving(saving);

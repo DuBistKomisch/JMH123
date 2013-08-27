@@ -49,7 +49,6 @@ public class Deposit_Saving implements Deposit_SavingRemote {
     @Override
     public void InputBalance(Integer E_ID, String ACCNUM, Integer BALANCE, String desc) {
         try {
-            //java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
             SavingDAO dao = new RDBSavingDAO(connection);
             Saving saving = new Saving(ACCNUM);
             EmployeeDAO daoE = new RDBEmployeeDAO(connection);

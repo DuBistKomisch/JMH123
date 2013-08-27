@@ -45,7 +45,6 @@ public class View_Balance implements View_BalanceRemote {
     public ArrayList<Saving> ViewBalance(Integer C_ID) {
         ArrayList<Saving> text = new ArrayList();
         try {
-            //  java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
             SavingDAO dao = new RDBSavingDAO(connection);
             Saving saving = new Saving(C_ID);
             text = dao.getUserAccount(saving);

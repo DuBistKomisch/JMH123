@@ -45,7 +45,6 @@ public class View_Customer implements View_CustomerRemote {
         Customer text;
         try {
             CustomerDAO dao = new RDBCustomerDAO(connection);
-            // Customer customer = new Customer(C_ID);
             text = dao.readCustomer(C_ID);
             System.out.println(text.getC_ID().toString() + text.getFirstName().toString()
                     + text.getLastName().toString() + text.getDateOfBirth().toString()

@@ -52,8 +52,7 @@ public class View_Transaction_History implements View_Transaction_HistoryRemote 
     public void seeTrans(String ACCNUM) {
         ArrayList<Saving> text = new ArrayList();
         try {
-            //  java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
-            SavingDAO dao = new RDBSavingDAO(connection);
+           SavingDAO dao = new RDBSavingDAO(connection);
             Saving saving = new Saving(ACCNUM);
             text = dao.getTransHistory(saving);
 

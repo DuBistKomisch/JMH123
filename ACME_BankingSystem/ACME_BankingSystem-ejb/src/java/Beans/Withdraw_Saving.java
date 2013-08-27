@@ -45,7 +45,6 @@ public class Withdraw_Saving implements Withdraw_SavingRemote {
 
     public void takeBalance(Integer E_ID, String ACCNUM, Integer BALANCE, String desc) {
         try {
-            //java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
             SavingDAO dao = new RDBSavingDAO(connection);
             Saving saving = new Saving(ACCNUM);
             EmployeeDAO daoE = new RDBEmployeeDAO(connection);
