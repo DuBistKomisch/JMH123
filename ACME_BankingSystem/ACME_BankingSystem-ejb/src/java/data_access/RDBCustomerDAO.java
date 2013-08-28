@@ -62,7 +62,7 @@ public class RDBCustomerDAO implements CustomerDAO {
         
         return result;
     }
-
+    
     @Override
     public void updateCustomer(Customer customer) {
         try {
