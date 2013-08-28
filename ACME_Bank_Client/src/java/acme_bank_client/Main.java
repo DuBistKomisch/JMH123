@@ -15,15 +15,7 @@ import javax.ejb.EJB;
 public class Main {
 
     @EJB
-    private static Create_CustomerRemote create_Customer;
-    @EJB
-    private static Create_SavingsRemote create_Savings;
-    @EJB
-    private static Deposit_SavingRemote deposit_Saving;
-    @EJB
-    private static Withdraw_SavingRemote withdraw_Saving;
-    @EJB
-    private static View_BalanceRemote view_Balance;
+    private static EmployeeSessionRemote employeeSessionRemote;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
@@ -39,17 +31,17 @@ public class Main {
 
         while (true) {
             // get login
-            int E_ID;
-            try {
-                System.out.println();
-                System.out.println("Please log in with your employee credentials.");
-                System.out.print("Employee ID: ");
-                E_ID = Integer.parseInt(br.readLine());
-                System.out.print("Password: ");
-                line = br.readLine();
-                // TODO validate and login
-            } catch (Exception ex) {
-                System.out.println("Invalid input.");
+            System.out.println();
+            System.out.println("Please log in with your name and password.");
+            System.out.print("First Name: ");
+            String firstName = br.readLine();
+            System.out.print("Last Name: ");
+            String lastName = br.readLine();
+            System.out.print("Password: ");
+            String password = br.readLine();
+            if (!employeeSessionRemote.login(firstName, lastName, password));
+            {
+                System.out.println("Log in failed.");
                 continue;
             }
 
@@ -115,8 +107,7 @@ public class Main {
                             create_Savings.createSaving(C_ID, accnum);
                             System.out.println("Savings account opened.");
                         } catch (Exception ex) {
-                            ex.printStackTrace();
-                            System.out.println("Invalid input.");
+                            System.out.println("Error: " + ex.getMessage());
                         }
                         break;
                     case 3: // Make Deposit
@@ -125,8 +116,7 @@ public class Main {
                             System.out.print("Account No.: ");
                             String accnum = br.readLine();
                             System.out.print("Amount: ");
-                            // TODO change type to double
-                            int amount = Integer.parseInt(br.readLine());
+                            double amount = Double.parseDouble(br.readLine());
                             System.out.print("Description: ");
                             String desc = br.readLine();
                             deposit_Saving.InputBalance(E_ID, accnum, amount, desc);
@@ -142,8 +132,7 @@ public class Main {
                             System.out.print("Account No.: ");
                             String accnum = br.readLine();
                             System.out.print("Amount: ");
-                            // TODO change type to double
-                            int amount = Integer.parseInt(br.readLine());
+                            double amount = Double.parseDouble(br.readLine());
                             System.out.print("Description: ");
                             String desc = br.readLine();
                             withdraw_Saving.takeBalance(E_ID, accnum, amount, desc);

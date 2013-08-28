@@ -10,9 +10,8 @@ public class Saving {
 
     private Integer C_ID;
     private String ACCNUM;
-    private Integer BALANCE;
+    private double BALANCE;
     private Date S_DATETIMECREATION;
-    //
     private String Description;
     private Integer E_ID;
 
@@ -27,11 +26,10 @@ public class Saving {
         this.C_ID = C_ID;
     }
 
-    public Saving(int C_ID, String ACCNUM, Integer BALANCE) {
+    public Saving(int C_ID, String ACCNUM) {
         this.C_ID = C_ID;
         this.ACCNUM = ACCNUM;
         this.BALANCE = BALANCE;
-        this.S_DATETIMECREATION = S_DATETIMECREATION;
     }
 
     public void setC_ID(Integer id) {
@@ -70,7 +68,7 @@ public class Saving {
         this.BALANCE = bal;
     }
 
-    public Integer getBALANCE() {
+    public double getBALANCE() {
         return this.BALANCE;
     }
 

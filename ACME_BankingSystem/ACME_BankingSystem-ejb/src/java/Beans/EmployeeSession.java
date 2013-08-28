@@ -76,15 +76,15 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
     
     @Override
-    public void login(String firstname, String lastName, String password) {
-        Employee emp = new Employee();
+    public boolean login(String firstname, String lastName, String password) {
         EmployeeDAO doa = new RDBEmployeeDAO(connection);
-        emp = doa.loginEmployee(firstname, lastName, password);
+        Employee emp = doa.loginEmployee(firstname, lastName, password);
         if (emp != null)
             this.logged = true;
         else
             this.logged = false;
         this.actions = 0;
+        return this.logged;
     }
     
     @Override

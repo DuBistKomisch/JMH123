@@ -23,24 +23,24 @@ public class RDBSavingDAO implements SavingDAO {
     public void createSaving(Saving save) throws Exception {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
-                    "SELECT * FROM JMH123.SAVING WHERE C_ID = ?");
+                    "SELECT * FROM JMH123.SAVINGS WHERE C_ID = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
             sqlStatement.setInt(1, save.getC_ID());
             ResultSet res = sqlStatement.executeQuery();
             if (res.last() && res.getRow() >= 2) {
-                throw new SQLException("Impossible to add a new account to this customer");
+                throw new Exception("Impossible to add a new account to this customer.");
             }
             sqlStatement = dbConnection.prepareStatement(
-                    "INSERT INTO JMH123.SAVING(C_ID, ACCNUM, BALANCE)"
+                    "INSERT INTO JMH123.SAVINGS (C_ID, ACCNUM, BALANCE)"
                     + " VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             sqlStatement.setInt(1, save.getC_ID());
             //sqlStatement.setString(2, customer.getLastName().substring(0, 3).toUpperCase() + customer.getC_ID().toString());
             sqlStatement.setString(2, save.getACCNUM());
-            sqlStatement.setInt(3, 0);
-            sqlStatement.executeQuery();
-        } catch (SQLException sqlException) {
-            System.out.println("Impossible to add a new account or this customer");
-            sqlException.printStackTrace();
-            throw new Exception("Impossible to create another account for this customer");
+            sqlStatement.setDouble(3, save.getBALANCE());
+            sqlStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new Exception("Couldn't add savings account.");
         }
     }
 
@@ -82,7 +82,7 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public void withdraw(Employee emp, Saving acc, Integer amount, String desc)
+    public void withdraw(Employee emp, Saving acc, double amount, String desc)
             throws Exception {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
@@ -96,7 +96,7 @@ public class RDBSavingDAO implements SavingDAO {
                             "INSERT INTO JMH123.TRANSACTIONS(ACCNUM, AMOUNT, DESCRIPTION, ACCNUM2, E_ID)"
                             + " VALUES (?, ?, ?, ?, ?)");
                     transaction.setString(1, acc.getACCNUM());
-                    transaction.setInt(2, -(amount));
+                    transaction.setDouble(2, -(amount));
                     transaction.setString(3, desc);
                     transaction.setString(4, "");
                     transaction.setInt(5, emp.getE_ID());
@@ -104,7 +104,7 @@ public class RDBSavingDAO implements SavingDAO {
                     if (result.next()) {
                         sqlStatement = dbConnection.prepareStatement(
                                 "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE - ? WHERE ACCNUM = ?");
-                        sqlStatement.setInt(1, amount);
+                        sqlStatement.setDouble(1, amount);
                         sqlStatement.setString(2, acc.getACCNUM());
                         sqlStatement.executeQuery();
                     }
@@ -122,7 +122,7 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public void deposit(Employee emp, Saving acc, Integer amount, String desc)
+    public void deposit(Employee emp, Saving acc, double amount, String desc)
             throws Exception {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
@@ -134,7 +134,7 @@ public class RDBSavingDAO implements SavingDAO {
                         "INSERT INTO JMH123.TRANSACTIONS(ACCNUM, AMOUNT, DESCRIPTION, ACCNUM2, E_ID)"
                         + " VALUES (?, ?, ?, ?, ?)");
                 transaction.setString(1, acc.getACCNUM());
-                transaction.setInt(2, amount);
+                transaction.setDouble(2, amount);
                 transaction.setString(3, desc);
                 transaction.setString(4, "");
                 transaction.setInt(5, emp.getE_ID());
@@ -142,7 +142,7 @@ public class RDBSavingDAO implements SavingDAO {
                 if (result.next()) {
                     sqlStatement = dbConnection.prepareStatement(
                             "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE + ? WHERE ACCNUM = ?");
-                    sqlStatement.setInt(1, amount);
+                    sqlStatement.setDouble(1, amount);
                     sqlStatement.setString(2, acc.getACCNUM());
                     sqlStatement.executeQuery();
                 }

@@ -43,7 +43,7 @@ public class Withdraw_Saving implements Withdraw_SavingRemote {
         }
     }
 
-    public void takeBalance(Integer E_ID, String ACCNUM, Integer BALANCE, String desc) {
+    public void takeBalance(Integer E_ID, String ACCNUM, double BALANCE, String desc) {
         try {
             SavingDAO dao = new RDBSavingDAO(connection);
             Saving saving = new Saving(ACCNUM);

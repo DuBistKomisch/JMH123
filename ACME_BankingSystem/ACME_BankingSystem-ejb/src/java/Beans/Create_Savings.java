@@ -41,14 +41,14 @@ public class Create_Savings implements Create_SavingsRemote {
     }
 
     @Override
-    public void createSaving(Integer C_ID, String ACCNUM) {
+    public void createSaving(Integer C_ID, String ACCNUM) throws Exception {
         try {
             SavingDAO daoS = new RDBSavingDAO(connection);
-            Saving saving = new Saving(C_ID, ACCNUM, 0);
+            Saving saving = new Saving(C_ID, ACCNUM);
             daoS.createSaving(saving);
         } catch (Exception e) {
-            System.out.println("Could not create customer.");
-            e.printStackTrace();
+            System.out.println("Could not create savings.");
+            throw e;
         }
     }
 }

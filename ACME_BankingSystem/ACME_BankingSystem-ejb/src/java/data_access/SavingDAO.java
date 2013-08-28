@@ -16,7 +16,7 @@ public interface SavingDAO {
     
     public ArrayList<Saving> getTransHistory(Saving saving);
 
-    public void withdraw(Employee emp, Saving acc, Integer amount, String desc) throws Exception;
+    public void withdraw(Employee emp, Saving acc, double amount, String desc) throws Exception;
 
-    public void deposit(Employee emp, Saving acc, Integer amount, String desc) throws Exception;
+    public void deposit(Employee emp, Saving acc, double amount, String desc) throws Exception;
 }

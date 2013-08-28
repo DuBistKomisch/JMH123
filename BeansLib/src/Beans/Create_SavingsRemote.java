@@ -9,5 +9,5 @@ import javax.ejb.Remote;
 @Remote
 public interface Create_SavingsRemote {
 
-    public void createSaving(Integer C_ID, String ACCNUM);
+    public void createSaving(Integer C_ID, String ACCNUM) throws Exception;
 }
