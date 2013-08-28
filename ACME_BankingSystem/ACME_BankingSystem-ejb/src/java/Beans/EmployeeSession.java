@@ -3,6 +3,7 @@ package Beans;
 import data_access.Employee;
 import data_access.EmployeeDAO;
 import data_access.RDBEmployeeDAO;
+import exceptions.DataLayerException;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.SQLException;
@@ -27,17 +28,18 @@ import javax.sql.DataSource;
 public class EmployeeSession implements EmployeeSessionRemote {
 
     @EJB
-    private static Create_CustomerRemote create_Customer;
+    private Create_CustomerRemote create_Customer;
     @EJB
-    private static Create_SavingsRemote create_Savings;
+    private Create_SavingsRemote create_Savings;
     @EJB
-    private static Deposit_SavingRemote deposit_Saving;
+    private Deposit_SavingRemote deposit_Saving;
     @EJB
-    private static Withdraw_SavingRemote withdraw_Saving;
+    private Withdraw_SavingRemote withdraw_Saving;
     @EJB
-    private static View_BalanceRemote view_Balance;
+    private View_BalanceRemote view_Balance;
     private boolean logged = false;
-    private int actions = 0;
+    private int E_ID;
+    private int actions;
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
     private Connection connection;
@@ -67,18 +69,26 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public boolean login(String firstname, String lastName, String password) {
+    public void login(String firstname, String lastName, String password) throws DataLayerException {
+        if (this.logged)
+            throw new IllegalStateException("You are already logged in.");
         EmployeeDAO doa = new RDBEmployeeDAO(connection);
         Employee emp = doa.loginEmployee(firstname, lastName, password);
-        if (emp != null) {
-            this.logged = true;
-        } else {
-            this.logged = false;
-        }
+        if (emp == null)
+            throw new IllegalStateException("Wrong employee name and password.");
+        this.logged = true;
+        this.E_ID = emp.getE_ID();
         this.actions = 0;
-        return this.logged;
     }
 
+    @Override
+    public void logout() {
+        if (!this.logged)
+            throw new IllegalStateException("You are not logged in.");
+        this.logged = false;
+        this.actions = 0;
+    }
+    
     private boolean addAction() {
         if (this.actions < 10) {
             this.actions++;
@@ -98,7 +108,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
     @Override
     public void addCustomer(String firstName, String lastName, Date dob, String address) throws Exception {
         if (!this.logged)
-            throw new Exception("You are not logged in.");
+            throw new IllegalStateException("You are not logged in.");
         create_Customer.addCustomer(firstName, lastName, dob, address);
         this.addAction();
     }
@@ -106,31 +116,31 @@ public class EmployeeSession implements EmployeeSessionRemote {
     @Override
     public void createSaving(Integer C_ID, String accnum) throws Exception {
         if (!this.logged)
-            throw new Exception("You are not logged in.");
+            throw new IllegalStateException("You are not logged in.");
         create_Savings.createSaving(C_ID, accnum);
         this.addAction();
     }
 
     @Override
-    public void InputBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception {
+    public void InputBalance(String accnum, Double amount, String desc) throws Exception {
         if (!this.logged)
-            throw new Exception("You are not logged in.");
-        deposit_Saving.InputBalance(E_ID, desc, amount, desc);
+            throw new IllegalStateException("You are not logged in.");
+        deposit_Saving.InputBalance(this.E_ID, desc, amount, desc);
         this.addAction();
     }
     
     @Override
-    public void takeBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception {
+    public void takeBalance(String accnum, Double amount, String desc) throws Exception {
         if (!this.logged)
-            throw new Exception("You are not logged in.");
-        withdraw_Saving.takeBalance(E_ID, desc, amount, desc);
+            throw new IllegalStateException("You are not logged in.");
+        withdraw_Saving.takeBalance(this.E_ID, desc, amount, desc);
         this.addAction();
     }
 
     @Override
     public ArrayList ViewBalance(Integer C_ID) throws Exception {
         if (!this.logged)
-            throw new Exception("You are not logged in.");
+            throw new IllegalStateException("You are not logged in.");
         ArrayList list = view_Balance.ViewBalance(C_ID);
         this.addAction();
         return list;

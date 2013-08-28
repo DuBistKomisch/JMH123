@@ -4,6 +4,7 @@
  */
 package Beans;
 
+import exceptions.DataLayerException;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.ejb.Remote;
@@ -14,14 +15,17 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface EmployeeSessionRemote {
-    public boolean login(String firstName, String lastName, String password);
+    public void login(String firstName, String lastName, String password) throws DataLayerException;
+
+    public void logout();
+    
     public int getCounter();
 
     public ArrayList ViewBalance(Integer C_ID) throws Exception;
 
-    public void takeBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception;
+    public void takeBalance(String accnum, Double amount, String desc) throws Exception;
 
-    public void InputBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception;
+    public void InputBalance(String accnum, Double amount, String desc) throws Exception;
 
     public void createSaving(Integer C_ID, String accnum) throws Exception;
 

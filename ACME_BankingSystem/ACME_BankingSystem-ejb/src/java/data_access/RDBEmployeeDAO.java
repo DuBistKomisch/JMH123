@@ -1,5 +1,6 @@
 package data_access;
 
+import exceptions.DataLayerException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -91,7 +92,7 @@ public class RDBEmployeeDAO implements EmployeeDAO {
     }
 
     @Override
-    public Employee loginEmployee(String E_FIRSTNAME, String E_LASTNAME, String PASSWORD) {
+    public Employee loginEmployee(String E_FIRSTNAME, String E_LASTNAME, String PASSWORD) throws DataLayerException {
         Employee result = new Employee();
 
         try {
@@ -110,8 +111,9 @@ public class RDBEmployeeDAO implements EmployeeDAO {
                 result = null;
             }
         } catch (SQLException sqlException) {
-            System.out.println("Could not log employee.");
+            System.out.println("Could not log in employee.");
             sqlException.printStackTrace();
+            throw new DataLayerException();
         }
         return result;
     }
