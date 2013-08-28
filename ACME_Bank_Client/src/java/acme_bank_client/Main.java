@@ -1,7 +1,8 @@
 package acme_bank_client;
 
-import Beans.*;
-import exceptions.*;
+import acme_banking_system.exceptions.LoggedInStateException;
+import acme_banking_system.beans.EmployeeSessionRemote;
+import acme_banking_system.data_access.ISaving;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
@@ -128,9 +129,10 @@ public class Main {
                             System.out.println("View Balance");
                             System.out.print("Customer ID: ");
                             C_ID = Integer.parseInt(br.readLine());
-                            ArrayList savings = employeeSession.ViewBalance(C_ID);
-                            // TODO output
-                            // print out all? or just get one account
+                            ArrayList<ISaving> savings = employeeSession.ViewBalance(C_ID);
+                            for (ISaving saving : savings) {
+                                System.out.printf("AccNum %s: $%.2f", saving.getACCNUM(), saving.getBALANCE());
+                            }
                             break;
                         case 6: // View Transactions
                             System.out.println("View Transactions");
