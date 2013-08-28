@@ -18,19 +18,20 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface EmployeeSessionRemote {
+
     public void login(String firstName, String lastName, String password) throws LoggedInStateException, BusinessException, DataLayerException;
 
     public void logout() throws LoggedInStateException;
-    
+
     public int getCounter();
 
-    public ArrayList<ISaving> viewBalance(Integer C_ID) throws Exception;
-
-    public void withdraw(String accnum, Double amount, String desc) throws Exception;
-
-    public void deposit(String accnum, Double amount, String desc) throws Exception;
-
-    public void createSaving(Integer C_ID, String accnum) throws Exception;
-
     public void createCustomer(String firstName, String lastName, Date dob, String address) throws Exception;
+
+    public void createSaving(Integer C_ID, String accnum) throws LoggedInStateException, BusinessException, DataLayerException;
+
+    public void deposit(String accnum, Double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException;
+
+    public void withdraw(String accnum, Double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException;
+
+    public ArrayList<ISaving> viewBalance(Integer C_ID) throws Exception;
 }

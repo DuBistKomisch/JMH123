@@ -58,9 +58,9 @@ public class SavingBean implements SavingBeanRemote {
             throw e;
         }
     }
-    
+
     @Override
-    public void deposit(Integer E_ID, String ACCNUM, double BALANCE, String desc) {
+    public void deposit(Integer E_ID, String ACCNUM, double BALANCE, String desc) throws BusinessException, DataLayerException {
         try {
             SavingDAO dao = new RDBSavingDAO(connection);
             Saving saving = new Saving(ACCNUM);
@@ -68,13 +68,13 @@ public class SavingBean implements SavingBeanRemote {
             Employee employee = new Employee(E_ID);
             dao.deposit(employee, saving, BALANCE, desc);
         } catch (Exception e) {
-            System.out.println("Could not Deposit Balance");
-            e.printStackTrace();
+            System.out.println("Could not deposit.");
+            throw e;
         }
     }
-    
+
     @Override
-    public void withdraw(Integer E_ID, String ACCNUM, double BALANCE, String desc) {
+    public void withdraw(Integer E_ID, String ACCNUM, double BALANCE, String desc) throws BusinessException, DataLayerException {
         try {
             SavingDAO dao = new RDBSavingDAO(connection);
             Saving saving = new Saving(ACCNUM);
@@ -82,13 +82,13 @@ public class SavingBean implements SavingBeanRemote {
             Employee employee = new Employee(E_ID);
             dao.withdraw(employee, saving, BALANCE, desc);
         } catch (Exception e) {
-            System.out.println("Could not Withdraw Balance");
-            e.printStackTrace();
+            System.out.println("Could not withdraw.");
+            throw e;
         }
     }
-    
+
     @Override
-    public ArrayList<ISaving> viewBalance(Integer C_ID) {
+    public ArrayList<ISaving> viewBalance(Integer C_ID) throws DataLayerException {
         ArrayList<ISaving> text = new ArrayList<ISaving>();
         try {
             SavingDAO dao = new RDBSavingDAO(connection);
@@ -96,26 +96,15 @@ public class SavingBean implements SavingBeanRemote {
             text.addAll(dao.getCustomerSavings(saving));
 
         } catch (Exception e) {
-            System.out.println("Could not create customer.");
-            e.printStackTrace();
-            text = null;
+            System.out.println("Could not view balance.");
+            throw e;
         }
         return text;
     }
-    
-    @Override
-    public void viewTransactionsHistory(String ACCNUM) {
-        ArrayList<Saving> text;
-        try {
-           SavingDAO dao = new RDBSavingDAO(connection);
-            Saving saving = new Saving(ACCNUM);
-            text = dao.getTransactionsHistory(saving);
 
-        } catch (Exception e) {
-            System.out.println("Could not create customer.");
-            e.printStackTrace();
-            text = null;
-        }
-        System.out.println(text.toString());
+    @Override
+    public void viewTransactionsHistory(String ACCNUM) throws DataLayerException {
+        // TODO implement
+        throw new DataLayerException();
     }
 }

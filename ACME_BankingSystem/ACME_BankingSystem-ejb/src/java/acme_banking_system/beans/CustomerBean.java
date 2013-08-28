@@ -3,6 +3,7 @@ package acme_banking_system.beans;
 import acme_banking_system.data_access.Customer;
 import acme_banking_system.data_access.CustomerDAO;
 import acme_banking_system.data_access.RDBCustomerDAO;
+import acme_banking_system.exceptions.DataLayerException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -42,7 +43,7 @@ public class CustomerBean implements CustomerBeanRemote {
     }
 
     @Override
-    public void createCustomer(String firstname, String lastname, Date dob, String address) {
+    public void createCustomer(String firstname, String lastname, Date dob, String address) throws DataLayerException {
         try {
             java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
             CustomerDAO dao = new RDBCustomerDAO(connection);
@@ -50,36 +51,12 @@ public class CustomerBean implements CustomerBeanRemote {
             dao.createCustomer(customer);
         } catch (Exception e) {
             System.out.println("Could not create customer.");
-            e.printStackTrace();
+            throw e;
         }
     }
-    
+
     @Override
-    public void removeCustomer(Integer C_ID) {
-        try {
-            CustomerDAO dao = new RDBCustomerDAO(connection);
-            Customer customer = new Customer(C_ID);
-            dao.deleteCustomer(customer);
-        } catch (Exception e) {
-            System.out.println("Could not delete customer.");
-            e.printStackTrace();
-        }
-    }
-    
-    @Override
-    public void changeCustomerDetail(String firstname, String lastname, Date dob, String address, Integer C_ID) {
-        try {
-            CustomerDAO dao = new RDBCustomerDAO(connection);
-            Customer customer = new Customer(firstname, lastname, (java.sql.Date) dob, address, C_ID);
-            dao.updateCustomer(customer);
-        } catch (Exception e) {
-            System.out.println("Could not re-update customer.");
-            e.printStackTrace();
-        }
-    }
-    
-    @Override
-    public void seeCustomer(Integer C_ID) {
+    public void readCustomer(Integer C_ID) throws DataLayerException {
         Customer text;
         try {
             CustomerDAO dao = new RDBCustomerDAO(connection);
@@ -88,8 +65,32 @@ public class CustomerBean implements CustomerBeanRemote {
                     + text.getLastName().toString() + text.getDateOfBirth().toString()
                     + text.getAddress().toString());
         } catch (Exception e) {
-            System.out.println("Could not show customer details.");
-            e.printStackTrace();
+            System.out.println("Could not read customer.");
+            throw e;
+        }
+    }
+
+    @Override
+    public void updateCustomer(String firstname, String lastname, Date dob, String address, Integer C_ID) throws DataLayerException {
+        try {
+            CustomerDAO dao = new RDBCustomerDAO(connection);
+            Customer customer = new Customer(firstname, lastname, (java.sql.Date) dob, address, C_ID);
+            dao.updateCustomer(customer);
+        } catch (Exception e) {
+            System.out.println("Could not update customer.");
+            throw e;
+        }
+    }
+
+    @Override
+    public void deleteCustomer(Integer C_ID) throws DataLayerException {
+        try {
+            CustomerDAO dao = new RDBCustomerDAO(connection);
+            Customer customer = new Customer(C_ID);
+            dao.deleteCustomer(customer);
+        } catch (Exception e) {
+            System.out.println("Could not delete customer.");
+            throw e;
         }
     }
 }

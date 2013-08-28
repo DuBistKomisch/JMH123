@@ -1,8 +1,8 @@
 package acme_banking_system.data_access;
 
+import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +21,7 @@ public class RDBEmployeeDAO implements EmployeeDAO {
     }
 
     @Override
-    public void createEmployee(Employee employee) {
+    public void createEmployee(Employee employee) throws DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "INSERT INTO JMH123.EMPLOYEES(E_FIRSTNAME, E_LASTNAME, E_PASSWORD)"
@@ -33,15 +33,14 @@ public class RDBEmployeeDAO implements EmployeeDAO {
             ResultSet result = sqlStatement.getGeneratedKeys();
             result.next();
             employee.setE_ID(result.getInt(1));
-            System.out.print("Employee has been created with id: " + employee.getE_ID().toString());
+            System.out.println("Employee has been created with id: " + employee.getE_ID().toString());
         } catch (SQLException sqlException) {
-            System.out.println("Could not add new employee.");
-            sqlException.printStackTrace();
+            throw new DataLayerException();
         }
     }
 
     @Override
-    public Employee readEmployee(Integer E_ID) {
+    public Employee readEmployee(Integer E_ID) throws DataLayerException {
         Employee result = new Employee();
 
         try {
@@ -54,16 +53,14 @@ public class RDBEmployeeDAO implements EmployeeDAO {
             result.setE_LASTNAME(res.getString(3));
             result.setE_PASSWORD(res.getString(4));
         } catch (SQLException sqlException) {
-            System.out.println("Could not retrieve emplyee.");
-            sqlException.printStackTrace();
-            result = null;
+            throw new DataLayerException();
         }
 
         return result;
     }
 
     @Override
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(Employee employee) throws DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "UPDATE JMH123.EMPLOYEES SET E_FIRSTNAME = ?, E_LASTNAME = ?, E_PASSWORD = ? WHERE E_ID = ?");
@@ -73,26 +70,24 @@ public class RDBEmployeeDAO implements EmployeeDAO {
             sqlStatement.setString(4, employee.getE_ID().toString());
             sqlStatement.executeQuery();
         } catch (SQLException sqlException) {
-            System.out.println("Could not update employee.");
-            sqlException.printStackTrace();
+            throw new DataLayerException();
         }
     }
 
     @Override
-    public void deleteEmployee(Employee employee) {
+    public void deleteEmployee(Employee employee) throws DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "DELETE FROM JMH123.EMPLOYEES WHERE C_ID = ?");
             sqlStatement.setString(1, employee.getE_ID().toString());
             sqlStatement.executeQuery();
         } catch (SQLException sqlException) {
-            System.out.println("Could not delete employee.");
-            sqlException.printStackTrace();
+            throw new DataLayerException();
         }
     }
 
     @Override
-    public Employee loginEmployee(String E_FIRSTNAME, String E_LASTNAME, String PASSWORD) throws DataLayerException {
+    public Employee loginEmployee(String E_FIRSTNAME, String E_LASTNAME, String PASSWORD) throws BusinessException, DataLayerException {
         Employee result = new Employee();
 
         try {
@@ -108,11 +103,9 @@ public class RDBEmployeeDAO implements EmployeeDAO {
                 result.setE_PASSWORD(PASSWORD);
                 result.setE_ID(res.getInt("E_ID"));
             } else {
-                result = null;
+                throw new BusinessException("Wrong employee name and password.");
             }
         } catch (SQLException sqlException) {
-            System.out.println("Could not log in employee.");
-            sqlException.printStackTrace();
             throw new DataLayerException();
         }
         return result;

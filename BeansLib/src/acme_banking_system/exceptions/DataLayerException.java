@@ -9,8 +9,8 @@ package acme_banking_system.exceptions;
  * @author Howard Tseng
  */
 public class DataLayerException extends Exception {
-    public DataLayerException ()
-    {
+
+    public DataLayerException() {
         super("Database error (see server log).");
     }
 }

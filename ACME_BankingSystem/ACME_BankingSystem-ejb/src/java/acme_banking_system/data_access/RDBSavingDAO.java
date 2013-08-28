@@ -24,6 +24,7 @@ public class RDBSavingDAO implements SavingDAO {
     @Override
     public void createSaving(Saving save) throws BusinessException, DataLayerException {
         try {
+            // TODO needs more validation
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.SAVINGS WHERE C_ID = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -37,7 +38,6 @@ public class RDBSavingDAO implements SavingDAO {
                     "INSERT INTO JMH123.SAVINGS (C_ID, ACCNUM, BALANCE)"
                     + " VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             sqlStatement.setInt(1, save.getC_ID());
-            //sqlStatement.setString(2, customer.getLastName().substring(0, 3).toUpperCase() + customer.getC_ID().toString());
             sqlStatement.setString(2, save.getACCNUM());
             sqlStatement.setDouble(3, save.getBALANCE());
             sqlStatement.executeUpdate();
@@ -47,45 +47,50 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public void deleteSaving(Saving saving) {
+    public void deleteSaving(Saving saving) throws DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "DELETE FROM JMH123.SAVINGS WHERE ACCNUM = ?");
             sqlStatement.executeQuery();
         } catch (SQLException sqle) {
-            System.out.print("Impossible to delete this account");
-            sqle.printStackTrace();
+            throw new DataLayerException();
         }
     }
 
     @Override
-    public ArrayList<Saving> getCustomerSavings(Saving saving) {
-        ArrayList<Saving> res = new ArrayList<>();
+    public void deposit(Employee emp, Saving acc, double amount, String desc) throws BusinessException, DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
-                    "SELECT * FROM JMH123.SAVINGS WHERE C_ID = ?");
-            sqlStatement.setInt(1, saving.getC_ID());
+                    "SELECT * FROM JMH123.SAVINGS WHERE ACCNUM = ?");
+            sqlStatement.setString(1, acc.getACCNUM());
             ResultSet result = sqlStatement.executeQuery();
-            while (result.next()) {
-                Saving acc = new Saving();
-                acc.setC_ID(saving.getC_ID());
-                acc.setACCNUM(result.getString("ACCNUM"));
-                acc.setBALANCE(result.getInt("BALANCE"));
-                acc.setCREATIONTIME(result.getDate("S_DATETIMECREATED"));
-                res.add(acc);
+            if (result.next()) {
+                PreparedStatement transaction = dbConnection.prepareStatement(
+                        "INSERT INTO JMH123.TRANSACTIONS(ACCNUM, AMOUNT, DESCRIPTION, ACCNUM2, E_ID)"
+                        + " VALUES (?, ?, ?, ?, ?)");
+                transaction.setString(1, acc.getACCNUM());
+                transaction.setDouble(2, amount);
+                transaction.setString(3, desc);
+                transaction.setString(4, "");
+                transaction.setInt(5, emp.getE_ID());
+                result = transaction.executeQuery();
+                if (result.next()) {
+                    sqlStatement = dbConnection.prepareStatement(
+                            "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE + ? WHERE ACCNUM = ?");
+                    sqlStatement.setDouble(1, amount);
+                    sqlStatement.setString(2, acc.getACCNUM());
+                    sqlStatement.executeQuery();
+                }
+            } else {
+                throw new BusinessException("Account not found.");
             }
         } catch (SQLException sqle) {
-            System.out.println("Impossible to retrieve any account for this customer");
-            sqle.printStackTrace();
-            res = null;
+            throw new DataLayerException();
         }
-
-        return res;
     }
 
     @Override
-    public void withdraw(Employee emp, Saving acc, double amount, String desc)
-            throws Exception {
+    public void withdraw(Employee emp, Saving acc, double amount, String desc) throws BusinessException, DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.SAVINGS WHERE ACCNUM = ?");
@@ -111,76 +116,42 @@ public class RDBSavingDAO implements SavingDAO {
                         sqlStatement.executeQuery();
                     }
                 } else {
-                    throw new Exception("Not enough balance");
+                    throw new BusinessException("Not enough balance.");
                 }
             } else {
-                throw new Exception("Impossible to make this withdraw");
+                throw new BusinessException("Account not found.");
             }
         } catch (SQLException sqle) {
-            System.out.println("Impossible to withdraw from this account");
-            sqle.printStackTrace();
-            throw new Exception("Sql error");
+            throw new DataLayerException();
         }
     }
 
     @Override
-    public void deposit(Employee emp, Saving acc, double amount, String desc)
-            throws Exception {
+    public ArrayList<Saving> getCustomerSavings(Saving saving) throws DataLayerException {
+        ArrayList<Saving> res = new ArrayList<>();
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
-                    "SELECT * FROM JMH123.SAVINGS WHERE ACCNUM = ?");
-            sqlStatement.setString(1, acc.getACCNUM());
-            ResultSet result = sqlStatement.executeQuery();
-            if (result.next()) {
-                PreparedStatement transaction = dbConnection.prepareStatement(
-                        "INSERT INTO JMH123.TRANSACTIONS(ACCNUM, AMOUNT, DESCRIPTION, ACCNUM2, E_ID)"
-                        + " VALUES (?, ?, ?, ?, ?)");
-                transaction.setString(1, acc.getACCNUM());
-                transaction.setDouble(2, amount);
-                transaction.setString(3, desc);
-                transaction.setString(4, "");
-                transaction.setInt(5, emp.getE_ID());
-                result = transaction.executeQuery();
-                if (result.next()) {
-                    sqlStatement = dbConnection.prepareStatement(
-                            "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE + ? WHERE ACCNUM = ?");
-                    sqlStatement.setDouble(1, amount);
-                    sqlStatement.setString(2, acc.getACCNUM());
-                    sqlStatement.executeQuery();
-                }
-            } else {
-                throw new Exception("Impossible to make this deposit");
-            }
-        } catch (SQLException sqle) {
-            System.out.println("Impossible to withdraw from this account");
-            sqle.printStackTrace();
-            throw new Exception("Sql error");
-        }
-    }
-    
-    @Override
-    public ArrayList<Saving>    getTransactionsHistory(Saving saving) {
-        ArrayList<Saving>   res = new ArrayList<>();
-        try {
-            PreparedStatement sqlStatement = dbConnection.prepareStatement(
-                "SELECT * FROM JMH123.Transactions WHERE ACCNUM = ?");
-            sqlStatement.setString(1, saving.getACCNUM());
+                    "SELECT * FROM JMH123.SAVINGS WHERE C_ID = ?");
+            sqlStatement.setInt(1, saving.getC_ID());
             ResultSet result = sqlStatement.executeQuery();
             while (result.next()) {
                 Saving acc = new Saving();
-                //acc.setC_ID(saving.getC_ID());
+                acc.setC_ID(saving.getC_ID());
                 acc.setACCNUM(result.getString("ACCNUM"));
                 acc.setBALANCE(result.getInt("BALANCE"));
                 acc.setCREATIONTIME(result.getDate("S_DATETIMECREATED"));
-                acc.setDesc("Description");
                 res.add(acc);
             }
         } catch (SQLException sqle) {
-            System.out.println("Impossible to retrieve any Transaction History for this customer");
-            sqle.printStackTrace();
-            res = null;
+            throw new DataLayerException();
         }
-        
+
         return res;
+    }
+
+    @Override
+    public ArrayList<Saving> getTransactionsHistory(Saving saving) throws DataLayerException {
+        // TODO implement
+        throw new DataLayerException();
     }
 }

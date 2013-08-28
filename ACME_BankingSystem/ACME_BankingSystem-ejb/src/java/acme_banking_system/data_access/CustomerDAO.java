@@ -1,5 +1,6 @@
 package acme_banking_system.data_access;
 
+import acme_banking_system.exceptions.DataLayerException;
 import java.util.ArrayList;
 
 /**
@@ -8,13 +9,13 @@ import java.util.ArrayList;
  */
 public interface CustomerDAO {
 
-    public void createCustomer(Customer customer);
+    public void createCustomer(Customer customer) throws DataLayerException;
 
-    public Customer readCustomer(Integer C_ID);
+    public Customer readCustomer(Integer C_ID) throws DataLayerException;
 
-    public void updateCustomer(Customer customer);
+    public void updateCustomer(Customer customer) throws DataLayerException;
 
-    public void deleteCustomer(Customer customer);
+    public void deleteCustomer(Customer customer) throws DataLayerException;
 
-    public ArrayList<Customer> getAllCustomer();
+    public ArrayList<Customer> getAllCustomer() throws DataLayerException;
 }

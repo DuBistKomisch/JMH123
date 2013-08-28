@@ -1,5 +1,6 @@
 package acme_banking_system.beans;
 
+import acme_banking_system.exceptions.DataLayerException;
 import java.util.Date;
 import javax.ejb.Remote;
 
@@ -10,11 +11,11 @@ import javax.ejb.Remote;
 @Remote
 public interface CustomerBeanRemote {
 
-    public void createCustomer(String firstname, String lastname, Date dob, String address);
-    
-    public void removeCustomer(Integer C_ID);
-    
-    public void changeCustomerDetail(String firstname, String lastname, Date dob, String address, Integer C_ID);
-    
-    public void seeCustomer(Integer C_ID);
+    public void createCustomer(String firstname, String lastname, Date dob, String address) throws DataLayerException;
+
+    public void readCustomer(Integer C_ID) throws DataLayerException;
+
+    public void updateCustomer(String firstname, String lastname, Date dob, String address, Integer C_ID) throws DataLayerException;
+
+    public void deleteCustomer(Integer C_ID) throws DataLayerException;
 }

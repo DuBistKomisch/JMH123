@@ -4,7 +4,6 @@ package acme_banking_system.data_access;
  *
  * @author morga_000
  */
-import java.util.Calendar;
 import java.sql.Date;
 
 public class Customer {

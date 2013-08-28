@@ -1,5 +1,6 @@
 package acme_banking_system.data_access;
 
+import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
 
 /**
@@ -8,13 +9,13 @@ import acme_banking_system.exceptions.DataLayerException;
  */
 public interface EmployeeDAO {
 
-    public void createEmployee(Employee employee);
+    public void createEmployee(Employee employee) throws DataLayerException;
 
-    public Employee readEmployee(Integer E_ID);
+    public Employee readEmployee(Integer E_ID) throws DataLayerException;
 
-    public void updateEmployee(Employee employee);
+    public void updateEmployee(Employee employee) throws DataLayerException;
 
-    public void deleteEmployee(Employee employee);
+    public void deleteEmployee(Employee employee) throws DataLayerException;
 
-    public Employee loginEmployee(String firstName, String lastName, String password) throws DataLayerException;
+    public Employee loginEmployee(String firstName, String lastName, String password) throws BusinessException, DataLayerException;
 }

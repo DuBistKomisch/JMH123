@@ -16,9 +16,10 @@ import javax.rmi.PortableRemoteObject;
  * @author morga_000, jake
  */
 public class Main {
+
     private static EmployeeSessionRemote employeeSession;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    
+
     /**
      * @param args the command line arguments
      */
@@ -27,7 +28,7 @@ public class Main {
         String firstName, lastName, password, address, accnum, desc;
         int C_ID;
         double amount;
-        
+
         // welcome
         System.out.println();
         System.out.println("Welcome to JMH123 ACME Banking System");

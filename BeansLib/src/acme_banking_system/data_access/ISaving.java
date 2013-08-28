@@ -23,5 +23,4 @@ public interface ISaving {
     String getDesc();
 
     Integer getE_ID();
-    
 }

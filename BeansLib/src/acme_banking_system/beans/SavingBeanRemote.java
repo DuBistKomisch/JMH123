@@ -14,12 +14,12 @@ import javax.ejb.Remote;
 public interface SavingBeanRemote {
 
     public void createSaving(Integer C_ID, String ACCNUM) throws BusinessException, DataLayerException;
-    
-    public void deposit(Integer E_ID, String ACCNUM, double BALANCE, String desc);
-    
-    public void withdraw(Integer E_ID, String ACCNUM, double BALANCE, String desc);
-    
-    public ArrayList<ISaving> viewBalance(Integer C_ID);
-    
-    public void viewTransactionsHistory(String ACCNUM);
+
+    public void deposit(Integer E_ID, String ACCNUM, double BALANCE, String desc) throws BusinessException, DataLayerException;
+
+    public void withdraw(Integer E_ID, String ACCNUM, double BALANCE, String desc) throws BusinessException, DataLayerException;
+
+    public ArrayList<ISaving> viewBalance(Integer C_ID) throws DataLayerException;
+
+    public void viewTransactionsHistory(String ACCNUM) throws DataLayerException;
 }

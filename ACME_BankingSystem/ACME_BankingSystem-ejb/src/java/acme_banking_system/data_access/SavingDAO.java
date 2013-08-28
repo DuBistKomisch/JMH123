@@ -12,13 +12,13 @@ public interface SavingDAO {
 
     public void createSaving(Saving saving) throws BusinessException, DataLayerException;
 
-    public void deleteSaving(Saving saving);
+    public void deleteSaving(Saving saving) throws DataLayerException;
 
-    public ArrayList<Saving> getCustomerSavings(Saving saving);
-    
-    public ArrayList<Saving> getTransactionsHistory(Saving saving);
+    public void deposit(Employee emp, Saving acc, double amount, String desc) throws BusinessException, DataLayerException;
 
-    public void withdraw(Employee emp, Saving acc, double amount, String desc) throws Exception;
+    public void withdraw(Employee emp, Saving acc, double amount, String desc) throws BusinessException, DataLayerException;
 
-    public void deposit(Employee emp, Saving acc, double amount, String desc) throws Exception;
+    public ArrayList<Saving> getCustomerSavings(Saving saving) throws DataLayerException;
+
+    public ArrayList<Saving> getTransactionsHistory(Saving saving) throws DataLayerException;
 }
