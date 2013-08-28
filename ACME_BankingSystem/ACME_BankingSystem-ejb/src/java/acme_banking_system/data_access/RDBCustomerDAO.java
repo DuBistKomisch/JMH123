@@ -35,7 +35,6 @@ public class RDBCustomerDAO implements CustomerDAO {
             ResultSet result = sqlStatement.getGeneratedKeys();
             result.next();
             customer.setId(result.getInt(1));
-            System.out.print("Customer has been created with id: " + customer.getId().toString());
         } catch (SQLException sqlException) {
             throw new DataLayerException();
         }

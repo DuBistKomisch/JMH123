@@ -4,9 +4,10 @@ package acme_banking_system.data_access;
  *
  * @author morga_000
  */
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Customer implements ICustomer {
+public class Customer implements ICustomer, Serializable {
 
     private int id;
     private String firstName;
@@ -14,6 +15,9 @@ public class Customer implements ICustomer {
     private Date dateOfBirth;
     private String address;
 
+    protected Customer() {
+    }
+    
     public Customer(int id) {
         this.id = id;
     }

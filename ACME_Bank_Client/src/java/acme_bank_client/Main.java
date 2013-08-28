@@ -8,9 +8,9 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.ejb.EJB;
 import javax.ejb.NoSuchEJBException;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.rmi.PortableRemoteObject;
 
 /**
@@ -18,7 +18,6 @@ import javax.rmi.PortableRemoteObject;
  */
 public class Main {
 
-    @EJB
     private static EmployeeSessionRemote employeeSession;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -27,9 +26,10 @@ public class Main {
      */
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String firstName, lastName, password, address, accnum, desc;
+        String firstName, lastName, password, address, accNum, desc;
         int id;
         double amount;
+        getEmployeeSession();
 
         // welcome
         System.out.println();
@@ -50,11 +50,11 @@ public class Main {
                     employeeSession.login(firstName, lastName, password);
                 } catch (NoSuchEJBException ex) {
                     // expired, get new stateful bean, try again
-                    employeeSession = (EmployeeSessionRemote) PortableRemoteObject.narrow(new InitialContext().lookup("java:global/ACME_BankingSystem/ACME_BankingSystem-ejb/EmployeeSession!Beans.EmployeeSessionRemote"), EmployeeSessionRemote.class);
+                    getEmployeeSession();
                     employeeSession.login(firstName, lastName, password);
                 }
             } catch (Exception ex) {
-                System.out.println("Error: " + ex.getMessage());
+                System.out.println("Error: " + ex.getClass().getName() + ": " + ex.getMessage());
                 continue;
             }
 
@@ -107,30 +107,30 @@ public class Main {
                             System.out.print("Customer ID: ");
                             id = Integer.parseInt(br.readLine());
                             System.out.print("Account No.: ");
-                            accnum = br.readLine();
-                            employeeSession.createSaving(id, accnum);
+                            accNum = br.readLine();
+                            employeeSession.createSaving(id, accNum);
                             System.out.println("Savings account opened.");
                             break;
                         case 3: // Make Deposit
                             System.out.println("Make Deposit");
                             System.out.print("Account No.: ");
-                            accnum = br.readLine();
+                            accNum = br.readLine();
                             System.out.print("Amount: ");
                             amount = Double.parseDouble(br.readLine());
                             System.out.print("Description: ");
                             desc = br.readLine();
-                            employeeSession.deposit(accnum, amount, desc);
+                            employeeSession.deposit(accNum, amount, desc);
                             System.out.println("Deposit made.");
                             break;
                         case 4: // Make Withdrawal
                             System.out.println("Make Withdrawal");
                             System.out.print("Account No.: ");
-                            accnum = br.readLine();
+                            accNum = br.readLine();
                             System.out.print("Amount: ");
                             amount = Double.parseDouble(br.readLine());
                             System.out.print("Description: ");
                             desc = br.readLine();
-                            employeeSession.withdraw(accnum, amount, desc);
+                            employeeSession.withdraw(accNum, amount, desc);
                             System.out.println("Withdrawal made.");
                             break;
                         case 5: // View Balance
@@ -171,5 +171,9 @@ public class Main {
                 }
             }
         }
+    }
+    
+    private static void getEmployeeSession() throws NamingException {
+        employeeSession = (EmployeeSessionRemote) PortableRemoteObject.narrow(new InitialContext().lookup("java:global/ACME_BankingSystem/ACME_BankingSystem-ejb/EmployeeSession"), EmployeeSessionRemote.class);
     }
 }

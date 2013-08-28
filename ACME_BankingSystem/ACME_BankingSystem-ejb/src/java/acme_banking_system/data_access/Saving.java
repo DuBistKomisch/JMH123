@@ -4,15 +4,19 @@ package acme_banking_system.data_access;
  *
  * @author morga_000
  */
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Saving implements ISaving {
+public class Saving implements ISaving, Serializable {
 
     private int id;
     private String accNum;
     private double balance;
     private Date dateTimeCreation;
 
+    protected Saving() {
+    }
+    
     public Saving(String accNum) {
         this.accNum = accNum;
     }

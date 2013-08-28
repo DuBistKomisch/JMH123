@@ -4,6 +4,7 @@
  */
 package acme_banking_system.data_access;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**

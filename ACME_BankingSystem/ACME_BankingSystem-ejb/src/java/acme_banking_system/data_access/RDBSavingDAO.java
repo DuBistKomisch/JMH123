@@ -74,14 +74,13 @@ public class RDBSavingDAO implements SavingDAO {
                 transaction.setString(3, desc);
                 transaction.setString(4, "");
                 transaction.setInt(5, employeeId);
-                result = transaction.executeQuery();
-                if (result.next()) {
-                    sqlStatement = dbConnection.prepareStatement(
-                            "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE + ? WHERE ACCNUM = ?");
-                    sqlStatement.setDouble(1, amount);
-                    sqlStatement.setString(2, accNum);
-                    sqlStatement.executeQuery();
-                }
+                transaction.executeUpdate();
+
+                sqlStatement = dbConnection.prepareStatement(
+                        "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE + ? WHERE ACCNUM = ?");
+                sqlStatement.setDouble(1, amount);
+                sqlStatement.setString(2, accNum);
+                sqlStatement.executeUpdate();
             } else {
                 throw new BusinessException("Account not found.");
             }
@@ -98,7 +97,7 @@ public class RDBSavingDAO implements SavingDAO {
             sqlStatement.setString(1, accNum);
             ResultSet result = sqlStatement.executeQuery();
             if (result.next()) {
-                Integer balance = result.getInt("BALANCE");
+                int balance = result.getInt("BALANCE");
                 if (balance >= amount) {
                     PreparedStatement transaction = dbConnection.prepareStatement(
                             "INSERT INTO JMH123.TRANSACTIONS(ACCNUM, AMOUNT, DESCRIPTION, ACCNUM2, E_ID)"
@@ -108,14 +107,13 @@ public class RDBSavingDAO implements SavingDAO {
                     transaction.setString(3, desc);
                     transaction.setString(4, "");
                     transaction.setInt(5, employeeId);
-                    result = transaction.executeQuery();
-                    if (result.next()) {
-                        sqlStatement = dbConnection.prepareStatement(
-                                "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE - ? WHERE ACCNUM = ?");
-                        sqlStatement.setDouble(1, amount);
-                        sqlStatement.setString(2, accNum);
-                        sqlStatement.executeQuery();
-                    }
+                    transaction.executeUpdate();
+                    
+                    sqlStatement = dbConnection.prepareStatement(
+                            "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE - ? WHERE ACCNUM = ?");
+                    sqlStatement.setDouble(1, amount);
+                    sqlStatement.setString(2, accNum);
+                    sqlStatement.executeUpdate();
                 } else {
                     throw new BusinessException("Not enough balance.");
                 }

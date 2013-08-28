@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
 import javax.ejb.EJB;
 import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;
@@ -29,6 +30,7 @@ import javax.sql.DataSource;
  */
 @Stateful(name = "EmployeeSession")
 @StatefulTimeout(unit = TimeUnit.MINUTES, value = 1)
+@PermitAll
 public class EmployeeSession implements EmployeeSessionRemote {
 
     @EJB
@@ -105,47 +107,47 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public void createCustomer(String firstName, String lastName, Date dob, String address) throws LoggedInStateException, DataLayerException {
+    public void createCustomer(String firstName, String lastName, Date dateOfBirth, String address) throws LoggedInStateException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }
-        customerBean.createCustomer(firstName, lastName, dob, address);
+        customerBean.createCustomer(firstName, lastName, dateOfBirth, address);
         this.addAction();
     }
 
     @Override
-    public void createSaving(int C_ID, String accnum) throws LoggedInStateException, BusinessException, DataLayerException {
+    public void createSaving(int customerId, String accNum) throws LoggedInStateException, BusinessException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }
-        savingBean.createSaving(C_ID, accnum);
+        savingBean.createSaving(customerId, accNum);
         this.addAction();
     }
 
     @Override
-    public void deposit(String accnum, double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException {
+    public void deposit(String accNum, double amount, String description) throws LoggedInStateException, BusinessException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }
-        savingBean.deposit(this.E_ID, desc, amount, desc);
+        savingBean.deposit(this.E_ID, accNum, amount, description);
         this.addAction();
     }
 
     @Override
-    public void withdraw(String accnum, double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException {
+    public void withdraw(String accNum, double amount, String description) throws LoggedInStateException, BusinessException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }
-        savingBean.withdraw(this.E_ID, desc, amount, desc);
+        savingBean.withdraw(this.E_ID, accNum, amount, description);
         this.addAction();
     }
 
     @Override
-    public ArrayList<ISaving> viewBalance(int C_ID) throws LoggedInStateException, DataLayerException {
+    public ArrayList<ISaving> viewBalance(int customerId) throws LoggedInStateException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }
-        ArrayList list = savingBean.viewBalance(C_ID);
+        ArrayList<ISaving> list = savingBean.viewBalance(customerId);
         this.addAction();
         return list;
     }
