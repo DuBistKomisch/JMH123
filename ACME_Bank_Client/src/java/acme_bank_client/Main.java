@@ -39,7 +39,7 @@ public class Main {
             String lastName = br.readLine();
             System.out.print("Password: ");
             String password = br.readLine();
-            if (!employeeSessionRemote.login(firstName, lastName, password));
+            if (!employeeSessionRemote.login(firstName, lastName, password))
             {
                 System.out.println("Log in failed.");
                 continue;
@@ -47,9 +47,6 @@ public class Main {
 
             boolean logout = false;
             while (!logout) {
-                // TODO operations
-                int ops = 0;
-
                 // print menu
                 System.out.println();
                 System.out.println("Main Menu:");
@@ -60,7 +57,7 @@ public class Main {
                 System.out.println(" 5. View Balance");
                 System.out.println(" 6. View Transactions");
                 System.out.println(" 7. Log Out");
-                System.out.println("(operations performed: " + ops + "/10)");
+                System.out.println("(operations performed: " + employeeSessionRemote.getCounter() + "/10)");
 
                 // get selected option
                 System.out.println();
@@ -80,9 +77,9 @@ public class Main {
                         try {
                             System.out.println("Create Customer");
                             System.out.print("First Name: ");
-                            String firstName = br.readLine();
+                            firstName = br.readLine();
                             System.out.print("Last Name: ");
-                            String lastName = br.readLine();
+                            lastName = br.readLine();
                             System.out.print("DOB (yyyy-mm-dd): ");
                             dateFormat.parse(br.readLine());
                             System.out.print("Address: ");

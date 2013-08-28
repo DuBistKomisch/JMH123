@@ -4,6 +4,8 @@
  */
 package Beans;
 
+import java.util.ArrayList;
+import java.util.Date;
 import javax.ejb.Remote;
 
 /**
@@ -13,6 +15,15 @@ import javax.ejb.Remote;
 @Remote
 public interface EmployeeSessionRemote {
     public boolean login(String firstName, String lastName, String password);
-    public Boolean addAction();
-    public Integer getCounter();
+    public int getCounter();
+
+    public ArrayList ViewBalance(Integer C_ID) throws Exception;
+
+    public void takeBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception;
+
+    public void InputBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception;
+
+    public void createSaving(Integer C_ID, String accnum) throws Exception;
+
+    public void addCustomer(String firstName, String lastName, Date dob, String address) throws Exception;
 }

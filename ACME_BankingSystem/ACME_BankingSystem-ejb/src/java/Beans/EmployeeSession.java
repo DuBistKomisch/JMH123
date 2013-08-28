@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Beans;
 
 import data_access.Employee;
@@ -26,7 +22,6 @@ import javax.sql.DataSource;
  *
  * @author morga_000
  */
-
 @Stateful
 @StatefulTimeout(unit = TimeUnit.MINUTES, value = 1)
 public class EmployeeSession implements EmployeeSessionRemote {
@@ -41,16 +36,12 @@ public class EmployeeSession implements EmployeeSessionRemote {
     private static Withdraw_SavingRemote withdraw_Saving;
     @EJB
     private static View_BalanceRemote view_Balance;
-    
-    private Boolean logged = false;
-    private Integer actions = 0;
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-@Resource(lookup = "jdbc/acmeDBDatasource")
+    private boolean logged = false;
+    private int actions = 0;
+    @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
-    
     private Connection connection;
-    
+
     @PostActivate
     @PostConstruct
     public void initialize() {
@@ -62,7 +53,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
             sqle.printStackTrace();
         }
     }
-    
+
     @PrePassivate
     @PreDestroy
     public void close() {
@@ -74,21 +65,21 @@ public class EmployeeSession implements EmployeeSessionRemote {
             sqle.printStackTrace();
         }
     }
-    
+
     @Override
     public boolean login(String firstname, String lastName, String password) {
         EmployeeDAO doa = new RDBEmployeeDAO(connection);
         Employee emp = doa.loginEmployee(firstname, lastName, password);
-        if (emp != null)
+        if (emp != null) {
             this.logged = true;
-        else
+        } else {
             this.logged = false;
+        }
         this.actions = 0;
         return this.logged;
     }
-    
-    @Override
-    public Boolean addAction() {
+
+    private boolean addAction() {
         if (this.actions < 10) {
             this.actions++;
             return true;
@@ -98,75 +89,50 @@ public class EmployeeSession implements EmployeeSessionRemote {
             return false;
         }
     }
-    
+
     @Override
-    public Integer  getCounter() {
+    public int getCounter() {
         return this.actions;
     }
+
+    @Override
+    public void addCustomer(String firstName, String lastName, Date dob, String address) throws Exception {
+        if (!this.logged)
+            throw new Exception("You are not logged in.");
+        create_Customer.addCustomer(firstName, lastName, dob, address);
+        this.addAction();
+    }
+
+    @Override
+    public void createSaving(Integer C_ID, String accnum) throws Exception {
+        if (!this.logged)
+            throw new Exception("You are not logged in.");
+        create_Savings.createSaving(C_ID, accnum);
+        this.addAction();
+    }
+
+    @Override
+    public void InputBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception {
+        if (!this.logged)
+            throw new Exception("You are not logged in.");
+        deposit_Saving.InputBalance(E_ID, desc, amount, desc);
+        this.addAction();
+    }
     
-    public void     addCustomer(String firstName, String lastName, Date dob, String address) throws Exception {
+    @Override
+    public void takeBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception {
+        if (!this.logged)
+            throw new Exception("You are not logged in.");
+        withdraw_Saving.takeBalance(E_ID, desc, amount, desc);
         this.addAction();
-        if (this.logged) {
-            try {
-                create_Customer.addCustomer(firstName, lastName, dob, address);
-            } catch (Exception e) {
-                throw e;
-            }
-        } else {
-            throw new Exception("You are not logged in");
-        }        
     }
 
-    public void     createSaving(Integer C_ID, String accnum) throws Exception {
+    @Override
+    public ArrayList ViewBalance(Integer C_ID) throws Exception {
+        if (!this.logged)
+            throw new Exception("You are not logged in.");
+        ArrayList list = view_Balance.ViewBalance(C_ID);
         this.addAction();
-        if (this.logged) {
-            try {
-                create_Savings.createSaving(C_ID, accnum);
-
-            } catch (Exception e) {
-                throw e;
-            }
-        } else {
-            throw new Exception("You are not logged in");
-        }
-    }
-
-    public void     InputBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception {
-        this.addAction();
-        if (this.logged) {
-            try {
-                this.deposit_Saving.InputBalance(E_ID, desc, amount, desc);
-            } catch (Exception e) {
-                throw e;
-            }
-        } else {
-            throw new Exception("You are not logged in");
-        }        
-    }
-
-    public void     takeBalance(Integer E_ID, String accnum, Double amount, String desc) throws Exception {
-        this.addAction();
-        if (this.logged) {
-            try {
-                this.withdraw_Saving.takeBalance(E_ID, desc, amount, desc);
-            } catch (Exception e) {
-                throw e;
-            }
-        } else {
-            throw new Exception("You are not logged in");
-        }        
-    }
-
-    public ArrayList     ViewBalance(Integer C_ID) throws Exception {
-        this.addAction();
-        if (this.logged) {
-            try {
-                return this.view_Balance.ViewBalance(C_ID);
-            } catch (Exception e) {
-                throw e;
-            }
-        } else {
-            throw new Exception("You are not logged in");
-        }        
+        return list;
     }
 }
