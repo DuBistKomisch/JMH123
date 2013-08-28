@@ -13,6 +13,7 @@ import javax.ejb.Remote;
 @Remote
 public interface EmployeeSessionRemote {
     public boolean login(String firstName, String lastName, String password);
+    public void logout();
     public Boolean addAction();
     public Integer getCounter();
 }

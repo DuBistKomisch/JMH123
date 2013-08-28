@@ -88,6 +88,12 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
     
     @Override
+    public void logout() {
+        this.logged = false;
+        this.actions = 0;
+    }
+    
+    @Override
     public Boolean addAction() {
         if (this.actions < 10) {
             this.actions++;
