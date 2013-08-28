@@ -12,5 +12,5 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface View_Transaction_HistoryRemote {
-    public void seeTrans(String ACCNUM);
+    public void viewTransactionsHistory(String ACCNUM);
 }

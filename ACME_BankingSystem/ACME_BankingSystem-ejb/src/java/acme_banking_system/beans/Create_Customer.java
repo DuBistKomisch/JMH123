@@ -42,7 +42,7 @@ public class Create_Customer implements Create_CustomerRemote {
     }
 
     @Override
-    public void addCustomer(String firstname, String lastname, Date dob, String address) {
+    public void createCustomer(String firstname, String lastname, Date dob, String address) {
         try {
             java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
             CustomerDAO dao = new RDBCustomerDAO(connection);

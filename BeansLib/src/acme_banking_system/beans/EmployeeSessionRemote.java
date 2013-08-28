@@ -4,6 +4,7 @@
  */
 package acme_banking_system.beans;
 
+import acme_banking_system.data_access.ISaving;
 import acme_banking_system.exceptions.LoggedInStateException;
 import acme_banking_system.exceptions.DataLayerException;
 import acme_banking_system.exceptions.BusinessException;
@@ -23,13 +24,13 @@ public interface EmployeeSessionRemote {
     
     public int getCounter();
 
-    public ArrayList ViewBalance(Integer C_ID) throws Exception;
+    public ArrayList<ISaving> viewBalance(Integer C_ID) throws Exception;
 
-    public void takeBalance(String accnum, Double amount, String desc) throws Exception;
+    public void withdraw(String accnum, Double amount, String desc) throws Exception;
 
-    public void InputBalance(String accnum, Double amount, String desc) throws Exception;
+    public void deposit(String accnum, Double amount, String desc) throws Exception;
 
     public void createSaving(Integer C_ID, String accnum) throws Exception;
 
-    public void addCustomer(String firstName, String lastName, Date dob, String address) throws Exception;
+    public void createCustomer(String firstName, String lastName, Date dob, String address) throws Exception;
 }

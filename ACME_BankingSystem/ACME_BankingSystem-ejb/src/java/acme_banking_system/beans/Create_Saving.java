@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  * @author Howard Tseng
  */
 @Stateless
-public class Create_Savings implements Create_SavingsRemote {
+public class Create_Saving implements Create_SavingRemote {
 
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;

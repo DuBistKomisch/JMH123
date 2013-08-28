@@ -49,12 +49,12 @@ public class View_Transaction_History implements View_Transaction_HistoryRemote 
     }
 
     @Override
-    public void seeTrans(String ACCNUM) {
+    public void viewTransactionsHistory(String ACCNUM) {
         ArrayList<Saving> text;
         try {
            SavingDAO dao = new RDBSavingDAO(connection);
             Saving saving = new Saving(ACCNUM);
-            text = dao.getTransHistory(saving);
+            text = dao.getTransactionsHistory(saving);
 
         } catch (Exception e) {
             System.out.println("Could not create customer.");

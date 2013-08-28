@@ -59,7 +59,7 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public ArrayList<Saving> getUserAccount(Saving saving) {
+    public ArrayList<Saving> getCustomerSavings(Saving saving) {
         ArrayList<Saving> res = new ArrayList<>();
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
@@ -159,7 +159,7 @@ public class RDBSavingDAO implements SavingDAO {
     }
     
     @Override
-    public ArrayList<Saving>    getTransHistory(Saving saving) {
+    public ArrayList<Saving>    getTransactionsHistory(Saving saving) {
         ArrayList<Saving>   res = new ArrayList<>();
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(

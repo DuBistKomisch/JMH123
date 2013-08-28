@@ -10,5 +10,5 @@ import javax.ejb.Remote;
 @Remote
 public interface Create_CustomerRemote {
 
-    public void addCustomer(String firstname, String lastname, Date dob, String address);
+    public void createCustomer(String firstname, String lastname, Date dob, String address);
 }

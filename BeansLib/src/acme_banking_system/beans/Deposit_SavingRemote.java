@@ -8,5 +8,5 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface Deposit_SavingRemote {
-    public void InputBalance(Integer E_ID, String ACCNUM, double BALANCE, String desc);
+    public void deposit(Integer E_ID, String ACCNUM, double BALANCE, String desc);
 }

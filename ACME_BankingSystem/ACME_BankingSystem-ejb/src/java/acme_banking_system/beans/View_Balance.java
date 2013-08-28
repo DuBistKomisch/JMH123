@@ -43,12 +43,12 @@ public class View_Balance implements View_BalanceRemote {
     }
 
     @Override
-    public ArrayList<ISaving> ViewBalance(Integer C_ID) {
+    public ArrayList<ISaving> viewBalance(Integer C_ID) {
         ArrayList<ISaving> text = new ArrayList<ISaving>();
         try {
             SavingDAO dao = new RDBSavingDAO(connection);
             Saving saving = new Saving(C_ID);
-            text.addAll(dao.getUserAccount(saving));
+            text.addAll(dao.getCustomerSavings(saving));
 
         } catch (Exception e) {
             System.out.println("Could not create customer.");

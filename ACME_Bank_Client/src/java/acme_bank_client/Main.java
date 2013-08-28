@@ -88,7 +88,7 @@ public class Main {
                             dateFormat.parse(br.readLine());
                             System.out.print("Address: ");
                             address = br.readLine();
-                            employeeSession.addCustomer(firstName, lastName,
+                            employeeSession.createCustomer(firstName, lastName,
                                     new Date(dateFormat.getCalendar().getTimeInMillis()),
                                     address);
                             // TODO output C_ID? bean call needs to return it
@@ -111,7 +111,7 @@ public class Main {
                             amount = Double.parseDouble(br.readLine());
                             System.out.print("Description: ");
                             desc = br.readLine();
-                            employeeSession.InputBalance(accnum, amount, desc);
+                            employeeSession.deposit(accnum, amount, desc);
                             System.out.println("Deposit made.");
                             break;
                         case 4: // Make Withdrawal
@@ -122,14 +122,14 @@ public class Main {
                             amount = Double.parseDouble(br.readLine());
                             System.out.print("Description: ");
                             desc = br.readLine();
-                            employeeSession.takeBalance(accnum, amount, desc);
+                            employeeSession.withdraw(accnum, amount, desc);
                             System.out.println("Withdrawal made.");
                             break;
                         case 5: // View Balance
                             System.out.println("View Balance");
                             System.out.print("Customer ID: ");
                             C_ID = Integer.parseInt(br.readLine());
-                            ArrayList<ISaving> savings = employeeSession.ViewBalance(C_ID);
+                            ArrayList<ISaving> savings = employeeSession.viewBalance(C_ID);
                             for (ISaving saving : savings) {
                                 System.out.printf("AccNum %s: $%.2f", saving.getACCNUM(), saving.getBALANCE());
                             }

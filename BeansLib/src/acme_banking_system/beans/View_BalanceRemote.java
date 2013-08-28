@@ -11,5 +11,5 @@ import javax.ejb.Remote;
 @Remote
 public interface View_BalanceRemote {
 
-    public ArrayList<ISaving> ViewBalance(Integer C_ID);
+    public ArrayList<ISaving> viewBalance(Integer C_ID);
 }

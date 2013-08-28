@@ -14,9 +14,9 @@ public interface SavingDAO {
 
     public void deleteSaving(Saving saving);
 
-    public ArrayList<Saving> getUserAccount(Saving saving);
+    public ArrayList<Saving> getCustomerSavings(Saving saving);
     
-    public ArrayList<Saving> getTransHistory(Saving saving);
+    public ArrayList<Saving> getTransactionsHistory(Saving saving);
 
     public void withdraw(Employee emp, Saving acc, double amount, String desc) throws Exception;
 

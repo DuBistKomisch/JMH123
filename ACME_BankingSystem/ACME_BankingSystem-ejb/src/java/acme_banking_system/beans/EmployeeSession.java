@@ -2,6 +2,7 @@ package acme_banking_system.beans;
 
 import acme_banking_system.data_access.Employee;
 import acme_banking_system.data_access.EmployeeDAO;
+import acme_banking_system.data_access.ISaving;
 import acme_banking_system.data_access.RDBEmployeeDAO;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
@@ -33,7 +34,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
     @EJB
     private Create_CustomerRemote create_Customer;
     @EJB
-    private Create_SavingsRemote create_Savings;
+    private Create_SavingRemote create_Savings;
     @EJB
     private Deposit_SavingRemote deposit_Saving;
     @EJB
@@ -110,10 +111,10 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public void addCustomer(String firstName, String lastName, Date dob, String address) throws LoggedInStateException, DataLayerException {
+    public void createCustomer(String firstName, String lastName, Date dob, String address) throws LoggedInStateException, DataLayerException {
         if (!this.logged)
             throw new LoggedInStateException("You are not logged in.");
-        create_Customer.addCustomer(firstName, lastName, dob, address);
+        create_Customer.createCustomer(firstName, lastName, dob, address);
         this.addAction();
     }
 
@@ -126,26 +127,26 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public void InputBalance(String accnum, Double amount, String desc) throws LoggedInStateException, DataLayerException {
+    public void deposit(String accnum, Double amount, String desc) throws LoggedInStateException, DataLayerException {
         if (!this.logged)
             throw new LoggedInStateException("You are not logged in.");
-        deposit_Saving.InputBalance(this.E_ID, desc, amount, desc);
+        deposit_Saving.deposit(this.E_ID, desc, amount, desc);
         this.addAction();
     }
     
     @Override
-    public void takeBalance(String accnum, Double amount, String desc) throws LoggedInStateException, DataLayerException {
+    public void withdraw(String accnum, Double amount, String desc) throws LoggedInStateException, DataLayerException {
         if (!this.logged)
             throw new LoggedInStateException("You are not logged in.");
-        withdraw_Saving.takeBalance(this.E_ID, desc, amount, desc);
+        withdraw_Saving.withdraw(this.E_ID, desc, amount, desc);
         this.addAction();
     }
 
     @Override
-    public ArrayList ViewBalance(Integer C_ID) throws LoggedInStateException, DataLayerException {
+    public ArrayList<ISaving> viewBalance(Integer C_ID) throws LoggedInStateException, DataLayerException {
         if (!this.logged)
             throw new LoggedInStateException("You are not logged in.");
-        ArrayList list = view_Balance.ViewBalance(C_ID);
+        ArrayList list = view_Balance.viewBalance(C_ID);
         this.addAction();
         return list;
     }
