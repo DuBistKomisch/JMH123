@@ -2,7 +2,7 @@ package acme_bank_client;
 
 import acme_banking_system.exceptions.LoggedInStateException;
 import acme_banking_system.beans.EmployeeSessionRemote;
-import acme_banking_system.data_access.ISaving;
+import acme_banking_system.data_access.Saving;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
@@ -137,9 +137,9 @@ public class Main {
                             System.out.println("View Balance");
                             System.out.print("Customer ID: ");
                             id = Integer.parseInt(br.readLine());
-                            ArrayList<ISaving> savings = employeeSession.viewBalance(id);
-                            for (ISaving saving : savings) {
-                                System.out.printf("AccNum %s: $%.2f", saving.getAccNum(), saving.getBalance());
+                            ArrayList<Saving> savings = employeeSession.viewBalance(id);
+                            for (Saving saving : savings) {
+                                System.out.printf("AccNum %s: $%.2f" + System.lineSeparator(), saving.getAccNum(), saving.getBalance());
                             }
                             break;
                         case 6: // View Transactions
@@ -172,7 +172,7 @@ public class Main {
             }
         }
     }
-    
+
     private static void getEmployeeSession() throws NamingException {
         employeeSession = (EmployeeSessionRemote) PortableRemoteObject.narrow(new InitialContext().lookup("java:global/ACME_BankingSystem/ACME_BankingSystem-ejb/EmployeeSession"), EmployeeSessionRemote.class);
     }

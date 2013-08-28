@@ -2,7 +2,7 @@ package acme_banking_system.beans;
 
 import acme_banking_system.data_access.Customer;
 import acme_banking_system.data_access.CustomerDAO;
-import acme_banking_system.data_access.ICustomer;
+import acme_banking_system.data_access.Customer;
 import acme_banking_system.data_access.RDBCustomerDAO;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
@@ -45,11 +45,11 @@ public class CustomerBean implements CustomerBeanRemote {
     }
 
     @Override
-    public void createCustomer(String firstname, String lastname, Date dob, String address) throws DataLayerException {
+    public void createCustomer(String firstName, String lastName, Date dateOfBirth, String address) throws DataLayerException {
         try {
-            java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
+            java.sql.Date sqlDob = new java.sql.Date(dateOfBirth.getTime());
             CustomerDAO dao = new RDBCustomerDAO(connection);
-            Customer customer = new Customer(firstname, lastname, sqlDob, address);
+            Customer customer = new Customer(firstName, lastName, sqlDob, address);
             dao.createCustomer(customer);
         } catch (Exception e) {
             System.out.println("Could not create customer.");
@@ -58,11 +58,11 @@ public class CustomerBean implements CustomerBeanRemote {
     }
 
     @Override
-    public ICustomer readCustomer(int C_ID) throws BusinessException, DataLayerException {
+    public Customer readCustomer(int customerId) throws BusinessException, DataLayerException {
         Customer text;
         try {
             CustomerDAO dao = new RDBCustomerDAO(connection);
-            return dao.readCustomer(C_ID);
+            return dao.readCustomer(customerId);
         } catch (Exception e) {
             System.out.println("Could not read customer.");
             throw e;
@@ -70,10 +70,10 @@ public class CustomerBean implements CustomerBeanRemote {
     }
 
     @Override
-    public void updateCustomer(int customerId, String firstname, String lastname, Date dateOfBirth, String address) throws DataLayerException {
+    public void updateCustomer(int customerId, String firstName, String lastName, Date dateOfBirth, String address) throws DataLayerException {
         try {
             CustomerDAO dao = new RDBCustomerDAO(connection);
-            Customer customer = new Customer(customerId, firstname, lastname, (java.sql.Date) dateOfBirth, address);
+            Customer customer = new Customer(customerId, firstName, lastName, (java.sql.Date) dateOfBirth, address);
             dao.updateCustomer(customer);
         } catch (Exception e) {
             System.out.println("Could not update customer.");

@@ -7,7 +7,7 @@ package acme_banking_system.data_access;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Saving implements ISaving, Serializable {
+public class Saving implements Serializable {
 
     private int id;
     private String accNum;
@@ -16,7 +16,7 @@ public class Saving implements ISaving, Serializable {
 
     protected Saving() {
     }
-    
+
     public Saving(String accNum) {
         this.accNum = accNum;
     }
@@ -41,7 +41,6 @@ public class Saving implements ISaving, Serializable {
         this.id = id;
     }
 
-    @Override
     public int getId() {
         return this.id;
     }
@@ -50,7 +49,6 @@ public class Saving implements ISaving, Serializable {
         this.accNum = accNum;
     }
 
-    @Override
     public String getAccNum() {
         return this.accNum;
     }
@@ -59,7 +57,6 @@ public class Saving implements ISaving, Serializable {
         this.balance = balance;
     }
 
-    @Override
     public double getBalance() {
         return this.balance;
     }
@@ -68,7 +65,6 @@ public class Saving implements ISaving, Serializable {
         this.dateTimeCreation = dateTimeCreation;
     }
 
-    @Override
     public Date getDateTimeCreated() {
         return this.dateTimeCreation;
     }

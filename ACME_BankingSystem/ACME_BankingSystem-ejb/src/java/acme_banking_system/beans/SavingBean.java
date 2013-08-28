@@ -1,6 +1,6 @@
 package acme_banking_system.beans;
 
-import acme_banking_system.data_access.ISaving;
+import acme_banking_system.data_access.Saving;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
 import acme_banking_system.data_access.RDBSavingDAO;
@@ -79,8 +79,8 @@ public class SavingBean implements SavingBeanRemote {
     }
 
     @Override
-    public ArrayList<ISaving> viewBalance(int customerId) throws DataLayerException {
-        ArrayList<ISaving> text = new ArrayList<>();
+    public ArrayList<Saving> viewBalance(int customerId) throws DataLayerException {
+        ArrayList<Saving> text = new ArrayList<>();
         try {
             SavingDAO dao = new RDBSavingDAO(connection);
             text.addAll(dao.getCustomerSavings(customerId));

@@ -2,7 +2,7 @@ package acme_banking_system.beans;
 
 import acme_banking_system.data_access.Employee;
 import acme_banking_system.data_access.EmployeeDAO;
-import acme_banking_system.data_access.ISaving;
+import acme_banking_system.data_access.Saving;
 import acme_banking_system.data_access.RDBEmployeeDAO;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
@@ -143,11 +143,11 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public ArrayList<ISaving> viewBalance(int customerId) throws LoggedInStateException, DataLayerException {
+    public ArrayList<Saving> viewBalance(int customerId) throws LoggedInStateException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }
-        ArrayList<ISaving> list = savingBean.viewBalance(customerId);
+        ArrayList<Saving> list = savingBean.viewBalance(customerId);
         this.addAction();
         return list;
     }

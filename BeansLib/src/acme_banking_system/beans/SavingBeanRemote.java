@@ -1,6 +1,6 @@
 package acme_banking_system.beans;
 
-import acme_banking_system.data_access.ISaving;
+import acme_banking_system.data_access.Saving;
 import acme_banking_system.exceptions.DataLayerException;
 import acme_banking_system.exceptions.BusinessException;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public interface SavingBeanRemote {
 
     public void withdraw(int employeeId, String accNum, double balance, String description) throws BusinessException, DataLayerException;
 
-    public ArrayList<ISaving> viewBalance(int customerId) throws DataLayerException;
+    public ArrayList<Saving> viewBalance(int customerId) throws DataLayerException;
 
     public void viewTransactionsHistory() throws DataLayerException;
 }

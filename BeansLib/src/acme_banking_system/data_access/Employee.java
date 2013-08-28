@@ -1,16 +1,21 @@
 package acme_banking_system.data_access;
 
+import java.io.Serializable;
+
 /**
  *
  * @author morga_000
  */
-public class Employee {
+public class Employee implements Serializable {
 
     private int id;
     private String firstName;
     private String lastName;
     private String password;
 
+    protected Employee() {
+    }
+    
     public Employee(int id) {
         this.id = id;
     }

@@ -7,7 +7,7 @@ package acme_banking_system.data_access;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Customer implements ICustomer, Serializable {
+public class Customer implements Serializable {
 
     private int id;
     private String firstName;
@@ -17,7 +17,7 @@ public class Customer implements ICustomer, Serializable {
 
     protected Customer() {
     }
-    
+
     public Customer(int id) {
         this.id = id;
     }
@@ -37,7 +37,6 @@ public class Customer implements ICustomer, Serializable {
         this.address = address;
     }
 
-    @Override
     public Integer getId() {
         return id;
     }
@@ -46,7 +45,6 @@ public class Customer implements ICustomer, Serializable {
         this.id = id;
     }
 
-    @Override
     public String getFirstName() {
         return firstName;
     }
@@ -55,7 +53,6 @@ public class Customer implements ICustomer, Serializable {
         this.firstName = firstName;
     }
 
-    @Override
     public String getLastName() {
         return lastName;
     }
@@ -64,7 +61,6 @@ public class Customer implements ICustomer, Serializable {
         this.lastName = lastName;
     }
 
-    @Override
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -73,7 +69,6 @@ public class Customer implements ICustomer, Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    @Override
     public String getAddress() {
         return address;
     }

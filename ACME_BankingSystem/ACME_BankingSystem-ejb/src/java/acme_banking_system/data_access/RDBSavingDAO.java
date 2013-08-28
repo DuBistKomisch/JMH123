@@ -108,7 +108,7 @@ public class RDBSavingDAO implements SavingDAO {
                     transaction.setString(4, "");
                     transaction.setInt(5, employeeId);
                     transaction.executeUpdate();
-                    
+
                     sqlStatement = dbConnection.prepareStatement(
                             "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE - ? WHERE ACCNUM = ?");
                     sqlStatement.setDouble(1, amount);

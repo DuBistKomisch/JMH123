@@ -4,7 +4,7 @@
  */
 package acme_banking_system.beans;
 
-import acme_banking_system.data_access.ISaving;
+import acme_banking_system.data_access.Saving;
 import acme_banking_system.exceptions.LoggedInStateException;
 import acme_banking_system.exceptions.DataLayerException;
 import acme_banking_system.exceptions.BusinessException;
@@ -33,5 +33,5 @@ public interface EmployeeSessionRemote {
 
     public void withdraw(String accNum, double amount, String description) throws LoggedInStateException, BusinessException, DataLayerException;
 
-    public ArrayList<ISaving> viewBalance(int customerId) throws Exception;
+    public ArrayList<Saving> viewBalance(int customerId) throws Exception;
 }
