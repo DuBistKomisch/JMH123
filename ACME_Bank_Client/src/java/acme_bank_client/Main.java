@@ -1,32 +1,32 @@
 package acme_bank_client;
 
 import Beans.*;
+import exceptions.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.ejb.EJB;
+import javax.ejb.NoSuchEJBException;
+import javax.naming.InitialContext;
+import javax.rmi.PortableRemoteObject;
 
 /**
  * @author morga_000, jake
  */
 public class Main {
-
-    @EJB
     private static EmployeeSessionRemote employeeSession;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String firstName, lastName, password, address, accnum, desc;
         int C_ID;
         double amount;
-
+        
         // welcome
         System.out.println();
         System.out.println("Welcome to JMH123 ACME Banking System");
@@ -42,6 +42,7 @@ public class Main {
             System.out.print("Password: ");
             password = br.readLine();
             try {
+                employeeSession = (EmployeeSessionRemote) PortableRemoteObject.narrow(new InitialContext().lookup("java:global/ACME_BankingSystem/ACME_BankingSystem-ejb/EmployeeSession!Beans.EmployeeSessionRemote"), EmployeeSessionRemote.class);
                 employeeSession.login(firstName, lastName, password);
             } catch (Exception ex) {
                 System.out.println("Error: " + ex.getMessage());
@@ -67,7 +68,6 @@ public class Main {
                 try {
                     System.out.println();
                     System.out.print("Select option: ");
-                    System.out.println();
                     option = Integer.parseInt(br.readLine());
                 } catch (Exception ex) {
                     option = 0; // invalid
@@ -75,6 +75,7 @@ public class Main {
 
                 // do selection
                 try {
+                    System.out.println();
                     switch (option) {
                         case 1: // Create Customer
                             System.out.println("Create Customer");
@@ -146,7 +147,11 @@ public class Main {
                             System.out.println("Invalid option.");
                             break;
                     }
-                } catch (IllegalStateException ex) {
+                } catch (LoggedInStateException ex) {
+                    // Session timed out
+                    System.out.println("Session timed out.");
+                    logout = true;
+                } catch (NoSuchEJBException ex) {
                     // Session timed out
                     System.out.println("Session timed out.");
                     logout = true;

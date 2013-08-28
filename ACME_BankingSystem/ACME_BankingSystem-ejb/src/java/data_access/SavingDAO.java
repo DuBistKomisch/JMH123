@@ -4,11 +4,12 @@ package data_access;
  *
  * @author morga_000
  */
+import exceptions.*;
 import java.util.ArrayList;
 
 public interface SavingDAO {
 
-    public void createSaving(Saving saving) throws Exception;
+    public void createSaving(Saving saving) throws BusinessException, DataLayerException;
 
     public void deleteSaving(Saving saving);
 

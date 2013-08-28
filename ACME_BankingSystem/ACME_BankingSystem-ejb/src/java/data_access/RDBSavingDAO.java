@@ -1,5 +1,6 @@
 package data_access;
 
+import exceptions.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public void createSaving(Saving save) throws Exception {
+    public void createSaving(Saving save) throws BusinessException, DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.SAVINGS WHERE C_ID = ?",
@@ -29,7 +30,7 @@ public class RDBSavingDAO implements SavingDAO {
             sqlStatement.setInt(1, save.getC_ID());
             ResultSet res = sqlStatement.executeQuery();
             if (res.last() && res.getRow() >= 2) {
-                throw new Exception("Impossible to add a new account to this customer.");
+                throw new BusinessException("Impossible to add a new account to this customer.");
             }
             sqlStatement = dbConnection.prepareStatement(
                     "INSERT INTO JMH123.SAVINGS (C_ID, ACCNUM, BALANCE)"
@@ -40,7 +41,7 @@ public class RDBSavingDAO implements SavingDAO {
             sqlStatement.setDouble(3, save.getBALANCE());
             sqlStatement.executeUpdate();
         } catch (SQLException ex) {
-            throw new Exception("Couldn't add savings account.");
+            throw new DataLayerException();
         }
     }
 
