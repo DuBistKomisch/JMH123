@@ -5,18 +5,19 @@ import acme_banking_system.data_access.CustomerDAO;
 import acme_banking_system.data_access.RDBCustomerDAO;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
+import javax.sql.DataSource;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
-import javax.sql.DataSource;
 
 /**
  *
  * @author Howard Tseng
  */
 @Stateless
-public class View_Customer implements View_CustomerRemote {
+public class CustomerBean implements CustomerBeanRemote {
 
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
@@ -40,6 +41,43 @@ public class View_Customer implements View_CustomerRemote {
         }
     }
 
+    @Override
+    public void createCustomer(String firstname, String lastname, Date dob, String address) {
+        try {
+            java.sql.Date sqlDob = new java.sql.Date(dob.getTime());
+            CustomerDAO dao = new RDBCustomerDAO(connection);
+            Customer customer = new Customer(firstname, lastname, sqlDob, address);
+            dao.createCustomer(customer);
+        } catch (Exception e) {
+            System.out.println("Could not create customer.");
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void removeCustomer(Integer C_ID) {
+        try {
+            CustomerDAO dao = new RDBCustomerDAO(connection);
+            Customer customer = new Customer(C_ID);
+            dao.deleteCustomer(customer);
+        } catch (Exception e) {
+            System.out.println("Could not delete customer.");
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void changeCustomerDetail(String firstname, String lastname, Date dob, String address, Integer C_ID) {
+        try {
+            CustomerDAO dao = new RDBCustomerDAO(connection);
+            Customer customer = new Customer(firstname, lastname, (java.sql.Date) dob, address, C_ID);
+            dao.updateCustomer(customer);
+        } catch (Exception e) {
+            System.out.println("Could not re-update customer.");
+            e.printStackTrace();
+        }
+    }
+    
     @Override
     public void seeCustomer(Integer C_ID) {
         Customer text;
