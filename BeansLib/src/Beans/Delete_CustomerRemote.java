@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Beans;
 
 import javax.ejb.Remote;
@@ -12,5 +8,6 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface Delete_CustomerRemote {
+
     public void removeCustomer(Integer C_ID);
 }

@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Beans;
 
+import java.util.ArrayList;
 import javax.ejb.Remote;
 
 /**
@@ -12,5 +9,6 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface View_BalanceRemote {
-//    public void ViewBalance();
+
+    public ArrayList ViewBalance(Integer C_ID);
 }

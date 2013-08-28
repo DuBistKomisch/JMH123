@@ -1,10 +1,9 @@
 package Beans;
 
-import data_access.Customer;
-import data_access.CustomerDAO;
-import data_access.RDBCustomerDAO;
+import data_access.RDBSavingDAO;
+import data_access.Saving;
+import data_access.SavingDAO;
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.SQLException;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -17,7 +16,7 @@ import javax.sql.DataSource;
  * @author Howard Tseng
  */
 @Stateless
-public class Update_Customer implements Update_CustomerRemote {
+public class Create_Savings implements Create_SavingsRemote {
 
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
@@ -42,13 +41,13 @@ public class Update_Customer implements Update_CustomerRemote {
     }
 
     @Override
-    public void changeCustomerDetail(String firstname, String lastname, Date dob, String address, Integer C_ID) {
+    public void createSaving(Integer C_ID, String ACCNUM) {
         try {
-            CustomerDAO dao = new RDBCustomerDAO(connection);
-            Customer customer = new Customer(firstname, lastname, (java.sql.Date) dob, address, C_ID);
-            dao.updateCustomer(customer);
+            SavingDAO daoS = new RDBSavingDAO(connection);
+            Saving saving = new Saving(C_ID, ACCNUM, 0);
+            daoS.createSaving(saving);
         } catch (Exception e) {
-            System.out.println("Could not re-update customer.");
+            System.out.println("Could not create customer.");
             e.printStackTrace();
         }
     }

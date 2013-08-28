@@ -2,9 +2,14 @@ package Beans;
 
 import data_access.Customer;
 import data_access.CustomerDAO;
+import data_access.Employee;
+import data_access.EmployeeDAO;
 import data_access.RDBCustomerDAO;
+import data_access.RDBEmployeeDAO;
+import data_access.RDBSavingDAO;
+import data_access.Saving;
+import data_access.SavingDAO;
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.SQLException;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -17,7 +22,7 @@ import javax.sql.DataSource;
  * @author Howard Tseng
  */
 @Stateless
-public class Update_Customer implements Update_CustomerRemote {
+public class Deposit_Saving implements Deposit_SavingRemote {
 
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
@@ -42,13 +47,15 @@ public class Update_Customer implements Update_CustomerRemote {
     }
 
     @Override
-    public void changeCustomerDetail(String firstname, String lastname, Date dob, String address, Integer C_ID) {
+    public void InputBalance(Integer E_ID, String ACCNUM, Integer BALANCE, String desc) {
         try {
-            CustomerDAO dao = new RDBCustomerDAO(connection);
-            Customer customer = new Customer(firstname, lastname, (java.sql.Date) dob, address, C_ID);
-            dao.updateCustomer(customer);
+            SavingDAO dao = new RDBSavingDAO(connection);
+            Saving saving = new Saving(ACCNUM);
+            EmployeeDAO daoE = new RDBEmployeeDAO(connection);
+            Employee employee = new Employee(E_ID);
+            dao.deposit(employee, saving, BALANCE, desc);
         } catch (Exception e) {
-            System.out.println("Could not re-update customer.");
+            System.out.println("Could not Deposit Balance");
             e.printStackTrace();
         }
     }

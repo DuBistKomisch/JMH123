@@ -1,11 +1,15 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Beans;
 
-import data_access.Customer;
-import data_access.CustomerDAO;
-import data_access.RDBCustomerDAO;
+import data_access.RDBSavingDAO;
+import data_access.Saving;
+import data_access.SavingDAO;
 import java.sql.Connection;
-import java.util.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
@@ -17,7 +21,10 @@ import javax.sql.DataSource;
  * @author Howard Tseng
  */
 @Stateless
-public class Update_Customer implements Update_CustomerRemote {
+public class View_Transaction_History implements View_Transaction_HistoryRemote {
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
 
     @Resource(lookup = "jdbc/acmeDBDatasource")
     private DataSource dataSource;
@@ -42,14 +49,18 @@ public class Update_Customer implements Update_CustomerRemote {
     }
 
     @Override
-    public void changeCustomerDetail(String firstname, String lastname, Date dob, String address, Integer C_ID) {
+    public void seeTrans(String ACCNUM) {
+        ArrayList<Saving> text = new ArrayList();
         try {
-            CustomerDAO dao = new RDBCustomerDAO(connection);
-            Customer customer = new Customer(firstname, lastname, (java.sql.Date) dob, address, C_ID);
-            dao.updateCustomer(customer);
+           SavingDAO dao = new RDBSavingDAO(connection);
+            Saving saving = new Saving(ACCNUM);
+            text = dao.getTransHistory(saving);
+
         } catch (Exception e) {
-            System.out.println("Could not re-update customer.");
+            System.out.println("Could not create customer.");
             e.printStackTrace();
+            text = null;
         }
+        System.out.println(text.toString());
     }
 }
