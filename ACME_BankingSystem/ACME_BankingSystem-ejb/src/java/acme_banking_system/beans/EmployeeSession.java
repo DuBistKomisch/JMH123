@@ -74,7 +74,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
         EmployeeDAO doa = new RDBEmployeeDAO(connection);
         Employee emp = doa.loginEmployee(firstname, lastName, password); // throws
         this.logged = true;
-        this.E_ID = emp.getE_ID();
+        this.E_ID = emp.getId();
         this.actions = 0;
     }
 
@@ -114,7 +114,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public void createSaving(Integer C_ID, String accnum) throws LoggedInStateException, BusinessException, DataLayerException {
+    public void createSaving(int C_ID, String accnum) throws LoggedInStateException, BusinessException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }
@@ -123,7 +123,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public void deposit(String accnum, Double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException {
+    public void deposit(String accnum, double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }
@@ -132,7 +132,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public void withdraw(String accnum, Double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException {
+    public void withdraw(String accnum, double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }
@@ -141,7 +141,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public ArrayList<ISaving> viewBalance(Integer C_ID) throws LoggedInStateException, DataLayerException {
+    public ArrayList<ISaving> viewBalance(int C_ID) throws LoggedInStateException, DataLayerException {
         if (!this.logged) {
             throw new LoggedInStateException(this.logged);
         }

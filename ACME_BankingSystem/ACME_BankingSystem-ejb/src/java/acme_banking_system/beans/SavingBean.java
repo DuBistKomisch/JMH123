@@ -1,9 +1,6 @@
 package acme_banking_system.beans;
 
-import acme_banking_system.data_access.Employee;
-import acme_banking_system.data_access.EmployeeDAO;
 import acme_banking_system.data_access.ISaving;
-import acme_banking_system.data_access.RDBEmployeeDAO;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
 import acme_banking_system.data_access.RDBSavingDAO;
@@ -48,10 +45,10 @@ public class SavingBean implements SavingBeanRemote {
     }
 
     @Override
-    public void createSaving(Integer C_ID, String ACCNUM) throws BusinessException, DataLayerException {
+    public void createSaving(int customerId, String accNum) throws BusinessException, DataLayerException {
         try {
             SavingDAO daoS = new RDBSavingDAO(connection);
-            Saving saving = new Saving(C_ID, ACCNUM);
+            Saving saving = new Saving(customerId, accNum);
             daoS.createSaving(saving);
         } catch (Exception e) {
             System.out.println("Could not create savings.");
@@ -60,13 +57,10 @@ public class SavingBean implements SavingBeanRemote {
     }
 
     @Override
-    public void deposit(Integer E_ID, String ACCNUM, double BALANCE, String desc) throws BusinessException, DataLayerException {
+    public void deposit(int employeeId, String accNum, double balance, String desc) throws BusinessException, DataLayerException {
         try {
             SavingDAO dao = new RDBSavingDAO(connection);
-            Saving saving = new Saving(ACCNUM);
-            EmployeeDAO daoE = new RDBEmployeeDAO(connection);
-            Employee employee = new Employee(E_ID);
-            dao.deposit(employee, saving, BALANCE, desc);
+            dao.deposit(employeeId, accNum, balance, desc);
         } catch (Exception e) {
             System.out.println("Could not deposit.");
             throw e;
@@ -74,13 +68,10 @@ public class SavingBean implements SavingBeanRemote {
     }
 
     @Override
-    public void withdraw(Integer E_ID, String ACCNUM, double BALANCE, String desc) throws BusinessException, DataLayerException {
+    public void withdraw(int employeeId, String accNum, double balance, String desc) throws BusinessException, DataLayerException {
         try {
             SavingDAO dao = new RDBSavingDAO(connection);
-            Saving saving = new Saving(ACCNUM);
-            EmployeeDAO daoE = new RDBEmployeeDAO(connection);
-            Employee employee = new Employee(E_ID);
-            dao.withdraw(employee, saving, BALANCE, desc);
+            dao.withdraw(employeeId, accNum, balance, desc);
         } catch (Exception e) {
             System.out.println("Could not withdraw.");
             throw e;
@@ -88,13 +79,11 @@ public class SavingBean implements SavingBeanRemote {
     }
 
     @Override
-    public ArrayList<ISaving> viewBalance(Integer C_ID) throws DataLayerException {
-        ArrayList<ISaving> text = new ArrayList<ISaving>();
+    public ArrayList<ISaving> viewBalance(int customerId) throws DataLayerException {
+        ArrayList<ISaving> text = new ArrayList<>();
         try {
             SavingDAO dao = new RDBSavingDAO(connection);
-            Saving saving = new Saving(C_ID);
-            text.addAll(dao.getCustomerSavings(saving));
-
+            text.addAll(dao.getCustomerSavings(customerId));
         } catch (Exception e) {
             System.out.println("Could not view balance.");
             throw e;
@@ -103,7 +92,7 @@ public class SavingBean implements SavingBeanRemote {
     }
 
     @Override
-    public void viewTransactionsHistory(String ACCNUM) throws DataLayerException {
+    public void viewTransactionsHistory() throws DataLayerException {
         // TODO implement
         throw new DataLayerException();
     }

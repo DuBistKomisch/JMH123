@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.ejb.EJB;
 import javax.ejb.NoSuchEJBException;
 import javax.naming.InitialContext;
 import javax.rmi.PortableRemoteObject;
@@ -17,6 +18,7 @@ import javax.rmi.PortableRemoteObject;
  */
 public class Main {
 
+    @EJB
     private static EmployeeSessionRemote employeeSession;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -26,7 +28,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String firstName, lastName, password, address, accnum, desc;
-        int C_ID;
+        int id;
         double amount;
 
         // welcome
@@ -44,8 +46,13 @@ public class Main {
             System.out.print("Password: ");
             password = br.readLine();
             try {
-                employeeSession = (EmployeeSessionRemote) PortableRemoteObject.narrow(new InitialContext().lookup("java:global/ACME_BankingSystem/ACME_BankingSystem-ejb/EmployeeSession!Beans.EmployeeSessionRemote"), EmployeeSessionRemote.class);
-                employeeSession.login(firstName, lastName, password);
+                try {
+                    employeeSession.login(firstName, lastName, password);
+                } catch (NoSuchEJBException ex) {
+                    // expired, get new stateful bean, try again
+                    employeeSession = (EmployeeSessionRemote) PortableRemoteObject.narrow(new InitialContext().lookup("java:global/ACME_BankingSystem/ACME_BankingSystem-ejb/EmployeeSession!Beans.EmployeeSessionRemote"), EmployeeSessionRemote.class);
+                    employeeSession.login(firstName, lastName, password);
+                }
             } catch (Exception ex) {
                 System.out.println("Error: " + ex.getMessage());
                 continue;
@@ -98,10 +105,10 @@ public class Main {
                         case 2: // Open Savings Account
                             System.out.println("Open Savings Account");
                             System.out.print("Customer ID: ");
-                            C_ID = Integer.parseInt(br.readLine());
+                            id = Integer.parseInt(br.readLine());
                             System.out.print("Account No.: ");
                             accnum = br.readLine();
-                            employeeSession.createSaving(C_ID, accnum);
+                            employeeSession.createSaving(id, accnum);
                             System.out.println("Savings account opened.");
                             break;
                         case 3: // Make Deposit
@@ -129,10 +136,10 @@ public class Main {
                         case 5: // View Balance
                             System.out.println("View Balance");
                             System.out.print("Customer ID: ");
-                            C_ID = Integer.parseInt(br.readLine());
-                            ArrayList<ISaving> savings = employeeSession.viewBalance(C_ID);
+                            id = Integer.parseInt(br.readLine());
+                            ArrayList<ISaving> savings = employeeSession.viewBalance(id);
                             for (ISaving saving : savings) {
-                                System.out.printf("AccNum %s: $%.2f", saving.getACCNUM(), saving.getBALANCE());
+                                System.out.printf("AccNum %s: $%.2f", saving.getAccNum(), saving.getBalance());
                             }
                             break;
                         case 6: // View Transactions
@@ -151,15 +158,15 @@ public class Main {
                             break;
                     }
                 } catch (LoggedInStateException ex) {
-                    // Session timed out
-                    System.out.println("Session timed out.");
+                    // Session timed out, return to login
+                    System.out.println("Exceeded operations limit.");
                     logout = true;
                 } catch (NoSuchEJBException ex) {
-                    // Session timed out
+                    // Session timed out, return to login
                     System.out.println("Session timed out.");
                     logout = true;
                 } catch (Exception ex) {
-                    // Input or data layer error
+                    // Input or data layer error, return to menu
                     System.out.println("Error: " + ex.getMessage());
                 }
             }

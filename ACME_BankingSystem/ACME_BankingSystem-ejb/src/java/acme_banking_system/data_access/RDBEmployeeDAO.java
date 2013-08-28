@@ -26,37 +26,31 @@ public class RDBEmployeeDAO implements EmployeeDAO {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "INSERT INTO JMH123.EMPLOYEES(E_FIRSTNAME, E_LASTNAME, E_PASSWORD)"
                     + " VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-            sqlStatement.setString(1, employee.getE_FIRSTNAME());
-            sqlStatement.setString(2, employee.getE_LASTNAME());
-            sqlStatement.setString(3, employee.getE_PASSWORD());
+            sqlStatement.setString(1, employee.getFirstName());
+            sqlStatement.setString(2, employee.getLastName());
+            sqlStatement.setString(3, employee.getPassword());
             sqlStatement.executeUpdate();
             ResultSet result = sqlStatement.getGeneratedKeys();
             result.next();
-            employee.setE_ID(result.getInt(1));
-            System.out.println("Employee has been created with id: " + employee.getE_ID().toString());
+            employee.setId(result.getInt(1));
+            System.out.println("Employee has been created with id: " + employee.getId().toString());
         } catch (SQLException sqlException) {
             throw new DataLayerException();
         }
     }
 
     @Override
-    public Employee readEmployee(Integer E_ID) throws DataLayerException {
-        Employee result = new Employee();
-
+    public Employee readEmployee(int E_ID) throws DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
-                    "SELECT * FROM JMH123.EMPLOYEES WHERE C_ID = ?");
-            sqlStatement.setString(1, E_ID.toString());
+                    "SELECT * FROM JMH123.EMPLOYEES WHERE E_ID = ?");
+            sqlStatement.setInt(1, E_ID);
             ResultSet res = sqlStatement.executeQuery();
             res.next();
-            result.setE_FIRSTNAME(res.getString(2));
-            result.setE_LASTNAME(res.getString(3));
-            result.setE_PASSWORD(res.getString(4));
+            return new Employee(E_ID, res.getString(2), res.getString(3), res.getString(4));
         } catch (SQLException sqlException) {
             throw new DataLayerException();
         }
-
-        return result;
     }
 
     @Override
@@ -64,10 +58,10 @@ public class RDBEmployeeDAO implements EmployeeDAO {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "UPDATE JMH123.EMPLOYEES SET E_FIRSTNAME = ?, E_LASTNAME = ?, E_PASSWORD = ? WHERE E_ID = ?");
-            sqlStatement.setString(1, employee.getE_FIRSTNAME());
-            sqlStatement.setString(2, employee.getE_LASTNAME());
-            sqlStatement.setString(3, employee.getE_PASSWORD());
-            sqlStatement.setString(4, employee.getE_ID().toString());
+            sqlStatement.setString(1, employee.getFirstName());
+            sqlStatement.setString(2, employee.getLastName());
+            sqlStatement.setString(3, employee.getPassword());
+            sqlStatement.setString(4, employee.getId().toString());
             sqlStatement.executeQuery();
         } catch (SQLException sqlException) {
             throw new DataLayerException();
@@ -75,11 +69,11 @@ public class RDBEmployeeDAO implements EmployeeDAO {
     }
 
     @Override
-    public void deleteEmployee(Employee employee) throws DataLayerException {
+    public void deleteEmployee(int employeeId) throws DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "DELETE FROM JMH123.EMPLOYEES WHERE C_ID = ?");
-            sqlStatement.setString(1, employee.getE_ID().toString());
+            sqlStatement.setInt(1, employeeId);
             sqlStatement.executeQuery();
         } catch (SQLException sqlException) {
             throw new DataLayerException();
@@ -88,8 +82,6 @@ public class RDBEmployeeDAO implements EmployeeDAO {
 
     @Override
     public Employee loginEmployee(String E_FIRSTNAME, String E_LASTNAME, String PASSWORD) throws BusinessException, DataLayerException {
-        Employee result = new Employee();
-
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.EMPLOYEES WHERE E_FIRSTNAME = ? AND E_LASTNAME = ? AND E_PASSWORD = ?");
@@ -98,16 +90,12 @@ public class RDBEmployeeDAO implements EmployeeDAO {
             sqlStatement.setString(3, PASSWORD);
             ResultSet res = sqlStatement.executeQuery();
             if (res.next()) {
-                result.setE_FIRSTNAME(E_FIRSTNAME);
-                result.setE_LASTNAME(E_LASTNAME);
-                result.setE_PASSWORD(PASSWORD);
-                result.setE_ID(res.getInt("E_ID"));
+                return new Employee(res.getInt(1));
             } else {
                 throw new BusinessException("Wrong employee name and password.");
             }
         } catch (SQLException sqlException) {
             throw new DataLayerException();
         }
-        return result;
     }
 }

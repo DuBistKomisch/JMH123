@@ -29,7 +29,7 @@ public class RDBSavingDAO implements SavingDAO {
                     "SELECT * FROM JMH123.SAVINGS WHERE C_ID = ?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            sqlStatement.setInt(1, save.getC_ID());
+            sqlStatement.setInt(1, save.getId());
             ResultSet res = sqlStatement.executeQuery();
             if (res.last() && res.getRow() >= 2) {
                 throw new BusinessException("Impossible to add a new account to this customer.");
@@ -37,9 +37,9 @@ public class RDBSavingDAO implements SavingDAO {
             sqlStatement = dbConnection.prepareStatement(
                     "INSERT INTO JMH123.SAVINGS (C_ID, ACCNUM, BALANCE)"
                     + " VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-            sqlStatement.setInt(1, save.getC_ID());
-            sqlStatement.setString(2, save.getACCNUM());
-            sqlStatement.setDouble(3, save.getBALANCE());
+            sqlStatement.setInt(1, save.getId());
+            sqlStatement.setString(2, save.getAccNum());
+            sqlStatement.setDouble(3, save.getBalance());
             sqlStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new DataLayerException();
@@ -47,10 +47,11 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public void deleteSaving(Saving saving) throws DataLayerException {
+    public void deleteSaving(String accNum) throws DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "DELETE FROM JMH123.SAVINGS WHERE ACCNUM = ?");
+            sqlStatement.setString(1, accNum);
             sqlStatement.executeQuery();
         } catch (SQLException sqle) {
             throw new DataLayerException();
@@ -58,27 +59,27 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public void deposit(Employee emp, Saving acc, double amount, String desc) throws BusinessException, DataLayerException {
+    public void deposit(int employeeId, String accNum, double amount, String desc) throws BusinessException, DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.SAVINGS WHERE ACCNUM = ?");
-            sqlStatement.setString(1, acc.getACCNUM());
+            sqlStatement.setString(1, accNum);
             ResultSet result = sqlStatement.executeQuery();
             if (result.next()) {
                 PreparedStatement transaction = dbConnection.prepareStatement(
                         "INSERT INTO JMH123.TRANSACTIONS(ACCNUM, AMOUNT, DESCRIPTION, ACCNUM2, E_ID)"
                         + " VALUES (?, ?, ?, ?, ?)");
-                transaction.setString(1, acc.getACCNUM());
+                transaction.setString(1, accNum);
                 transaction.setDouble(2, amount);
                 transaction.setString(3, desc);
                 transaction.setString(4, "");
-                transaction.setInt(5, emp.getE_ID());
+                transaction.setInt(5, employeeId);
                 result = transaction.executeQuery();
                 if (result.next()) {
                     sqlStatement = dbConnection.prepareStatement(
                             "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE + ? WHERE ACCNUM = ?");
                     sqlStatement.setDouble(1, amount);
-                    sqlStatement.setString(2, acc.getACCNUM());
+                    sqlStatement.setString(2, accNum);
                     sqlStatement.executeQuery();
                 }
             } else {
@@ -90,11 +91,11 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public void withdraw(Employee emp, Saving acc, double amount, String desc) throws BusinessException, DataLayerException {
+    public void withdraw(int employeeId, String accNum, double amount, String desc) throws BusinessException, DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.SAVINGS WHERE ACCNUM = ?");
-            sqlStatement.setString(1, acc.getACCNUM());
+            sqlStatement.setString(1, accNum);
             ResultSet result = sqlStatement.executeQuery();
             if (result.next()) {
                 Integer balance = result.getInt("BALANCE");
@@ -102,17 +103,17 @@ public class RDBSavingDAO implements SavingDAO {
                     PreparedStatement transaction = dbConnection.prepareStatement(
                             "INSERT INTO JMH123.TRANSACTIONS(ACCNUM, AMOUNT, DESCRIPTION, ACCNUM2, E_ID)"
                             + " VALUES (?, ?, ?, ?, ?)");
-                    transaction.setString(1, acc.getACCNUM());
+                    transaction.setString(1, accNum);
                     transaction.setDouble(2, -(amount));
                     transaction.setString(3, desc);
                     transaction.setString(4, "");
-                    transaction.setInt(5, emp.getE_ID());
+                    transaction.setInt(5, employeeId);
                     result = transaction.executeQuery();
                     if (result.next()) {
                         sqlStatement = dbConnection.prepareStatement(
                                 "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE - ? WHERE ACCNUM = ?");
                         sqlStatement.setDouble(1, amount);
-                        sqlStatement.setString(2, acc.getACCNUM());
+                        sqlStatement.setString(2, accNum);
                         sqlStatement.executeQuery();
                     }
                 } else {
@@ -127,20 +128,15 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public ArrayList<Saving> getCustomerSavings(Saving saving) throws DataLayerException {
+    public ArrayList<Saving> getCustomerSavings(int customerId) throws DataLayerException {
         ArrayList<Saving> res = new ArrayList<>();
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.SAVINGS WHERE C_ID = ?");
-            sqlStatement.setInt(1, saving.getC_ID());
+            sqlStatement.setInt(1, customerId);
             ResultSet result = sqlStatement.executeQuery();
             while (result.next()) {
-                Saving acc = new Saving();
-                acc.setC_ID(saving.getC_ID());
-                acc.setACCNUM(result.getString("ACCNUM"));
-                acc.setBALANCE(result.getInt("BALANCE"));
-                acc.setCREATIONTIME(result.getDate("S_DATETIMECREATED"));
-                res.add(acc);
+                res.add(new Saving(result.getInt(1), result.getString(2), result.getDouble(3), result.getDate(4)));
             }
         } catch (SQLException sqle) {
             throw new DataLayerException();
@@ -150,7 +146,7 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public ArrayList<Saving> getTransactionsHistory(Saving saving) throws DataLayerException {
+    public ArrayList<Saving> getTransactionsHistory() throws DataLayerException {
         // TODO implement
         throw new DataLayerException();
     }

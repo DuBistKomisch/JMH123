@@ -13,13 +13,13 @@ import javax.ejb.Remote;
 @Remote
 public interface SavingBeanRemote {
 
-    public void createSaving(Integer C_ID, String ACCNUM) throws BusinessException, DataLayerException;
+    public void createSaving(int customerId, String accNum) throws BusinessException, DataLayerException;
 
-    public void deposit(Integer E_ID, String ACCNUM, double BALANCE, String desc) throws BusinessException, DataLayerException;
+    public void deposit(int employeeId, String accNum, double balance, String description) throws BusinessException, DataLayerException;
 
-    public void withdraw(Integer E_ID, String ACCNUM, double BALANCE, String desc) throws BusinessException, DataLayerException;
+    public void withdraw(int employeeId, String accNum, double balance, String description) throws BusinessException, DataLayerException;
 
-    public ArrayList<ISaving> viewBalance(Integer C_ID) throws DataLayerException;
+    public ArrayList<ISaving> viewBalance(int customerId) throws DataLayerException;
 
-    public void viewTransactionsHistory(String ACCNUM) throws DataLayerException;
+    public void viewTransactionsHistory() throws DataLayerException;
 }

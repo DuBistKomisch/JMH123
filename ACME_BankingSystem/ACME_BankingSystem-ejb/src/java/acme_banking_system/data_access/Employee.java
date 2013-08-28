@@ -6,47 +6,51 @@ package acme_banking_system.data_access;
  */
 public class Employee {
 
-    private Integer E_ID;
-    private String E_FIRSTNAME;
-    private String E_LASTNAME;
-    private String E_PASSWORD;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String password;
 
-    public Employee() {
+    public Employee(int id) {
+        this.id = id;
     }
 
-    public Employee(Integer E_ID) {
-        this.E_ID = E_ID;
+    public Employee(int id, String firstName, String lastName, String password) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
     }
 
-    public void setE_ID(Integer E_ID) {
-        this.E_ID = E_ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Integer getE_ID() {
-        return this.E_ID;
+    public Integer getId() {
+        return this.id;
     }
 
-    public void setE_FIRSTNAME(String firstName) {
-        this.E_FIRSTNAME = firstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getE_FIRSTNAME() {
-        return this.E_FIRSTNAME;
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    public void setE_LASTNAME(String lastName) {
-        this.E_FIRSTNAME = lastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getE_LASTNAME() {
-        return this.E_FIRSTNAME;
+    public String getLastName() {
+        return this.lastName;
     }
 
-    public void setE_PASSWORD(String pass) {
-        this.E_PASSWORD = pass;
+    public void setPassword(String pass) {
+        this.password = pass;
     }
 
-    public String getE_PASSWORD() {
-        return this.E_PASSWORD;
+    public String getPassword() {
+        return this.password;
     }
 }

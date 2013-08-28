@@ -25,13 +25,13 @@ public interface EmployeeSessionRemote {
 
     public int getCounter();
 
-    public void createCustomer(String firstName, String lastName, Date dob, String address) throws Exception;
+    public void createCustomer(String firstName, String lastName, Date dateOfBirth, String address) throws Exception;
 
-    public void createSaving(Integer C_ID, String accnum) throws LoggedInStateException, BusinessException, DataLayerException;
+    public void createSaving(int customerId, String accNum) throws LoggedInStateException, BusinessException, DataLayerException;
 
-    public void deposit(String accnum, Double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException;
+    public void deposit(String accNum, double amount, String description) throws LoggedInStateException, BusinessException, DataLayerException;
 
-    public void withdraw(String accnum, Double amount, String desc) throws LoggedInStateException, BusinessException, DataLayerException;
+    public void withdraw(String accNum, double amount, String description) throws LoggedInStateException, BusinessException, DataLayerException;
 
-    public ArrayList<ISaving> viewBalance(Integer C_ID) throws Exception;
+    public ArrayList<ISaving> viewBalance(int customerId) throws Exception;
 }

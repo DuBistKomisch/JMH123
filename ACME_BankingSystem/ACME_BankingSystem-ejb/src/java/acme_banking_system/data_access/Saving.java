@@ -8,81 +8,64 @@ import java.sql.Date;
 
 public class Saving implements ISaving {
 
-    private Integer C_ID;
-    private String ACCNUM;
-    private double BALANCE;
-    private Date S_DATETIMECREATION;
-    private String Description;
-    private Integer E_ID;
+    private int id;
+    private String accNum;
+    private double balance;
+    private Date dateTimeCreation;
 
-    public Saving() {
+    public Saving(String accNum) {
+        this.accNum = accNum;
     }
 
-    public Saving(String ACCNUM) {
-        this.ACCNUM = ACCNUM;
+    public Saving(int id) {
+        this.id = id;
     }
 
-    public Saving(Integer C_ID) {
-        this.C_ID = C_ID;
+    public Saving(int id, String accNum) {
+        this.id = id;
+        this.accNum = accNum;
     }
 
-    public Saving(int C_ID, String ACCNUM) {
-        this.C_ID = C_ID;
-        this.ACCNUM = ACCNUM;
-        this.BALANCE = BALANCE;
+    public Saving(int id, String accNum, double balance, Date dateTimeCreation) {
+        this.id = id;
+        this.accNum = accNum;
+        this.balance = balance;
+        this.dateTimeCreation = dateTimeCreation;
     }
 
-    public void setC_ID(Integer id) {
-        this.C_ID = id;
-    }
-
-    @Override
-    public Integer getC_ID() {
-        return this.C_ID;
-    }
-
-    public void setE_ID(Integer id) {
-        this.E_ID = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
-    public Integer getE_ID() {
-        return this.E_ID;
+    public int getId() {
+        return this.id;
     }
 
-    public void setDesc(String Description) {
-        this.Description = Description;
-    }
-
-    @Override
-    public String getDesc() {
-        return this.Description;
-    }
-
-    public void setACCNUM(String number) {
-        this.ACCNUM = number;
+    public void setAccNum(String accNum) {
+        this.accNum = accNum;
     }
 
     @Override
-    public String getACCNUM() {
-        return this.ACCNUM;
+    public String getAccNum() {
+        return this.accNum;
     }
 
-    public void setBALANCE(Integer bal) {
-        this.BALANCE = bal;
-    }
-
-    @Override
-    public double getBALANCE() {
-        return this.BALANCE;
-    }
-
-    public void setCREATIONTIME(Date crea) {
-        this.S_DATETIMECREATION = crea;
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
     @Override
-    public Date getCREATIONTIME() {
-        return this.S_DATETIMECREATION;
+    public double getBalance() {
+        return this.balance;
+    }
+
+    public void setDateTimeCreated(Date dateTimeCreation) {
+        this.dateTimeCreation = dateTimeCreation;
+    }
+
+    @Override
+    public Date getDateTimeCreated() {
+        return this.dateTimeCreation;
     }
 }

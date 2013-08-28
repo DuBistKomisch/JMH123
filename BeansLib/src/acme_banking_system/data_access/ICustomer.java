@@ -10,13 +10,15 @@ import java.sql.Date;
  *
  * @author jake
  */
-public interface ISaving {
+public interface ICustomer {
 
-    int getId();
+    String getAddress();
 
-    String getAccNum();
+    Date getDateOfBirth();
 
-    double getBalance();
+    String getFirstName();
 
-    Date getDateTimeCreated();
+    Integer getId();
+
+    String getLastName();
 }

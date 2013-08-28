@@ -6,70 +6,75 @@ package acme_banking_system.data_access;
  */
 import java.sql.Date;
 
-public class Customer {
+public class Customer implements ICustomer {
 
-    private Integer C_ID;
-    private String C_FirstName;
-    private String C_LastName;
-    private Date DOB;
-    private String Address;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private Date dateOfBirth;
+    private String address;
+
+    public Customer(int id) {
+        this.id = id;
+    }
 
     public Customer(String firstName, String lastName, Date dateOfBirth, String address) {
-        this.C_FirstName = firstName;
-        this.C_LastName = lastName;
-        this.DOB = dateOfBirth;
-        this.Address = address;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
     }
 
-    public Customer(Integer C_ID) {
-        this.C_ID = C_ID;
+    public Customer(int id, String firstName, String lastName, Date dateOfBirth, String address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
     }
 
-    public Customer(String firstName, String lastName, Date dateOfBirth, String address, Integer C_ID) {
-        this.C_FirstName = firstName;
-        this.C_LastName = lastName;
-        this.DOB = dateOfBirth;
-        this.Address = address;
-        this.C_ID = C_ID;
+    @Override
+    public Integer getId() {
+        return id;
     }
 
-    public Integer getC_ID() {
-        return C_ID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setC_ID(Integer C_ID) {
-        this.C_ID = C_ID;
-    }
-
+    @Override
     public String getFirstName() {
-        return C_FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.C_FirstName = firstName;
+        this.firstName = firstName;
     }
 
+    @Override
     public String getLastName() {
-        return C_LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.C_LastName = lastName;
+        this.lastName = lastName;
     }
 
+    @Override
     public Date getDateOfBirth() {
-        return DOB;
+        return dateOfBirth;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
-        this.DOB = dateOfBirth;
+        this.dateOfBirth = dateOfBirth;
     }
 
+    @Override
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        this.Address = address;
+        this.address = address;
     }
 }

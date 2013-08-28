@@ -11,11 +11,11 @@ public interface EmployeeDAO {
 
     public void createEmployee(Employee employee) throws DataLayerException;
 
-    public Employee readEmployee(Integer E_ID) throws DataLayerException;
+    public Employee readEmployee(int customerId) throws DataLayerException;
 
     public void updateEmployee(Employee employee) throws DataLayerException;
 
-    public void deleteEmployee(Employee employee) throws DataLayerException;
+    public void deleteEmployee(int employeeId) throws DataLayerException;
 
     public Employee loginEmployee(String firstName, String lastName, String password) throws BusinessException, DataLayerException;
 }

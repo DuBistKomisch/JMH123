@@ -4,6 +4,7 @@ package acme_banking_system.data_access;
  *
  * @author morga_000
  */
+import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,33 +34,28 @@ public class RDBCustomerDAO implements CustomerDAO {
             sqlStatement.executeUpdate();
             ResultSet result = sqlStatement.getGeneratedKeys();
             result.next();
-            customer.setC_ID(result.getInt(1));
-            System.out.print("Customer has been created with id: " + customer.getC_ID().toString());
+            customer.setId(result.getInt(1));
+            System.out.print("Customer has been created with id: " + customer.getId().toString());
         } catch (SQLException sqlException) {
             throw new DataLayerException();
         }
     }
 
     @Override
-    public Customer readCustomer(Integer C_ID) throws DataLayerException {
-        Customer result = new Customer(null, null, null, null);
-
+    public Customer readCustomer(int customerId) throws BusinessException, DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.CUSTOMERS WHERE C_ID = ?", Statement.RETURN_GENERATED_KEYS);
-            sqlStatement.setString(1, C_ID.toString());
+            sqlStatement.setInt(1, customerId);
             ResultSet res = sqlStatement.executeQuery();
             if (res.next()) {
-                result.setFirstName(res.getString(2));
-                result.setLastName(res.getString(3));
-                result.setDateOfBirth(res.getDate(4));
-                result.setAddress(res.getString(5));
+                return new Customer(res.getInt(1), res.getString(2), res.getString(3), res.getDate(4), res.getString(5));
+            } else {
+                throw new BusinessException("Customer doesn't exist.");
             }
         } catch (SQLException sqlException) {
             throw new DataLayerException();
         }
-
-        return result;
     }
 
     @Override
@@ -71,18 +67,18 @@ public class RDBCustomerDAO implements CustomerDAO {
             sqlStatement.setString(2, customer.getLastName());
             sqlStatement.setDate(3, customer.getDateOfBirth());
             sqlStatement.setString(4, customer.getAddress());
-            sqlStatement.setString(5, customer.getC_ID().toString());
+            sqlStatement.setString(5, customer.getId().toString());
         } catch (SQLException sqlException) {
             throw new DataLayerException();
         }
     }
 
     @Override
-    public void deleteCustomer(Customer customer) throws DataLayerException {
+    public void deleteCustomer(int customerId) throws DataLayerException {
         try {
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "DELETE FROM JMH123.CUSTOMERS WHERE C_ID = ?");
-            sqlStatement.setString(1, customer.getC_ID().toString());
+            sqlStatement.setInt(1, customerId);
         } catch (SQLException sqlException) {
             throw new DataLayerException();
         }
@@ -97,13 +93,7 @@ public class RDBCustomerDAO implements CustomerDAO {
                     "SELECT * FROM JMH123.CUSTOMERS", Statement.RETURN_GENERATED_KEYS);
             ResultSet res = sqlStatement.executeQuery();
             while (res.next()) {
-                Customer cust = new Customer(null, null, null, null);
-
-                cust.setFirstName(res.getString(2));
-                cust.setLastName(res.getString(3));
-                cust.setDateOfBirth(res.getDate(4));
-                cust.setAddress(res.getString(5));
-                result.add(cust);
+                result.add(new Customer(res.getInt(1), res.getString(2), res.getString(3), res.getDate(4), res.getString(5)));
             }
         } catch (SQLException sqlException) {
             throw new DataLayerException();
