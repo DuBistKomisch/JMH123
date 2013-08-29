@@ -70,7 +70,7 @@ public class Main {
                 System.out.println(" 5. View Balance");
                 System.out.println(" 6. View Transactions");
                 System.out.println(" 7. Log Out");
-                System.out.println("(operations performed: " + employeeSession.getCounter() + "/10)");
+                System.out.println("(operations performed: " + employeeSession.getActionCount() + "/" + employeeSession.getActionLimit() + ")");
 
                 // get selected option
                 int option;
@@ -156,6 +156,9 @@ public class Main {
                         default:
                             System.out.println("Invalid option.");
                             break;
+                    }
+                    if (employeeSession.getActionCount() == employeeSession.getActionLimit()) {
+                        throw new LoggedInStateException(false);
                     }
                 } catch (LoggedInStateException ex) {
                     // Session timed out, return to login

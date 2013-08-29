@@ -91,7 +91,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     private boolean addAction() {
-        if (this.actions < 10) {
+        if (this.actions < getActionLimit()) {
             this.actions++;
             return true;
         } else {
@@ -102,8 +102,13 @@ public class EmployeeSession implements EmployeeSessionRemote {
     }
 
     @Override
-    public int getCounter() {
+    public int getActionCount() {
         return this.actions;
+    }
+    
+    @Override
+    public int getActionLimit() {
+        return 10;
     }
 
     @Override

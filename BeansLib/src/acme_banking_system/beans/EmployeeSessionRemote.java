@@ -23,7 +23,9 @@ public interface EmployeeSessionRemote {
 
     public void logout() throws LoggedInStateException;
 
-    public int getCounter();
+    public int getActionCount();
+    
+    public int getActionLimit();
 
     public void createCustomer(String firstName, String lastName, Date dateOfBirth, String address) throws Exception;
 
