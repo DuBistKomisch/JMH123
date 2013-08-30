@@ -1,6 +1,5 @@
 package acme_banking_system.beans;
 
-import acme_banking_system.data_access.Customer;
 import acme_banking_system.data_access.CustomerDAO;
 import acme_banking_system.data_access.Customer;
 import acme_banking_system.data_access.RDBCustomerDAO;

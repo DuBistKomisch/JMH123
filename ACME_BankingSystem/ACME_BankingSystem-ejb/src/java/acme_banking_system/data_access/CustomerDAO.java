@@ -8,6 +8,9 @@ import java.util.ArrayList;
  *
  * @author morga_000
  */
+
+// CRUD for the Customer
+
 public interface CustomerDAO {
 
     public void createCustomer(Customer customer) throws DataLayerException;

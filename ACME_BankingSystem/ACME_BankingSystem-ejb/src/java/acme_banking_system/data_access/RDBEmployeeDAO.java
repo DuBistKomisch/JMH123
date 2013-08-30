@@ -23,6 +23,7 @@ public class RDBEmployeeDAO implements EmployeeDAO {
     @Override
     public void createEmployee(Employee employee) throws DataLayerException {
         try {
+            // Inserts the employee
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "INSERT INTO JMH123.EMPLOYEES(E_FIRSTNAME, E_LASTNAME, E_PASSWORD)"
                     + " VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -42,6 +43,7 @@ public class RDBEmployeeDAO implements EmployeeDAO {
     @Override
     public Employee readEmployee(int E_ID) throws DataLayerException {
         try {
+            // Get the employee with an ID
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.EMPLOYEES WHERE E_ID = ?");
             sqlStatement.setInt(1, E_ID);
@@ -56,6 +58,7 @@ public class RDBEmployeeDAO implements EmployeeDAO {
     @Override
     public void updateEmployee(Employee employee) throws DataLayerException {
         try {
+            // Update the employee
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "UPDATE JMH123.EMPLOYEES SET E_FIRSTNAME = ?, E_LASTNAME = ?, E_PASSWORD = ? WHERE E_ID = ?");
             sqlStatement.setString(1, employee.getFirstName());
@@ -71,6 +74,7 @@ public class RDBEmployeeDAO implements EmployeeDAO {
     @Override
     public void deleteEmployee(int employeeId) throws DataLayerException {
         try {
+            // Delete the employee
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "DELETE FROM JMH123.EMPLOYEES WHERE C_ID = ?");
             sqlStatement.setInt(1, employeeId);
@@ -83,6 +87,7 @@ public class RDBEmployeeDAO implements EmployeeDAO {
     @Override
     public Employee loginEmployee(String E_FIRSTNAME, String E_LASTNAME, String PASSWORD) throws BusinessException, DataLayerException {
         try {
+            // Getting the employee using his full name and apssword
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.EMPLOYEES WHERE E_FIRSTNAME = ? AND E_LASTNAME = ? AND E_PASSWORD = ?");
             sqlStatement.setString(1, E_FIRSTNAME);

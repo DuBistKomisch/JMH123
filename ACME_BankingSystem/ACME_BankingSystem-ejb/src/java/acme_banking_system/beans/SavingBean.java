@@ -1,6 +1,5 @@
 package acme_banking_system.beans;
 
-import acme_banking_system.data_access.Saving;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
 import acme_banking_system.data_access.RDBSavingDAO;
@@ -59,6 +58,8 @@ public class SavingBean implements SavingBeanRemote {
     @Override
     public void deposit(int employeeId, String accNum, double balance, String desc) throws BusinessException, DataLayerException {
         try {
+            if (balance <= 0)
+                throw new BusinessException("Deposit has to be positive");
             SavingDAO dao = new RDBSavingDAO(connection);
             dao.deposit(employeeId, accNum, balance, desc);
         } catch (Exception e) {
@@ -70,6 +71,8 @@ public class SavingBean implements SavingBeanRemote {
     @Override
     public void withdraw(int employeeId, String accNum, double balance, String desc) throws BusinessException, DataLayerException {
         try {
+            if (balance <= 0)
+                throw new BusinessException("Withdrawal has to be positive");
             SavingDAO dao = new RDBSavingDAO(connection);
             dao.withdraw(employeeId, accNum, balance, desc);
         } catch (Exception e) {

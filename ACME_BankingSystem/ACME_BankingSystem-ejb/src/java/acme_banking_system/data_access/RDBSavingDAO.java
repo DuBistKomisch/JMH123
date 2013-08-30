@@ -21,6 +21,8 @@ public class RDBSavingDAO implements SavingDAO {
         this.dbConnection = connection;
     }
 
+    
+    // Creates a saving account checking if the are no more than 2 accounts.
     @Override
     public void createSaving(Saving save) throws BusinessException, DataLayerException {
         try {
@@ -31,9 +33,11 @@ public class RDBSavingDAO implements SavingDAO {
                     ResultSet.CONCUR_READ_ONLY);
             sqlStatement.setInt(1, save.getId());
             ResultSet res = sqlStatement.executeQuery();
+            // Got the accounts for the users, check if the user already has two accounts
             if (res.last() && res.getRow() >= 2) {
                 throw new BusinessException("Impossible to add a new account to this customer.");
             }
+            //Creates saving acocunt
             sqlStatement = dbConnection.prepareStatement(
                     "INSERT INTO JMH123.SAVINGS (C_ID, ACCNUM, BALANCE)"
                     + " VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -49,6 +53,7 @@ public class RDBSavingDAO implements SavingDAO {
     @Override
     public void deleteSaving(String accNum) throws DataLayerException {
         try {
+            //Deleting saving account
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "DELETE FROM JMH123.SAVINGS WHERE ACCNUM = ?");
             sqlStatement.setString(1, accNum);
@@ -61,11 +66,13 @@ public class RDBSavingDAO implements SavingDAO {
     @Override
     public void deposit(int employeeId, String accNum, double amount, String desc) throws BusinessException, DataLayerException {
         try {
+            //Getting the account using the account number
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.SAVINGS WHERE ACCNUM = ?");
             sqlStatement.setString(1, accNum);
             ResultSet result = sqlStatement.executeQuery();
             if (result.next()) {
+                // Insert the new transaction
                 PreparedStatement transaction = dbConnection.prepareStatement(
                         "INSERT INTO JMH123.TRANSACTIONS(ACCNUM, AMOUNT, DESCRIPTION, ACCNUM2, E_ID)"
                         + " VALUES (?, ?, ?, ?, ?)");
@@ -76,6 +83,7 @@ public class RDBSavingDAO implements SavingDAO {
                 transaction.setInt(5, employeeId);
                 transaction.executeUpdate();
 
+                // Update the balance
                 sqlStatement = dbConnection.prepareStatement(
                         "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE + ? WHERE ACCNUM = ?");
                 sqlStatement.setDouble(1, amount);
@@ -92,11 +100,13 @@ public class RDBSavingDAO implements SavingDAO {
     @Override
     public void withdraw(int employeeId, String accNum, double amount, String desc) throws BusinessException, DataLayerException {
         try {
+            //Getting the account from the user
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.SAVINGS WHERE ACCNUM = ?");
             sqlStatement.setString(1, accNum);
             ResultSet result = sqlStatement.executeQuery();
             if (result.next()) {
+                // Insert the new transaction
                 int balance = result.getInt("BALANCE");
                 if (balance >= amount) {
                     PreparedStatement transaction = dbConnection.prepareStatement(
@@ -108,7 +118,8 @@ public class RDBSavingDAO implements SavingDAO {
                     transaction.setString(4, "");
                     transaction.setInt(5, employeeId);
                     transaction.executeUpdate();
-
+                    
+                    // Update the balance
                     sqlStatement = dbConnection.prepareStatement(
                             "UPDATE JMH123.SAVINGS SET BALANCE = BALANCE - ? WHERE ACCNUM = ?");
                     sqlStatement.setDouble(1, amount);
@@ -129,10 +140,12 @@ public class RDBSavingDAO implements SavingDAO {
     public ArrayList<Saving> getCustomerSavings(int customerId) throws DataLayerException {
         ArrayList<Saving> res = new ArrayList<>();
         try {
+            // Getting all the saving accounts
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.SAVINGS WHERE C_ID = ?");
             sqlStatement.setInt(1, customerId);
             ResultSet result = sqlStatement.executeQuery();
+            // Filling the array with accounts
             while (result.next()) {
                 res.add(new Saving(result.getInt(1), result.getString(2), result.getDouble(3), result.getDate(4)));
             }

@@ -24,6 +24,7 @@ public class RDBCustomerDAO implements CustomerDAO {
     @Override
     public void createCustomer(Customer customer) throws DataLayerException {
         try {
+            // Creating the customer
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "INSERT INTO JMH123.CUSTOMERS(C_FIRSTNAME, C_LASTNAME, DOB, ADDRESS)"
                     + " VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -43,6 +44,7 @@ public class RDBCustomerDAO implements CustomerDAO {
     @Override
     public Customer readCustomer(int customerId) throws BusinessException, DataLayerException {
         try {
+            // Getting a customer
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.CUSTOMERS WHERE C_ID = ?", Statement.RETURN_GENERATED_KEYS);
             sqlStatement.setInt(1, customerId);
@@ -60,6 +62,7 @@ public class RDBCustomerDAO implements CustomerDAO {
     @Override
     public void updateCustomer(Customer customer) throws DataLayerException {
         try {
+            // Update the customer
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "UPDATE JMH123.CUSTOMERS SET C_FIRSTNAME = ?, C_LASTNAME = ?, DOB = ?, ADDRESS = ? WHERE C_ID = ?");
             sqlStatement.setString(1, customer.getFirstName());
@@ -75,6 +78,7 @@ public class RDBCustomerDAO implements CustomerDAO {
     @Override
     public void deleteCustomer(int customerId) throws DataLayerException {
         try {
+            // Deleting the customer
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "DELETE FROM JMH123.CUSTOMERS WHERE C_ID = ?");
             sqlStatement.setInt(1, customerId);
@@ -88,9 +92,11 @@ public class RDBCustomerDAO implements CustomerDAO {
         ArrayList<Customer> result = new ArrayList<>();
 
         try {
+            // Getting all the customers
             PreparedStatement sqlStatement = dbConnection.prepareStatement(
                     "SELECT * FROM JMH123.CUSTOMERS", Statement.RETURN_GENERATED_KEYS);
             ResultSet res = sqlStatement.executeQuery();
+            // Filling the array with customers
             while (res.next()) {
                 result.add(new Customer(res.getInt(1), res.getString(2), res.getString(3), res.getDate(4), res.getString(5)));
             }
