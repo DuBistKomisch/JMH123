@@ -15,7 +15,7 @@ public class Customer implements Serializable {
     private Date dateOfBirth;
     private String address;
 
-    protected Customer() {
+    public Customer() {
     }
 
     public Customer(int id) {

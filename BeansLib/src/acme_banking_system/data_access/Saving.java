@@ -14,7 +14,7 @@ public class Saving implements Serializable {
     private double balance;
     private Date dateTimeCreation;
 
-    protected Saving() {
+    public Saving() {
     }
 
     public Saving(String accNum) {
