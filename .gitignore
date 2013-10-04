@@ -31,3 +31,11 @@ ACME_BankingSystem/ACME_BankingSystem-war/nbproject/*
 /BeansLib/dist/
 /ACME_BankingSystem/ACME_BankingSystem-ejb/build/
 /ACME_BankingSystem/ACME_BankingSystem-ejb/dist/
+/JSPApp/nbproject/private/
+/ACME_HomeLoan/nbproject/private/
+/ACME_HomeLoan/ACME_HomeLoan-war/nbproject/private/
+/ACME_HomeLoan/ACME_HomeLoan-ejb/nbproject/private/
+/ACME_HomeLoanSystem/nbproject/private/
+/ACME_HomeLoanSystem/ACME_HomeLoanSystem-war/nbproject/private/
+/ACME_HomeLoanSystem/ACME_HomeLoanSystem-ejb/nbproject/private/
+/ACME_HomeLoan_Client/nbproject/private/

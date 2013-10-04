@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package acme_banking_system.beans;
+package acme_homeloan.data_access;
 
-import acme_banking_system.beans.exceptions.NonexistentEntityException;
-import acme_banking_system.beans.exceptions.RollbackFailureException;
+import acme_homeloan.data_access.exceptions.NonexistentEntityException;
+import acme_homeloan.data_access.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;

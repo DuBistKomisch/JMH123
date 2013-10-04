@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package acme_banking_system.beans;
+package acme_homeloan.data_access;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -134,7 +134,7 @@ public class Debt implements Serializable {
 
     @Override
     public String toString() {
-        return "acme_banking_system.beans.Debt[ id=" + id + " ]";
+        return "acme_homeloan.data_access.Debt[ id=" + id + " ]";
     }
     
 }
