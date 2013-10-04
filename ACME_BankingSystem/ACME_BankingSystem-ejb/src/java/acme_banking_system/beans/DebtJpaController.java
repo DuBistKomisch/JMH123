@@ -20,9 +20,9 @@ import javax.transaction.UserTransaction;
  *
  * @author Howard Tseng
  */
-public class HomeLoanJpaController implements Serializable {
+public class DebtJpaController implements Serializable {
 
-    public HomeLoanJpaController(UserTransaction utx, EntityManagerFactory emf) {
+    public DebtJpaController(UserTransaction utx, EntityManagerFactory emf) {
         this.utx = utx;
         this.emf = emf;
     }
@@ -33,12 +33,12 @@ public class HomeLoanJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(HomeLoan homeLoan) throws RollbackFailureException, Exception {
+    public void create(Debt debt) throws RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            em.persist(homeLoan);
+            em.persist(debt);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -54,12 +54,12 @@ public class HomeLoanJpaController implements Serializable {
         }
     }
 
-    public void edit(HomeLoan homeLoan) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Debt debt) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            homeLoan = em.merge(homeLoan);
+            debt = em.merge(debt);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -69,9 +69,9 @@ public class HomeLoanJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = homeLoan.getId();
-                if (findHomeLoan(id) == null) {
-                    throw new NonexistentEntityException("The homeLoan with id " + id + " no longer exists.");
+                Integer id = debt.getId();
+                if (findDebt(id) == null) {
+                    throw new NonexistentEntityException("The debt with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -82,19 +82,19 @@ public class HomeLoanJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            HomeLoan homeLoan;
+            Debt debt;
             try {
-                homeLoan = em.getReference(HomeLoan.class, id);
-                homeLoan.getId();
+                debt = em.getReference(Debt.class, id);
+                debt.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The homeLoan with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The debt with id " + id + " no longer exists.", enfe);
             }
-            em.remove(homeLoan);
+            em.remove(debt);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -110,19 +110,19 @@ public class HomeLoanJpaController implements Serializable {
         }
     }
 
-    public List<HomeLoan> findHomeLoanEntities() {
-        return findHomeLoanEntities(true, -1, -1);
+    public List<Debt> findDebtEntities() {
+        return findDebtEntities(true, -1, -1);
     }
 
-    public List<HomeLoan> findHomeLoanEntities(int maxResults, int firstResult) {
-        return findHomeLoanEntities(false, maxResults, firstResult);
+    public List<Debt> findDebtEntities(int maxResults, int firstResult) {
+        return findDebtEntities(false, maxResults, firstResult);
     }
 
-    private List<HomeLoan> findHomeLoanEntities(boolean all, int maxResults, int firstResult) {
+    private List<Debt> findDebtEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(HomeLoan.class));
+            cq.select(cq.from(Debt.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -134,20 +134,20 @@ public class HomeLoanJpaController implements Serializable {
         }
     }
 
-    public HomeLoan findHomeLoan(Long id) {
+    public Debt findDebt(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(HomeLoan.class, id);
+            return em.find(Debt.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getHomeLoanCount() {
+    public int getDebtCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<HomeLoan> rt = cq.from(HomeLoan.class);
+            Root<Debt> rt = cq.from(Debt.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

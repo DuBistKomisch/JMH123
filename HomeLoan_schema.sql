@@ -1,0 +1,14 @@
+DROP TABLE HomeLoan.DEBT;
+
+DROP SCHEMA HomeLoan RESTRICT;
+
+CREATE SCHEMA HomeLoan;
+
+CREATE TABLE HomeLoan.DEBT (
+    ID INTEGER NOT NULL PRIMARY KEY
+    GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    c_ID INTEGER NOT NULL,
+    accnum varchar(255) NOT NULL,
+    amountBorrowed double NOT NULL,
+    amountRepayed double NOT NULL
+);
