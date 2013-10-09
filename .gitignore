@@ -39,3 +39,6 @@ ACME_BankingSystem/ACME_BankingSystem-war/nbproject/*
 /ACME_HomeLoanSystem/ACME_HomeLoanSystem-war/nbproject/private/
 /ACME_HomeLoanSystem/ACME_HomeLoanSystem-ejb/nbproject/private/
 /ACME_HomeLoan_Client/nbproject/private/
+/ACME_HomeLoanSystem/ACME_HomeLoanSystem-ejb/build/
+/ACME_HomeLoanSystem/ACME_HomeLoanSystem-war/build/
+/ACME_HomeLoanSystem/ACME_HomeLoanSystem-ejb/dist/
