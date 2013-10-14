@@ -7,19 +7,22 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>JMH123 ACME_Banking</title>
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
-    <h1> Deposit </h1>
-        <div>TODO write content</div>
+    <h1> Withdraw</h1>
          <h:form> 
-             <h:panelGrid  columns="3">
-                 Amount Withdraw:
-                 <input type="text" name="withdraw"/>
-             </h:panelGrid>
-             <h:commandButton value="next" action="Testing.xhtml"/>
-           <a href="Testing.xhtml">Testing</a> 
-         </h:form>
+             <h:panelGrid columns="3"> 
+         
+            <h:outputLabel value="Withdraw Amount"/>
+            <h:inputText id="withdraw" label="withdraw" value="#{WithdrawBean.withdraw}"/>
+            <h:message for="withdraw"/>
+            
+             <h:commandButton value="Next" action="WithdrawBean.xhtml"/>
+             
+         </h:panelGrid>
+            
+           </h:form>
     <h:body>
     </h:body>
 </html>

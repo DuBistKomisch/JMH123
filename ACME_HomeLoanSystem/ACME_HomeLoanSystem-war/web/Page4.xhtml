@@ -7,15 +7,16 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>JMH123 ACME_Banking</title>
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
         <h:form>
         <h:panelGrid columns="3">
-            Borrow Amount:
-            <input type="text" name="Amount" value="" /> <br></br><br></br>
-            
+            <h:outputLabel value="Loan Amount"/>
+            <h:inputText id="loan" label="loan" value="#{HomeLoanBean.loan}"/>
+            <h:message for="loan"/>
+        
             Terms and Conditions:<br></br>
             - All money must return be back<br></br>
             - All agreements accepts is consider binding and no action can be use over the bank<br></br>
@@ -25,10 +26,10 @@ and open the template in the editor.
             - No information would be use without the bank consents<br></br>
             
             <input type="radio" name="Agree" value="" /> Agree
-            
+            <h:commandButton value="Finish" action="Testing.xhtml"/>
+            <h:commandButton value="Back" action="Page3.xhtml"/>
         </h:panelGrid>
-            <h:commandButton value="next" action="Testing.xhtml"/>
-           <a href="Testing.xhtml">Testing</a> 
+             
         </h:form>
     </h:body>
 </html>

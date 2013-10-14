@@ -7,19 +7,27 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>JMH123 ACME_Banking</title>
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
-    <h1> Home </h1>
-        Deposit:
-        <h:commandButton value="next" action="Deposit.xhtml"/>
-           <a href="Testing.xhtml">Deposit</a> 
-        WithDraw:
-        <h:commandButton value="next" action="Withdraw.xhtml"/>
-           <a href="Testing.xhtml">Withdraw</a> 
-        Create Home Loan:
-        <h:commandButton value="next" action="Page2.xhtml"/>
-           <a href="Testing.xhtml">Page2</a> 
     <h:body>
+    <h1> Welcome to JMH123 ACME_Banking </h1>
+        
+    Please select an option:
+        <h:form>
+        <h:panelGrid columns="2">
+            
+            
+        <h:outputLabel value="Deposit:"/>
+        <h:commandButton value="Select Deposit" action="Deposit.xhtml"/>
+           
+        <h:outputLabel value="Withdraw:"/>
+        <h:commandButton value="Select Withdraw" action="Withdraw.xhtml"/>
+           
+        <h:outputLabel value="Create a Home Loan:"/>
+        <h:commandButton value=" Select Create Hoan Loan" action="Page2.xhtml"/> 
+        
+        </h:panelGrid>
+        </h:form>
     </h:body>
 </html>

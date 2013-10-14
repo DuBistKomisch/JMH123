@@ -7,34 +7,35 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>JMH123 ACME_Banking</title>
          <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
-        <h1>HELLO</h1>
+        <h1>Contact Details</h1>
         
         <h:form>
         <h:panelGrid  columns="3">
             
-        Email: 
-        <input type="text" name="E-mail" value="" />
-        Phone: 
-        <input type="text" name="phone" value="" />
-        Post Code:
-        <input type="text" name="postCode" value="" width="4"/>
-        <br></br>
+        <h:outputLabel value="E-Mail"/>
+        <h:inputText id="email" label="email" value="#{HomeLoanBean.email}"/>
+        <h:message for="email"/>
+        
+        <h:outputLabel value="Phone Number"/> 
+        <h:inputText id="phone" label="phone" value="#{HomeLoanBean.phone}"/>
+        <h:message for="phone"/>
+        
+        <h:outputLabel value="Postcode"/>
+        <h:inputText id="postcode" label="postcode" value="#{HomeLoanBean.postcode}"/>
+        <h:message for="postcode"/>
         
         Prefer Method: <br></br>
-        <input type="radio" name="E-mail" value="Email"/>Email <br></br>
+        <input type="radio" name="e-mail" value="Email"/>Email <br></br>
         <input type="radio" name="phone" value="phone"/>Phone <br></br>
-        <input type="radio" name="postCode" value="postCode"/>Post Code <br></br>
+        <input type="radio" name="postcode" value="postCode"/>Post Code <br></br>
         
+        <h:commandButton value="Next" action="Page4.xhtml"/>
+        <h:commandButton value="Back" action="Page3.xhtml"/>
         </h:panelGrid>
-            
-            <h:commandButton value="next" action="Page4.xhtml"/>
-           <a href="Testing.xhtml">Page4</a> 
-            </h:form>
-        
-        
+        </h:form>
     </h:body>
 </html>

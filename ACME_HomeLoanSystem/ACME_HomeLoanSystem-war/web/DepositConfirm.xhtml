@@ -12,9 +12,13 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <h2>Confirmation Page</h2>
+        <h:form>
         <h:panelGrid columns="2">
             <h:outputText value="username: "/>
             <h:outputText value="#{depositBean.dAmount}" />
+            
         </h:panelGrid>
+            <h:commandButton value="previous" action="Deposit.xhtml"/>
+        </h:form>
     </h:body>
 </html>

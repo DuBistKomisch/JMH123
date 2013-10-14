@@ -9,26 +9,23 @@ and open the template in the editor.
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
         
-        <title>TODO supply title</title>
+        <title>Create Home Loan</title>
          <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
-        <div>TODO write content</div>
-        <h1> Helloworld </h1>
+        <h1> Client Job Details </h1>
         
         <h:form> 
             <h:panelGrid  columns="3">
-            Current Job Position:
-            <input id="firstName" type="text" name="First Name" value="" />
-            <br></br>
-            Salary per year:
-            <input id="lastName" type="text" name="last Name" value="" />
-            <br></br>
+                <h:outputLabel value="Current Job Position:"/>
+                <h:inputText id="currentJob" label="currentJob" value="#{Bean.currentJob}"/>
+                 <h:message for="currentJob"/>
+            <h:outputLabel value="Salary per year:"/>
+            <h:inputText id="salary" label="salary" value="#{Bean.salary}"/>
+            <h:message for="salary"/>
             
-           
-            </h:panelGrid>
-           <h:commandButton value="next" action="Page3.xhtml"/>
-           <a href="Testing.xhtml">Page3</a> 
+           <h:commandButton value="Next" action="Page3.xhtml"/>
+            </h:panelGrid> 
            
         </h:form>
         

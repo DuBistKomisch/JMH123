@@ -7,16 +7,15 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>JMH123 ACME_Banking</title>
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
         <h1> Login </h1>
-        <div>TODO write content</div>
          <h:form> 
              <h:panelGrid  columns="3">
                  
-                 <h:outputLabel value="userName:" for="userName"/>
+                 <h:outputLabel value="User Name:" for="userName"/>
                  <h:inputText id="username" label="userName" value="#{loginBean.username}"/>
                  <h:message for="username"/>
                  
@@ -24,9 +23,8 @@ and open the template in the editor.
                  <h:inputText id="password" label="password" value="#{loginBean.password}"/>
                  <h:message for="password"/>
              
+             <h:commandButton value="Login" action="HomePage.xhtml"/>
              </h:panelGrid>
-             <h:commandButton value="next" action="confirmation.xhtml"/>
-           <a href="confirmation.xhtml">Confirmation</a> 
-         </h:form>
+            </h:form>
     </h:body>
 </html>
