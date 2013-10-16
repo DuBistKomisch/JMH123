@@ -11,12 +11,11 @@ and open the template in the editor.
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h1> Deposit </h1>
-        <div>TODO write content</div>
          <h:form> 
              <h:panelGrid  columns="3">
                  
                  <h:outputLabel value="Deposit Amount" for="amount"/>
-                 <h:inputText id="amount" label="amount" value="#{depositBean.dAmount}"/>
+                 <h:inputText id="amount" label="amount" required="true" value="#{depositBean.dAmount}"/>
                  <h:message for="amount"/>
              </h:panelGrid>
              

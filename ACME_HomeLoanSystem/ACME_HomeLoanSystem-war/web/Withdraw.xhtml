@@ -15,7 +15,7 @@ and open the template in the editor.
              <h:panelGrid columns="3"> 
          
             <h:outputLabel value="Withdraw Amount"/>
-            <h:inputText id="withdraw" label="withdraw" value="#{WithdrawBean.withdraw}"/>
+            <h:inputText id="withdraw" label="withdraw" required="true" value="#{WithdrawBean.withdraw}"/>
             <h:message for="withdraw"/>
             
              <h:commandButton value="Next" action="WithdrawBean.xhtml"/>

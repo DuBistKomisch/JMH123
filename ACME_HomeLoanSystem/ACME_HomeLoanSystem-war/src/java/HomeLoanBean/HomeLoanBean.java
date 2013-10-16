@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package CreateHomeLoanBean;
+package HomeLoanBean;
 
 import java.util.Date;
 import javax.inject.Named;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Confirmation</title>
+        <h:outputStylesheet library="css" name="styles.css"/>
+    </h:head>
+    <h:body>
+        <h2>List of Account</h2>
+        <h:form>
+        <h:panelGrid columns="2">
+            <h:outputText value="Saving Accounts: "/>
+            <h:outputText value="#{ListAccountBean.savings}" />
+            
+            <h:outputText value="HomeLoan Accounts: "/>
+            <h:outputText value="#{ListAccountBean.loan}" />
+            
+        </h:panelGrid>
+            <h:commandButton value="previous" action="HomePage.xhtml"/>
+        </h:form>
+    </h:body>
+</html>

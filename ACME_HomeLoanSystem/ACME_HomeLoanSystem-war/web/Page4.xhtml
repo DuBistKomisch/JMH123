@@ -14,22 +14,20 @@ and open the template in the editor.
         <h:form>
         <h:panelGrid columns="3">
             <h:outputLabel value="Loan Amount"/>
-            <h:inputText id="loan" label="loan" value="#{HomeLoanBean.loan}"/>
+            <h:inputText id="loan" label="loan" required="true" value="#{page4.loan}"/>
             <h:message for="loan"/>
         
             Terms and Conditions:<br></br>
-            - All money must return be back<br></br>
+            - All money must be return back<br></br>
             - All agreements accepts is consider binding and no action can be use over the bank<br></br>
-            - Rules can be change, edited and remove<br></br>
+            - Rules can be change, edited and remove by the bank<br></br>
             - Information may be use as evidence<br></br>
             - Details lost is not the banks problem<br></br>
             - No information would be use without the bank consents<br></br>
             
-            <input type="radio" name="Agree" value="" /> Agree
+            <input type="radio" name="Agree" required="true" value="" /> Agree
             <h:commandButton value="Finish" action="Testing.xhtml"/>
-            <h:commandButton value="Back" action="Page3.xhtml"/>
-        </h:panelGrid>
-             
+        </h:panelGrid>             
         </h:form>
     </h:body>
 </html>
