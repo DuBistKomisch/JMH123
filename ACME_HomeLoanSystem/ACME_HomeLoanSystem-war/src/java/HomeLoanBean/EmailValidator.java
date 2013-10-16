@@ -18,28 +18,27 @@ import javax.faces.validator.ValidatorException;
  *
  * @author Howard Tseng
  */
-
 @FacesValidator("emailValidator")
-public class EmailValidator implements Validator{
-    
+public class EmailValidator implements Validator {
+
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-            Pattern pattern = Pattern.compile("\\w+@\\w+\\.\\w+");
-    Matcher matcher = pattern.matcher(
-    (CharSequence) value);
-    HtmlInputText htmlInputText =
-    (HtmlInputText) component;
-    String label;
-    if (htmlInputText.getLabel() == null ||
-    htmlInputText.getLabel().trim().equals("")) {
-    label = htmlInputText.getId();
-    } else {
-    label = htmlInputText.getLabel();
-    }
-    if (!matcher.matches()) {
-    FacesMessage facesMessage =
-    new FacesMessage(label +
-    ": not a valid email address");
-    throw new ValidatorException(facesMessage);
-    }
+        Pattern pattern = Pattern.compile("\\w+@\\w+(\\.\\w+)+");
+        Matcher matcher = pattern.matcher(
+                (CharSequence) value);
+        HtmlInputText htmlInputText =
+                (HtmlInputText) component;
+        String label;
+        if (htmlInputText.getLabel() == null
+                || htmlInputText.getLabel().trim().equals("")) {
+            label = htmlInputText.getId();
+        } else {
+            label = htmlInputText.getLabel();
         }
+        if (!matcher.matches()) {
+            FacesMessage facesMessage =
+                    new FacesMessage(label
+                    + ": not a valid email address");
+            throw new ValidatorException(facesMessage);
+        }
+    }
 }

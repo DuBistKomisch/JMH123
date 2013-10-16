@@ -24,7 +24,7 @@ public class Page1Bean {
     
     private String firstName;
     private String lastName;
-    private Date DOB;
+    private Date DOB ;
     private String addrss;
 
     public String getFirstName() {

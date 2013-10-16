@@ -11,8 +11,16 @@ and open the template in the editor.
     </head>
     <body>
         <h1>Withdraw Confirm</h1>
-        <h:outputText value="Withdraw: "/>
-        <h:outputText value="#{WithdrawBean.withdraw}" />
-        <h:commandButton value="Submit" action="Testing.xhtml"/>
+        <panelGrid column="2">
+            <h:outputText value="Amount Currently Owe: "/>
+            <h:outputText value="#{withdrawBean.amountBorrowed}" />
+
+            <h:outputText value="Amount Repay: "/>
+            <h:outputText value="#{withdrawBean.amountRepayed}" />
+        </panelGrid>
+
+        <h:form> 
+            <h:commandButton value="Submit" action="HomePage.xhtml"/>
+        </h:form>
     </body>
 </html>

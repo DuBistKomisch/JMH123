@@ -13,15 +13,15 @@ and open the template in the editor.
     <h1> Withdraw</h1>
          <h:form> 
              <h:panelGrid columns="3"> 
-         
-            <h:outputLabel value="Withdraw Amount"/>
-            <h:inputText id="withdraw" label="withdraw" required="true" value="#{WithdrawBean.withdraw}"/>
+                     
+            <h:outputLabel value="Amount to Repay"/>
+            <h:inputText id="withdraw" label="withdraw" required="true" value="#{withdrawBean.amountRepayed}"/>
             <h:message for="withdraw"/>
             
-             <h:commandButton value="Next" action="WithdrawBean.xhtml"/>
+            
              
          </h:panelGrid>
-            
+             <h:commandButton value="Next" action="WithdrawConfirm.xhtml"/>
            </h:form>
     <h:body>
     </h:body>

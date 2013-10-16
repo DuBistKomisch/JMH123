@@ -14,7 +14,7 @@ and open the template in the editor.
         <h:form>
         <h:panelGrid columns="3">
             <h:outputLabel value="Loan Amount"/>
-            <h:inputText id="loan" label="loan" required="true" value="#{page4.loan}"/>
+            <h:inputText id="loan" label="loan" required="true" value="#{page4Bean.loan}"/>
             <h:message for="loan"/>
         
             Terms and Conditions:<br></br>
@@ -26,7 +26,7 @@ and open the template in the editor.
             - No information would be use without the bank consents<br></br>
             
             <input type="radio" name="Agree" required="true" value="" /> Agree
-            <h:commandButton value="Finish" action="Testing.xhtml"/>
+            <h:commandButton value="Finish" action="HomeLoanConfirm.xhtml"/>
         </h:panelGrid>             
         </h:form>
     </h:body>

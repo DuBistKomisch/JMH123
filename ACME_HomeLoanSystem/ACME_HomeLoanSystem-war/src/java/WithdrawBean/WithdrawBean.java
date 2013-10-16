@@ -20,15 +20,27 @@ public class WithdrawBean {
      */
     public WithdrawBean() {
     }
-    private double withdraw;
+    
+    private double amountRepayed;
+    private double amountBorrowed;
 
-    public double getWithdraw() {
-        return withdraw;
+    public double getAmountRepayed() {
+        return amountRepayed;
     }
 
-    public void setWithdraw(double withdraw) {
-        this.withdraw = withdraw;
+    public void setAmountRepayed(double amountRepayed) {
+        this.amountRepayed = amountRepayed;
     }
+
+    public double getAmountBorrowed() {
+        return amountBorrowed;
+    }
+
+    public void setAmountBorrowed(double amountBorrowed) {
+        this.amountBorrowed = amountBorrowed;
+    }
+    
+ 
     
     
 }

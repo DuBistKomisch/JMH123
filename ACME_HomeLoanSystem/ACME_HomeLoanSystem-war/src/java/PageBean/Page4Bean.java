@@ -4,6 +4,8 @@
  */
 package PageBean;
 
+
+import WithdrawBean.WithdrawBean;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 
@@ -15,6 +17,7 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class Page4Bean {
 
+    WithdrawBean w = new WithdrawBean();
     /**
      * Creates a new instance of Page4Bean
      */
@@ -29,6 +32,8 @@ public class Page4Bean {
 
     public void setLoan(double loan) {
         this.loan = loan;
+        w.setAmountBorrowed(this.loan);
     }
+    
     
 }

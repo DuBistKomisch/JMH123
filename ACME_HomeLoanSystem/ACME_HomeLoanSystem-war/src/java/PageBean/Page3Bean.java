@@ -22,8 +22,9 @@ public class Page3Bean {
     }
     
     private String email;
-    private int phone;
-    private int postcode;
+    private String phone;
+    private String postcode;
+    private int method;
 
     public String getEmail() {
         return email;
@@ -33,21 +34,27 @@ public class Page3Bean {
         this.email = email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public int getPostcode() {
+    public String getPostcode() {
         return postcode;
     }
 
-    public void setPostcode(int postcode) {
+    public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
     
+    public void setmethod(int method){
+        this.method = method;
+    }
     
+    public int getMethod(){
+        return method;
+    }
 }
