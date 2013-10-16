@@ -11,23 +11,32 @@ and open the template in the editor.
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
+        <h1>Create Home Loan Wizard</h1>
+        <p>Job Details &#x2192; Contact Method &#x2192; <b>Terms</b> &#x2192; Confirm</p>
+        <h2>Terms</h2>
         <h:form>
-        <h:panelGrid columns="3">
-            <h:outputLabel value="Loan Amount"/>
-            <h:inputText id="loan" label="loan" required="true" value="#{page4Bean.loan}"/>
-            <h:message for="loan"/>
-        
-            Terms and Conditions:<br></br>
-            - All money must be return back<br></br>
-            - All agreements accepts is consider binding and no action can be use over the bank<br></br>
-            - Rules can be change, edited and remove by the bank<br></br>
-            - Information may be use as evidence<br></br>
-            - Details lost is not the banks problem<br></br>
-            - No information would be use without the bank consents<br></br>
-            
-            <input type="radio" name="Agree" required="true" value="" /> Agree
-            <h:commandButton value="Finish" action="HomeLoanConfirm.xhtml"/>
-        </h:panelGrid>             
+            <h:panelGrid columns="3">
+                <h:outputLabel value="Loan Amount"/>
+                <h:inputText id="loan" label="loan" required="true" value="#{page4Bean.loan}"/>
+                <h:message for="loan"/>
+
+                <h:outputLabel value="Terms and Conditions"/>
+                <p>
+                    <ul>
+                        <li>All money must be return back</li>
+                        <li>All agreements accepts is consider binding and no action can be use over the bank</li>
+                        <li>Rules can be change, edited and remove by the bank</li>
+                        <li>Information may be use as evidence</li>
+                        <li>Details lost is not the banks problem</li>
+                        <li>No information would be use without the bank consents</li>
+                    </ul>
+                    <label for="agree"><input type="checkbox" id="agree" required="true" /> Agree</label>
+                </p>
+                <h:message for="agree"/>
+                
+                <h:commandButton value="Next" action="HomeLoanConfirm.xhtml"/>
+                <h:link value="Cancel" outcome="HomePage.xhtml"/>
+            </h:panelGrid>
         </h:form>
     </h:body>
 </html>

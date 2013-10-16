@@ -8,26 +8,26 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        
         <title>Create Home Loan</title>
-         <h:outputStylesheet library="css" name="styles.css"/>
+        <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
-        <h1> Client Job Details </h1>
-        
-        <h:form> 
-            <h:panelGrid  columns="3">
-                <h:outputLabel value="Current Job Position:"/>
+        <h1>Create Home Loan Wizard</h1>
+        <p><b>Job Details</b> &#x2192; Contact Method &#x2192; Terms &#x2192; Confirm</p>
+        <h2>Job Details</h2>
+        <h:form>
+            <h:panelGrid  columns="3" columnClasses="cLabels,cFields,cMessages">
+                <h:outputLabel value="Current Job Position"/>
                 <h:inputText id="currentJob" label="currentJob" required="true" value="#{page2Bean.currentJob}"/>
-                 <h:message for="currentJob"/>
-            <h:outputLabel value="Salary per year:"/>
-            <h:inputText id="salary" label="salary" required="true" value="#{page2Bean.salary}"/>
-            <h:message for="salary"/>
-            
-           <h:commandButton value="Next" action="Page3.xhtml"/>
-            </h:panelGrid> 
-           
+                <h:message for="currentJob"/>
+                
+                <h:outputLabel value="Salary (per year)"/>
+                <h:inputText id="salary" label="salary" required="true" value="#{page2Bean.salary}"/>
+                <h:message for="salary"/>
+                
+                <h:commandButton value="Next" action="Page3.xhtml"/>
+                <h:link value="Cancel" outcome="HomePage.xhtml"/>
+            </h:panelGrid>
         </h:form>
-        
     </h:body>
 </html>

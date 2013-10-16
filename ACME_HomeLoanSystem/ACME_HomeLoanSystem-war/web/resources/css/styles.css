@@ -6,11 +6,20 @@
         Purpose of the stylesheet follows.
 */
 
-
 body {
-background-color:white;
+    background-color: white;
+    font-family: sans-serif;
 }
 
-h1 {color:#00ff00;}
+.cLabels {
     
+}
 
+.cFields {
+    
+}
+
+.cMessages {
+    color: red;
+    font-style: italic;
+}

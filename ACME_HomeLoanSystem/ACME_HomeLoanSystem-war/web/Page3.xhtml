@@ -9,37 +9,39 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>JMH123 ACME_Banking</title>
-         <h:outputStylesheet library="css" name="styles.css"/>
+        <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
-        <h1>Contact Details</h1>
-        
+        <h1>Create Home Loan Wizard</h1>
+        <p>Job Details &#x2192; <b>Contact Method</b> &#x2192; Terms &#x2192; Confirm</p>
+        <h2>Contact Method</h2>
         <h:form>
-        <h:panelGrid  columns="3">
-            
-        <h:outputLabel value="E-Mail"/>
-        <h:inputText id="email" label="email" required="true" value="#{page3Bean.email}">
-        <f:validator validatorId="emailValidator"/>
-        </h:inputText>
-        <h:message for="email"/>
-        
-        
-        <h:outputLabel value="Phone Number"/> 
-        <h:inputText id="phone" label="phone" required="true" value="#{page3Bean.phone}"/>
-        <h:message for="phone"/>
-        
-        <h:outputLabel value="Postcode"/>
-        <h:inputText id="postcode" label="postcode" required="true" value="#{page3Bean.postcode}"/>
-        <h:message for="postcode"/>
-        
-        Prefer Method: <br></br>
-        <input type="radio" name="e-mail" value="Email"/>Email <br></br>
-        <input type="radio" name="phone" value="phone"/>Phone <br></br>
-        <input type="radio" name="postcode" value="postCode"/>Post Code <br></br>
-        
-        <h:commandButton value="Next" action="Page4.xhtml"/>
-        <h:commandButton value="Back" action="Page3.xhtml"/>
-        </h:panelGrid>
+            <h:panelGrid columns="3" columnClasses="cLabels,cFields,cMessages">
+                <h:outputLabel value="E-Mail"/>
+                <h:inputText id="email" label="email" required="true" value="#{page3Bean.email}">
+                    <f:validator validatorId="emailValidator"/>
+                </h:inputText>
+                <h:message for="email"/>
+
+                <h:outputLabel value="Phone Number"/> 
+                <h:inputText id="phone" label="phone" required="true" value="#{page3Bean.phone}"/>
+                <h:message for="phone"/>
+
+                <h:outputLabel value="Postcode"/>
+                <h:inputText id="postcode" label="postcode" required="true" value="#{page3Bean.postcode}"/>
+                <h:message for="postcode"/>
+
+                <h:outputLabel value="Preferred Method"/>
+                <h:selectOneRadio id="method" required="true" value="#{page3Bean.method}">
+                    <f:selectItem itemValue="0" itemLabel="Email" />
+                    <f:selectItem itemValue="1" itemLabel="Phone" />
+                    <f:selectItem itemValue="2" itemLabel="Mail" />
+                </h:selectOneRadio>
+                <h:message for="method"/>
+
+                <h:commandButton value="Next" action="Page4.xhtml"/>
+                <h:link value="Cancel" outcome="HomePage.xhtml"/>
+            </h:panelGrid>
         </h:form>
     </h:body>
 </html>
