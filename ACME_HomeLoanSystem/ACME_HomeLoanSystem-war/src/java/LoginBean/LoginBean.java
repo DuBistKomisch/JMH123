@@ -4,15 +4,16 @@
  */
 package LoginBean;
 
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+
 
 /**
  *
  * @author Howard Tseng
  */
 @Named(value = "loginBean")
-@Dependent
+@SessionScoped
 public class LoginBean {
 
     /**

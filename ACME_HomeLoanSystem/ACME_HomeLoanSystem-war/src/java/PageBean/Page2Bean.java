@@ -4,6 +4,7 @@
  */
 package PageBean;
 
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 
@@ -12,7 +13,7 @@ import javax.enterprise.context.RequestScoped;
  * @author Howard Tseng
  */
 @Named(value = "page2Bean")
-@RequestScoped
+@ConversationScoped
 public class Page2Bean {
 
     /**

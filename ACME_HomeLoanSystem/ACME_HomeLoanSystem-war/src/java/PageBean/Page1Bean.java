@@ -6,14 +6,14 @@ package PageBean;
 
 import java.util.Date;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ConversationScoped;
 
 /**
  *
  * @author Howard Tseng
  */
 @Named(value = "page1Bean")
-@RequestScoped
+@ConversationScoped
 public class Page1Bean {
 
     /**
@@ -25,7 +25,7 @@ public class Page1Bean {
     private String firstName;
     private String lastName;
     private Date DOB ;
-    private String addrss;
+    private String address;
 
     public String getFirstName() {
         return firstName;
@@ -51,11 +51,11 @@ public class Page1Bean {
         this.DOB = DOB;
     }
 
-    public String getAddrss() {
-        return addrss;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddrss(String addrss) {
-        this.addrss = addrss;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
