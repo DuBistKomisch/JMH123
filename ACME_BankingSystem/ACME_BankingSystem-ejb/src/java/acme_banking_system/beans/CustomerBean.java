@@ -28,7 +28,7 @@ public class CustomerBean implements CustomerBeanRemote {
     @PostConstruct
     public void initialize() {
         try {
-            connection = dataSource.getConnection();
+            connection = dataSource.getConnection("jmh123", "jmh123");
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }

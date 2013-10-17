@@ -16,6 +16,8 @@ public interface CustomerDAO {
     public void createCustomer(Customer customer) throws DataLayerException;
 
     public Customer readCustomer(int customerId) throws BusinessException, DataLayerException;
+    
+    public Customer getCustomer(String firstName, String lastName) throws BusinessException, DataLayerException;
 
     public void updateCustomer(Customer customer) throws DataLayerException;
 

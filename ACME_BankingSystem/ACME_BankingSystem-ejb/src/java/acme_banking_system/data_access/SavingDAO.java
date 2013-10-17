@@ -20,5 +20,5 @@ public interface SavingDAO {
 
     public ArrayList<Saving> getCustomerSavings(int customerId) throws DataLayerException;
 
-    public ArrayList<Saving> getTransactionsHistory() throws DataLayerException;
+    public ArrayList<ACME_Transaction> getTransactionsHistory(String accNum) throws DataLayerException;
 }

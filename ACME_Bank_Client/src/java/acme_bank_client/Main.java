@@ -29,9 +29,9 @@ import org.jboss.logging.Logger;
  */
 public class Main {
     
-    @Resource(mappedName = "jms/BanckingSystemQueue")
+    @Resource(lookup = "jms/BankingSystemQueue")
     private static Queue BankingSystemQueue;
-    @Resource(mappedName = "jms/bankingSystemConnectionFactory")
+    @Resource(lookup = "jms/bankingSystemConnectionFactory")
     private static ConnectionFactory BankingSystemConnectionFactory;
     
     private static EmployeeSessionRemote employeeSession;

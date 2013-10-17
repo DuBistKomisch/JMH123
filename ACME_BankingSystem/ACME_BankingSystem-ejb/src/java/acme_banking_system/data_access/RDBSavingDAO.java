@@ -157,8 +157,19 @@ public class RDBSavingDAO implements SavingDAO {
     }
 
     @Override
-    public ArrayList<Saving> getTransactionsHistory() throws DataLayerException {
-        // TODO implement
-        throw new DataLayerException();
+    public ArrayList<ACME_Transaction> getTransactionsHistory(String accNum) throws DataLayerException {
+        ArrayList<ACME_Transaction> res = new ArrayList<>();
+        try {
+            PreparedStatement sqlStatement = dbConnection.prepareStatement(
+                    "SELECT * FROM JMH123.TRANSACTIONS WHERE ACCNUM = ?");
+            sqlStatement.setString(1, accNum);
+            ResultSet result = sqlStatement.executeQuery();
+            while (result.next()) {
+                res.add(new ACME_Transaction(result.getInt(2), result.getInt(3), result.getInt(4), result.getString(5)));
+            }
+        } catch (SQLException sqle) {
+            throw new DataLayerException();
+        }
+        return res;
     }
 }

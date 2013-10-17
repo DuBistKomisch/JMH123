@@ -50,7 +50,7 @@ public class EmployeeSession implements EmployeeSessionRemote {
         try {
             this.logged = false;
             this.actions = 0;
-            connection = dataSource.getConnection();
+            connection = dataSource.getConnection("jmh123", "jmh123");
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }

@@ -60,6 +60,25 @@ public class RDBCustomerDAO implements CustomerDAO {
     }
 
     @Override
+    public Customer getCustomer(String firstName, String lastName) throws BusinessException, DataLayerException {
+        try {
+            // Getting a customer
+            PreparedStatement sqlStatement = dbConnection.prepareStatement(
+                    "SELECT * FROM JMH123.CUSTOMERS WHERE C_FIRSTNAME = ? AND C_LASTNAME = ?", Statement.RETURN_GENERATED_KEYS);
+            sqlStatement.setString(1, firstName);
+            sqlStatement.setString(2, lastName);
+            ResultSet res = sqlStatement.executeQuery();
+            if (res.next()) {
+                return new Customer(res.getInt(1), res.getString(2), res.getString(3), res.getDate(4), res.getString(5));
+            } else {
+                throw new BusinessException("Customer doesn't exist.");
+            }
+        } catch (SQLException sqlException) {
+            throw new DataLayerException();
+        }
+    }
+    
+    @Override
     public void updateCustomer(Customer customer) throws DataLayerException {
         try {
             // Update the customer

@@ -28,7 +28,7 @@ public class SavingBean implements SavingBeanRemote {
     @PostConstruct
     public void initialize() {
         try {
-            connection = dataSource.getConnection();
+            connection = dataSource.getConnection("jmh123", "jmh123");
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
