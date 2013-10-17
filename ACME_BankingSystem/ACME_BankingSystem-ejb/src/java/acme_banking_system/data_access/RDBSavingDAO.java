@@ -162,4 +162,22 @@ public class RDBSavingDAO implements SavingDAO {
         // TODO implement
         throw new DataLayerException();
     }
+
+    @Override
+    public double stats() throws DataLayerException {
+        double res = 0.0;
+        try {
+            // Getting all the saving accounts
+            PreparedStatement sqlStatement = dbConnection.prepareStatement(
+                    "SELECT SUM(BALANCE) AS TOTAL FROM JMH123.SAVINGS");
+            ResultSet result = sqlStatement.executeQuery();
+            // Filling the array with accounts
+            while (result.next()) {
+                res = result.getDouble(1);
+            }
+        } catch (SQLException sqle) {
+            throw new DataLayerException();
+        }
+        return res;
+    }
 }
