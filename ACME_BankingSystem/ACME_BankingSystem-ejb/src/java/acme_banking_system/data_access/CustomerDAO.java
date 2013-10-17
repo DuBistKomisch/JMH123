@@ -22,4 +22,6 @@ public interface CustomerDAO {
     public void deleteCustomer(int customerId) throws DataLayerException;
 
     public ArrayList<Customer> getAllCustomer() throws DataLayerException;
+
+    public Customer loginCustomer(String firstname, String lastName) throws BusinessException, DataLayerException;
 }

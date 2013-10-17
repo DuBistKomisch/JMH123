@@ -15,15 +15,15 @@ and open the template in the editor.
         <h:form> 
             <h:panelGrid  columns="3">
 
-                <h:outputLabel value="User Name" for="username"/>
-                <h:inputText id="username" required="true" value="#{loginBean.username}"/>
-                <h:message for="username"/>
+                <h:outputLabel value="First Name" for="firstName"/>
+                <h:inputText id="firstName" required="true" value="#{loginBean.firstName}"/>
+                <h:message for="firstName"/>
 
-                <h:outputLabel value="Password" for="password"/>
-                <h:inputSecret id="password" required="true" value="#{loginBean.password}"/>
-                <h:message for="password"/>
+                <h:outputLabel value="Last Name" for="lastName"/>
+                <h:inputText id="lastName" required="true" value="#{loginBean.lastName}"/>
+                <h:message for="lastName"/>
 
-                <h:commandButton value="Login" action="#{loginBean.submit}"/>
+                <h:commandButton value="Login" action="#{loginBean.login}"/>
             </h:panelGrid>
         </h:form>
     </h:body>

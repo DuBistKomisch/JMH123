@@ -106,4 +106,23 @@ public class RDBCustomerDAO implements CustomerDAO {
 
         return result;
     }
+
+    @Override
+    public Customer loginCustomer(String firstname, String lastName) throws BusinessException, DataLayerException {
+        try {
+            // Getting the customer using his full name and apssword
+            PreparedStatement sqlStatement = dbConnection.prepareStatement(
+                    "SELECT * FROM JMH123.CUSTOMERS WHERE C_FIRSTNAME = ? AND C_LASTNAME = ?");
+            sqlStatement.setString(1, firstname);
+            sqlStatement.setString(2, lastName);
+            ResultSet res = sqlStatement.executeQuery();
+            if (res.next()) {
+                return new Customer(res.getInt(1));
+            } else {
+                throw new BusinessException("Wrong customer name.");
+            }
+        } catch (SQLException sqlException) {
+            throw new DataLayerException();
+        }
+    }
 }
