@@ -5,47 +5,42 @@
 package acme_homeloan.data_access;
 
 import acme_homeloan.data_access.exceptions.NonexistentEntityException;
-import acme_homeloan.data_access.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.transaction.UserTransaction;
 
 /**
  *
  * @author Howard Tseng
  */
+@TransactionManagement(TransactionManagementType.BEAN)
 public class HomeloansJpaController implements Serializable {
 
-    public HomeloansJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
+    public HomeloansJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ACME_HomeLoanSystem-ejbPU");;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Homeloans homeloans) throws RollbackFailureException, Exception {
+    public void create(Homeloans homeloans) throws Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             em.persist(homeloans);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
@@ -54,19 +49,14 @@ public class HomeloansJpaController implements Serializable {
         }
     }
 
-    public void edit(Homeloans homeloans) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Homeloans homeloans) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             homeloans = em.merge(homeloans);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = homeloans.getAccnum();
@@ -82,11 +72,11 @@ public class HomeloansJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Integer id) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Homeloans homeloans;
             try {
                 homeloans = em.getReference(Homeloans.class, id);
@@ -95,13 +85,8 @@ public class HomeloansJpaController implements Serializable {
                 throw new NonexistentEntityException("The homeloans with id " + id + " no longer exists.", enfe);
             }
             em.remove(homeloans);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {

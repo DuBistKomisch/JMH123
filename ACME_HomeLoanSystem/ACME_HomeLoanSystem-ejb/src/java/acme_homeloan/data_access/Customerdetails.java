@@ -15,7 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -52,28 +55,32 @@ public class Customerdetails implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "CURRENTJOB")
     private String currentjob;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Min(value = 1)
+    @Max(value = 999999)
     @Basic(optional = false)
     @NotNull
     @Column(name = "SALARY")
     private BigDecimal salary;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "EMAIL")
     private String email;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Pattern(regexp="^\\d{10}$", message="Invalid phone format, should be xxxxxxxxxx.")
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 10, max = 10, message = "Phone number must be 10 digits.")
     @Column(name = "PHONE")
     private String phone;
+    @Pattern(regexp="^\\d{4}$", message="Invalid post code format, should be xxxx.")
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 4)
+    @Size(min = 4, max = 4, message = "Post code must be 4 digits.")
     @Column(name = "POSTCODE")
     private String postcode;
+    @Min(value = 0)
+    @Max(value = 2)
     @Basic(optional = false)
     @NotNull
     @Column(name = "METHOD")

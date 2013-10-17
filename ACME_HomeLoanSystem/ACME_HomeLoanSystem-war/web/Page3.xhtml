@@ -18,9 +18,7 @@ and open the template in the editor.
         <h:form>
             <h:panelGrid columns="3" columnClasses="cLabels,cFields,cMessages">
                 <h:outputLabel value="E-Mail"/>
-                <h:inputText id="email" label="email" required="true" value="#{loginBean.customerdetails.email}">
-                    <f:validator validatorId="emailValidator"/>
-                </h:inputText>
+                <h:inputText id="email" label="email" required="true" value="#{loginBean.customerdetails.email}"/>
                 <h:message for="email"/>
 
                 <h:outputLabel value="Phone Number"/> 

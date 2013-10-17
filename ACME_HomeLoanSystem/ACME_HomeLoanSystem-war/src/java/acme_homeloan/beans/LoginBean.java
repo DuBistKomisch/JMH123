@@ -10,12 +10,9 @@ import acme_homeloan.data_access.CustomerdetailsJpaController;
 import acme_homeloan.data_access.Homeloans;
 import acme_homeloan.data_access.HomeloansJpaController;
 import java.io.Serializable;
-import javax.annotation.Resource;
+import java.math.BigDecimal;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
-import javax.transaction.UserTransaction;
 
 /**
  *
@@ -25,11 +22,6 @@ import javax.transaction.UserTransaction;
 @SessionScoped
 public class LoginBean implements Serializable {
 
-    /**
-     * Creates a new instance of LoginBean
-     */
-    public LoginBean() {
-    }
     private String username;
     private String password;
     
@@ -37,13 +29,13 @@ public class LoginBean implements Serializable {
     private Customerdetails customerdetails;
     private Customer customer;
     
-    @PersistenceUnit(unitName="ACME_HomeLoanSystem-warPU") //inject from your application server
-    EntityManagerFactory emf;
-    @Resource //inject from your application server
-    UserTransaction utx; 
+    private CustomerdetailsJpaController cjc;
+    private HomeloansJpaController hjc;
     
-    private CustomerdetailsJpaController cjc = new CustomerdetailsJpaController(utx, emf);
-    private HomeloansJpaController hjc = new HomeloansJpaController(utx, emf);
+    public LoginBean() {
+        cjc = new CustomerdetailsJpaController();
+        hjc = new HomeloansJpaController();
+    }
 
     public Customer getCustomer() {
         return customer;
@@ -101,12 +93,15 @@ public class LoginBean implements Serializable {
     }
 
     public String confirmHomeLoan() {
+        homeloan.setAmountrepayed(BigDecimal.ZERO);
         try {
             cjc.create(customerdetails);
             hjc.create(homeloan);
         } catch (Exception e) {
             e.printStackTrace(System.out);
+            return "HomeLoanConfirm";
         }
+        
         homeloan = null;
         customerdetails = null;
         customer = null;

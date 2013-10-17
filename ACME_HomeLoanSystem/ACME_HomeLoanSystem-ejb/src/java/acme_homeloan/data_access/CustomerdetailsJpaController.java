@@ -5,47 +5,42 @@
 package acme_homeloan.data_access;
 
 import acme_homeloan.data_access.exceptions.NonexistentEntityException;
-import acme_homeloan.data_access.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.transaction.UserTransaction;
 
 /**
  *
  * @author Howard Tseng
  */
+@TransactionManagement(TransactionManagementType.BEAN)
 public class CustomerdetailsJpaController implements Serializable {
 
-    public CustomerdetailsJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
+    public CustomerdetailsJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ACME_HomeLoanSystem-ejbPU");;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Customerdetails customerdetails) throws RollbackFailureException, Exception {
+    public void create(Customerdetails customerdetails) throws Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             em.persist(customerdetails);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
@@ -54,19 +49,14 @@ public class CustomerdetailsJpaController implements Serializable {
         }
     }
 
-    public void edit(Customerdetails customerdetails) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Customerdetails customerdetails) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             customerdetails = em.merge(customerdetails);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = customerdetails.getId();
@@ -82,11 +72,11 @@ public class CustomerdetailsJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Integer id) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
+            em.getTransaction().begin();
             Customerdetails customerdetails;
             try {
                 customerdetails = em.getReference(Customerdetails.class, id);
@@ -95,13 +85,8 @@ public class CustomerdetailsJpaController implements Serializable {
                 throw new NonexistentEntityException("The customerdetails with id " + id + " no longer exists.", enfe);
             }
             em.remove(customerdetails);
-            utx.commit();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
