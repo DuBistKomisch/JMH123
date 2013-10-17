@@ -18,14 +18,6 @@ import javax.rmi.PortableRemoteObject;
  */
 public class Main {
     
-<<<<<<< HEAD
-    @Resource(lookup = "jms/BankingSystemQueue")
-    private static Queue BankingSystemQueue;
-    @Resource(lookup = "jms/bankingSystemConnectionFactory")
-    private static ConnectionFactory BankingSystemConnectionFactory;
-    
-=======
->>>>>>> 0772b5e782ecccc8336ca4df2e7909efba7e1167
     private static EmployeeSessionRemote employeeSession;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
