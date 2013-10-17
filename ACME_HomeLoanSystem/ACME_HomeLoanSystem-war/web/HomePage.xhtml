@@ -15,8 +15,7 @@ and open the template in the editor.
         <h:form>
             <h:panelGrid columns="1">
                 <h:commandButton value="Create Home Loan" action="#{loginBean.createHomeLoan}"/>
-                <h:link value="Deposit" outcome="Deposit"/>
-                <h:link value="Withdraw" outcome="Withdraw"/>
+                <h:commandButton value="Make Repayment" action="#{loginBean.startRepayment}"/>
                 <h:commandButton value="Logout" action="#{loginBean.logout}"/>
             </h:panelGrid>
         </h:form>

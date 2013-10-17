@@ -3,6 +3,8 @@ package acme_banking_system.beans;
 import acme_banking_system.data_access.Customer;
 import acme_banking_system.data_access.CustomerDAO;
 import acme_banking_system.data_access.RDBCustomerDAO;
+import acme_banking_system.data_access.RDBSavingDAO;
+import acme_banking_system.data_access.SavingDAO;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
 import acme_banking_system.exceptions.LoggedInStateException;
@@ -76,7 +78,13 @@ public class CustomerSession implements CustomerSessionRemote {
     
     @Override
     public Customer getCustomer() throws BusinessException, DataLayerException {
-        CustomerDAO doa = new RDBCustomerDAO(connection);
-        return doa.readCustomer(C_ID); // throws
+        CustomerDAO dao = new RDBCustomerDAO(connection);
+        return dao.readCustomer(C_ID); // throws
+    }
+
+    @Override
+    public void makeRepayment(String accNum, double amount) throws BusinessException, DataLayerException {
+        SavingDAO dao = new RDBSavingDAO(connection);
+        dao.withdraw(1, accNum, amount, "Home Loan repayment");
     }
 }

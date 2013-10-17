@@ -8,31 +8,15 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import javax.annotation.Resource;
 import javax.ejb.NoSuchEJBException;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
-import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.rmi.PortableRemoteObject;
-import org.jboss.logging.Logger;
 
 /**
  * @author morga_000, jake
  */
 public class Main {
-    
-    @Resource(mappedName = "jms/BanckingSystemQueue")
-    private static Queue BankingSystemQueue;
-    @Resource(mappedName = "jms/bankingSystemConnectionFactory")
-    private static ConnectionFactory BankingSystemConnectionFactory;
     
     private static EmployeeSessionRemote employeeSession;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -42,16 +26,12 @@ public class Main {
      */
     public static void main(String[] args) throws Exception {
         
-        new Main().sendJMSMessageToBankingSystemQueue("NetBeans is fucking buggy");
-        
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String firstName, lastName, password, address, accNum, desc;
         int id;
         double amount;
         getEmployeeSession();
 
-        
-        
         // welcome
         System.out.println();
         System.out.println("Welcome to JMH123 ACME Banking System");
@@ -196,34 +176,8 @@ public class Main {
             }
         }
     }
-    
-    private Message createJMSMessageForjmsBankingSystemQueue(Session session,
-                        Object messageData) throws JMSException {
-        TextMessage tm = session.createTextMessage();
-        tm.setText(messageData.toString());
-        return tm;
-    }
-    
-    private void sendJMSMessageToBankingSystemQueue(Object messageData) throws JMSException {
-        Connection connection;
-        Session session = null;
-        try {
-            connection = BankingSystemConnectionFactory.createConnection();
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer messageProducer = session.createProducer(BankingSystemQueue);
-            messageProducer.send(createJMSMessageForjmsBankingSystemQueue(session, messageData));
-        } finally {
-            if (session != null) {
-                try {
-                    session.close();
-                } catch (JMSException e) {
-                    Logger.getLogger(this.getClass().getName()).log(org.jboss.logging.Logger.Level.WARN, "Cannot close session", e);
-                }
-            }
-        }
-    }
 
     private static void getEmployeeSession() throws NamingException {
-        employeeSession = (EmployeeSessionRemote) PortableRemoteObject.narrow(new InitialContext().lookup("java:global/ACME_BankingSystem/ACME_BankingSystem-ejb/EmployeeSession"), EmployeeSessionRemote.class);
+        employeeSession = (EmployeeSessionRemote) PortableRemoteObject.narrow(new InitialContext().lookup("java:global/ACME_BankingSystem-ejb/EmployeeSession!acme_banking_system.beans.EmployeeSessionRemote"), EmployeeSessionRemote.class);
     }
 }

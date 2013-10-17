@@ -5,7 +5,6 @@
 package acme_homeloan.beans;
 
 import acme_banking_system.beans.CustomerSessionRemote;
-import acme_banking_system.beans.EmployeeSessionRemote;
 import acme_banking_system.data_access.Customer;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
@@ -14,6 +13,7 @@ import acme_homeloan.data_access.Customerdetails;
 import acme_homeloan.data_access.CustomerdetailsJpaController;
 import acme_homeloan.data_access.Homeloans;
 import acme_homeloan.data_access.HomeloansJpaController;
+import acme_homeloan.data_access.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.ejb.NoSuchEJBException;
@@ -36,6 +36,8 @@ public class LoginBean implements Serializable {
     private Homeloans homeloan;
     private Customerdetails customerdetails;
     private Customer customer;
+    private String S_ID;
+    private BigDecimal amount;
     private CustomerdetailsJpaController cjc;
     private HomeloansJpaController hjc;
     private static CustomerSessionRemote customerSession;
@@ -45,7 +47,7 @@ public class LoginBean implements Serializable {
         hjc = new HomeloansJpaController();
         getCustomerSession();
     }
-    
+
     public String getFirstName() {
         return firstName;
     }
@@ -62,6 +64,22 @@ public class LoginBean implements Serializable {
         this.lastName = lastName;
     }
 
+    public String getS_ID() {
+        return S_ID;
+    }
+
+    public void setS_ID(String S_ID) {
+        this.S_ID = S_ID;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
@@ -73,7 +91,7 @@ public class LoginBean implements Serializable {
     public Customerdetails getCustomerdetails() {
         return customerdetails;
     }
-    
+
     private static void getCustomerSession() throws NamingException {
         customerSession = (CustomerSessionRemote) PortableRemoteObject.narrow(new InitialContext().lookup("java:global/ACME_BankingSystem-ejb/CustomerSession!acme_banking_system.beans.CustomerSessionRemote"), CustomerSessionRemote.class);
     }
@@ -129,13 +147,44 @@ public class LoginBean implements Serializable {
             cjc.create(customerdetails);
             hjc.create(homeloan);
         } catch (Exception e) {
-            e.printStackTrace(System.out);
             return "HomeLoanConfirm";
         }
 
         homeloan = null;
         customerdetails = null;
         customer = null;
+        return "HomePage";
+    }
+
+    public String startRepayment() {
+        homeloan = new Homeloans();
+        S_ID = "";
+        amount = null;
+        return "Repayment";
+    }
+
+    public String cancelRepayment() {
+        homeloan = null;
+        S_ID = "";
+        amount = null;
+        return "HomePage";
+    }
+
+    public String doRepayment() {
+        try {
+            customerSession.makeRepayment(S_ID, amount.doubleValue());
+            
+            homeloan = hjc.findHomeloans(homeloan.getAccnum());
+            homeloan.setAmountrepayed(homeloan.getAmountrepayed().add(amount));
+            hjc.edit(homeloan);
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+            return "Repayment";
+        }
+
+        homeloan = null;
+        S_ID = "";
+        amount = null;
         return "HomePage";
     }
 }

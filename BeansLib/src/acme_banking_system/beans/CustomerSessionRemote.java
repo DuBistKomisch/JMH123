@@ -22,4 +22,6 @@ public interface CustomerSessionRemote {
     public void logout() throws LoggedInStateException;
     
     public Customer getCustomer() throws BusinessException, DataLayerException;
+    
+    public void makeRepayment(String accNum, double amount) throws BusinessException, DataLayerException;
 }

@@ -121,8 +121,12 @@ public class HomeloansJpaController implements Serializable {
 
     public Homeloans findHomeloans(Integer id) {
         EntityManager em = getEntityManager();
+        Homeloans homeloans = null;
         try {
-            return em.find(Homeloans.class, id);
+            em.getTransaction().begin();
+            homeloans = em.find(Homeloans.class, id);
+            em.getTransaction().commit();
+            return homeloans;
         } finally {
             em.close();
         }
