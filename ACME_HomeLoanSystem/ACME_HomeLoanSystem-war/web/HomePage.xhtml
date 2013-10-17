@@ -11,23 +11,14 @@ and open the template in the editor.
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
-    <h1> Welcome to JMH123 ACME_Banking </h1>
-        
-    Please select an option:
+        <h1>Welcome to JMH123 ACME_Banking!</h1>
         <h:form>
-        <h:panelGrid columns="2">
-            
-            
-        <h:outputLabel value="Deposit:"/>
-        <h:commandButton value="Select Deposit" action="Deposit.xhtml"/>
-           
-        <h:outputLabel value="Withdraw:"/>
-        <h:commandButton value="Select Withdraw" action="Withdraw.xhtml"/>
-           
-        <h:outputLabel value="Create a Home Loan:"/>
-        <h:commandButton value=" Select Create Hoan Loan" action="Page2.xhtml"/> 
-        
-        </h:panelGrid>
+            <h:panelGrid columns="1">
+                <h:commandButton value="Create Home Loan" action="#{loginBean.createHomeLoan}"/>
+                <h:commandButton value="Make Repayment" action="#{loginBean.startRepayment}"/>
+                <h:commandButton value="List Accounts" action="#{loginBean.startListing}"/>
+                <h:commandButton value="Logout" action="#{loginBean.logout}"/>
+            </h:panelGrid>
         </h:form>
     </h:body>
 </html>

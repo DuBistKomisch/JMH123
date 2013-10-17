@@ -1,14 +1,26 @@
-DROP TABLE HomeLoan.DEBT;
+DROP TABLE HomeLoan.HomeLoans;
+DROP TABLE HomeLoan.CustomerDetails;
 
 DROP SCHEMA HomeLoan RESTRICT;
 
 CREATE SCHEMA HomeLoan;
 
-CREATE TABLE HomeLoan.DEBT (
+CREATE TABLE HomeLoan.HomeLoans (
+    AccNum INTEGER NOT NULL PRIMARY KEY
+    GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    C_ID INTEGER NOT NULL,
+    AmountBorrowed DECIMAL(6,2) NOT NULL,
+    AmountRepayed DECIMAL(6,2) NOT NULL
+);
+
+CREATE TABLE HomeLoan.CustomerDetails (
     ID INTEGER NOT NULL PRIMARY KEY
     GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-    c_ID INTEGER NOT NULL,
-    accnum varchar(255) NOT NULL,
-    amountBorrowed double NOT NULL,
-    amountRepayed double NOT NULL
+    C_ID INTEGER NOT NULL,
+    CurrentJob VARCHAR(255) NOT NULL,
+    Salary DECIMAL(6,2) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Phone VARCHAR(10) NOT NULL,
+    Postcode VARCHAR(4) NOT NULL,
+    Method INTEGER NOT NULL
 );

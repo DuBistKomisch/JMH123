@@ -11,25 +11,34 @@ and open the template in the editor.
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
+        <h1>Create Home Loan Wizard</h1>
+        <p>Customer Details &#x2192; Job Details &#x2192; Contact Method &#x2192; <b>Terms</b> &#x2192; Confirm</p>
+        <h2>Terms</h2>
         <h:form>
-        <h:panelGrid columns="3">
-            <h:outputLabel value="Loan Amount"/>
-            <h:inputText id="loan" label="loan" value="#{HomeLoanBean.loan}"/>
-            <h:message for="loan"/>
-        
-            Terms and Conditions:<br></br>
-            - All money must return be back<br></br>
-            - All agreements accepts is consider binding and no action can be use over the bank<br></br>
-            - Rules can be change, edited and remove<br></br>
-            - Information may be use as evidence<br></br>
-            - Details lost is not the banks problem<br></br>
-            - No information would be use without the bank consents<br></br>
-            
-            <input type="radio" name="Agree" value="" /> Agree
-            <h:commandButton value="Finish" action="Testing.xhtml"/>
+            <h:panelGrid columns="3"  columnClasses="cLabels,cFields,cMessages">
+                <h:outputLabel value="Loan Amount"/>
+                <h:inputText id="loan" label="loan" required="true" value="#{loginBean.homeloan.amountborrowed}"/>
+                <h:message for="loan"/>
+
+                <h:outputLabel value="Terms and Conditions"/>
+                <p>
+                    <ul>
+                        <li>All money must be return back</li>
+                        <li>All agreements accepts is consider binding and no action can be use over the bank</li>
+                        <li>Rules can be change, edited and remove by the bank</li>
+                        <li>Information may be use as evidence</li>
+                        <li>Details lost is not the banks problem</li>
+                        <li>No information would be use without the bank consents</li>
+                    </ul>
+                </p>
+                <h:message for="null"/>
+
+                <h:outputLabel value="Agree"/>
+                <p><input type="checkbox" id="agree" required="true"/></p>
+            </h:panelGrid>
+            <h:commandButton value="Next" action="HomeLoanConfirm.xhtml"/>
             <h:commandButton value="Back" action="Page3.xhtml"/>
-        </h:panelGrid>
-             
+            <h:commandButton value="Cancel" action="#{loginBean.cancelHomeLoan}"/>
         </h:form>
     </h:body>
 </html>

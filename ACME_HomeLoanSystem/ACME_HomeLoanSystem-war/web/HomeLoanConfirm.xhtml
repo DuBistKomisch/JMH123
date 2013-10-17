@@ -5,51 +5,58 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <head>
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
         <title>Home Loan Confirmation</title>
-    </head>
-    <body>
-        <h2>Confirmation Page</h2>
+        <h:outputStylesheet library="css" name="styles.css"/>
+    </h:head>
+    <h:body>
+        <h1>Create Home Loan Wizard</h1>
+        <p>Customer Details &#x2192; Job Details &#x2192; Contact Method &#x2192; Terms &#x2192; <b>Confirm</b></p>
+        <h2>Confirm</h2>
         <h:form>
-        <h:panelGrid columns="2">
-            <h:outputText value="First Name: "/>
-            <h:outputText value="#{HomeLoanBean.firstname}" />
-            
-            <h:outputText value="Last Name: "/>
-            <h:outputText value="#{HomeLoanBean.lastname}" />
-            
-            <h:outputText value="First Name: "/>
-            <h:outputText value="#{HomeLoanBean.firstname}" />
-            
-            <h:outputText value="Date: "/>
-            <h:outputText value="#{HomeLoanBean.DOB}" />
-            
-            <h:outputText value="Address: "/>
-            <h:outputText value="#{HomeLoanBean.address}" />
-            
-            <h:outputText value="Current Job: "/>
-            <h:outputText value="#{HomeLoanBean.currentJob}" />
-            
-            <h:outputText value="Salary: "/>
-            <h:outputText value="#{HomeLoanBean.salary}" />
-            
-            <h:outputText value="Email: "/>
-            <h:outputText value="#{HomeLoanBean.email}" />
-            
-            <h:outputText value="Phone: "/>
-            <h:outputText value="#{HomeLoanBean.phone}" />
-            
-            <h:outputText value="PostCode: "/>
-            <h:outputText value="#{HomeLoanBean.postcode}" />
-            
-            <h:outputText value="Loan Amount: "/>
-            <h:outputText value="#{HomeLoanBean.loan}" />
-            
-            
-            
-        </h:panelGrid>
+            <h:panelGrid columns="2"  columnClasses="cLabels,cFields">
+                <h:outputLabel value="First Name"/>
+                <h:inputText id="firstName" required="true" disabled="true" value="#{loginBean.customer.firstName}"/>
+
+                <h:outputLabel value="Last Name"/>
+                <h:inputText id="lastName" required="true" disabled="true" value="#{loginBean.customer.lastName}"/>
+
+                <h:outputLabel value="DOB"/>
+                <h:inputText id="DOB" label="DOB" required="true" disabled="true" value="#{loginBean.customer.dateOfBirth}"/>
+
+                <h:outputLabel value="Address"/>
+                <h:inputText id="address" label="address" required="true" disabled="true" value="#{loginBean.customer.address}"/>
+
+                <h:outputLabel value="Current Job Position"/>
+                <h:inputText id="currentJob" label="currentJob" required="true" disabled="true" value="#{loginBean.customerdetails.currentjob}"/>
+
+                <h:outputLabel value="Salary (per year)"/>
+                <h:inputText id="salary" label="salary" required="true" disabled="true" value="#{loginBean.customerdetails.salary}"/>
+
+                <h:outputLabel value="E-Mail"/>
+                <h:inputText id="email" label="email" required="true" disabled="true" value="#{loginBean.customerdetails.email}"/>
+
+                <h:outputLabel value="Phone Number"/> 
+                <h:inputText id="phone" label="phone" required="true" disabled="true" value="#{loginBean.customerdetails.phone}"/>
+
+                <h:outputLabel value="Postcode"/>
+                <h:inputText id="postcode" label="postcode" required="true" disabled="true" value="#{loginBean.customerdetails.postcode}"/>
+
+                <h:outputLabel value="Preferred Method"/>
+                <h:selectOneRadio id="method" required="true" disabled="true" value="#{loginBean.customerdetails.method}">
+                    <f:selectItem itemValue="0" itemLabel="Email" />
+                    <f:selectItem itemValue="1" itemLabel="Phone" />
+                    <f:selectItem itemValue="2" itemLabel="Mail" />
+                </h:selectOneRadio>
+
+                <h:outputLabel value="Loan Amount"/>
+                <h:inputText id="loan" label="loan" required="true" disabled="true" value="#{loginBean.homeloan.amountborrowed}"/>
+            </h:panelGrid>
+            <h:commandButton value="Confirm" action="#{loginBean.confirmHomeLoan}"/>
             <h:commandButton value="Back" action="Page4.xhtml"/>
+            <h:commandButton value="Cancel" action="#{loginBean.cancelHomeLoan}"/>
         </h:form>
-    </body>
+    </h:body>
 </html>

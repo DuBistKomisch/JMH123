@@ -5,47 +5,42 @@
 package acme_homeloan.data_access;
 
 import acme_homeloan.data_access.exceptions.NonexistentEntityException;
-import acme_homeloan.data_access.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.transaction.UserTransaction;
 
 /**
  *
  * @author Howard Tseng
  */
-public class DebtJpaController implements Serializable {
+@TransactionManagement(TransactionManagementType.BEAN)
+public class CustomerdetailsJpaController implements Serializable {
 
-    public DebtJpaController(UserTransaction utx, EntityManagerFactory emf) {
-        this.utx = utx;
-        this.emf = emf;
+    public CustomerdetailsJpaController() {
+        this.emf = Persistence.createEntityManagerFactory("ACME_HomeLoanSystem-ejbPU");;
     }
-    private UserTransaction utx = null;
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Debt debt) throws RollbackFailureException, Exception {
+    public void create(Customerdetails customerdetails) throws Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
-            em.persist(debt);
-            utx.commit();
+            em.getTransaction().begin();
+            em.persist(customerdetails);
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
@@ -54,24 +49,19 @@ public class DebtJpaController implements Serializable {
         }
     }
 
-    public void edit(Debt debt) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Customerdetails customerdetails) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
-            debt = em.merge(debt);
-            utx.commit();
+            em.getTransaction().begin();
+            customerdetails = em.merge(customerdetails);
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = debt.getId();
-                if (findDebt(id) == null) {
-                    throw new NonexistentEntityException("The debt with id " + id + " no longer exists.");
+                Integer id = customerdetails.getId();
+                if (findCustomerdetails(id) == null) {
+                    throw new NonexistentEntityException("The customerdetails with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -82,26 +72,21 @@ public class DebtJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Integer id) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
-            utx.begin();
             em = getEntityManager();
-            Debt debt;
+            em.getTransaction().begin();
+            Customerdetails customerdetails;
             try {
-                debt = em.getReference(Debt.class, id);
-                debt.getId();
+                customerdetails = em.getReference(Customerdetails.class, id);
+                customerdetails.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The debt with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The customerdetails with id " + id + " no longer exists.", enfe);
             }
-            em.remove(debt);
-            utx.commit();
+            em.remove(customerdetails);
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            try {
-                utx.rollback();
-            } catch (Exception re) {
-                throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
-            }
             throw ex;
         } finally {
             if (em != null) {
@@ -110,19 +95,19 @@ public class DebtJpaController implements Serializable {
         }
     }
 
-    public List<Debt> findDebtEntities() {
-        return findDebtEntities(true, -1, -1);
+    public List<Customerdetails> findCustomerdetailsEntities() {
+        return findCustomerdetailsEntities(true, -1, -1);
     }
 
-    public List<Debt> findDebtEntities(int maxResults, int firstResult) {
-        return findDebtEntities(false, maxResults, firstResult);
+    public List<Customerdetails> findCustomerdetailsEntities(int maxResults, int firstResult) {
+        return findCustomerdetailsEntities(false, maxResults, firstResult);
     }
 
-    private List<Debt> findDebtEntities(boolean all, int maxResults, int firstResult) {
+    private List<Customerdetails> findCustomerdetailsEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Debt.class));
+            cq.select(cq.from(Customerdetails.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -134,20 +119,20 @@ public class DebtJpaController implements Serializable {
         }
     }
 
-    public Debt findDebt(Integer id) {
+    public Customerdetails findCustomerdetails(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Debt.class, id);
+            return em.find(Customerdetails.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getDebtCount() {
+    public int getCustomerdetailsCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Debt> rt = cq.from(Debt.class);
+            Root<Customerdetails> rt = cq.from(Customerdetails.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

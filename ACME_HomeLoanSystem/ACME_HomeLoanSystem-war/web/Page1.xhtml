@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Create Home Loan</title>
+        <h:outputStylesheet library="css" name="styles.css"/>
+    </h:head>
+    <h:body>
+        <h1>Create Home Loan Wizard</h1>
+        <p><b>Customer Details</b> &#x2192; Job Details &#x2192; Contact Method &#x2192; Terms &#x2192; Confirm</p>
+        <h2>Customer Details</h2>
+        <h:form>
+            <h:panelGrid  columns="3" columnClasses="cLabels,cFields,cMessages">
+                <h:outputLabel value="First Name"/>
+                <h:inputText id="firstName" required="true" disabled="true" value="#{loginBean.customer.firstName}"/>
+                <h:message for="firstName"/>
+
+                <h:outputLabel value="Last Name"/>
+                <h:inputText id="lastName" required="true" disabled="true" value="#{loginBean.customer.lastName}"/>
+                <h:message for="lastName"/>
+
+                <h:outputLabel value="DOB"/>
+                <h:inputText id="DOB" label="DOB" required="true" disabled="true" value="#{loginBean.customer.dateOfBirth}"/>
+                <h:message for="DOB"/>
+
+                <h:outputLabel value="Address"/>
+                <h:inputText id="address" label="address" required="true" disabled="true" value="#{loginBean.customer.address}"/>
+                <h:message for="address"/>
+            </h:panelGrid>
+            <h:commandButton value="Next" action="Page2.xhtml"/>
+            <h:commandButton value="Cancel" action="#{loginBean.cancelHomeLoan}"/>
+        </h:form>
+    </h:body>
+</html>
