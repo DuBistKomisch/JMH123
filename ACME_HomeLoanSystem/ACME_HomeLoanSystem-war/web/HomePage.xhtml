@@ -14,7 +14,7 @@ and open the template in the editor.
         <h1>Welcome to JMH123 ACME_Banking!</h1>
         <h:form>
             <h:panelGrid columns="1">
-                <h:link value="Create Home Loan" outcome="Page2"/>
+                <h:commandButton value="Create Home Loan" action="#{loginBean.createHomeLoan}"/>
                 <h:link value="Deposit" outcome="Deposit"/>
                 <h:link value="Withdraw" outcome="Withdraw"/>
             </h:panelGrid>

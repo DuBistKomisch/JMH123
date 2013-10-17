@@ -11,20 +11,20 @@ and open the template in the editor.
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
     <h:body>
-        <h1> Login </h1>
-         <h:form> 
-             <h:panelGrid  columns="3">
-                 
-                 <h:outputLabel value="User Name:" for="userName"/>
-                 <h:inputText id="username" label="userName" required="true" value="#{loginBean.username}"/>
-                 <h:message for="username"/>
-                 
-                 <h:outputLabel value="password:" for="password"/>
-                 <h:inputText id="password" label="password" required="true" value="#{loginBean.password}"/>
-                 <h:message for="password"/>
-             
-             <h:commandButton value="Login" action="HomePage.xhtml"/>
-             </h:panelGrid>
-            </h:form>
+        <h1>Login</h1>
+        <h:form> 
+            <h:panelGrid  columns="3">
+
+                <h:outputLabel value="User Name" for="username"/>
+                <h:inputText id="username" required="true" value="#{loginBean.username}"/>
+                <h:message for="username"/>
+
+                <h:outputLabel value="Password" for="password"/>
+                <h:inputSecret id="password" required="true" value="#{loginBean.password}"/>
+                <h:message for="password"/>
+
+                <h:commandButton value="Login" action="#{loginBean.submit}"/>
+            </h:panelGrid>
+        </h:form>
     </h:body>
 </html>

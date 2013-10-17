@@ -13,21 +13,21 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <h1>Create Home Loan Wizard</h1>
-        <p><b>Job Details</b> &#x2192; Contact Method &#x2192; Terms &#x2192; Confirm</p>
+        <p>Customer Details &#x2192; <b>Job Details</b> &#x2192; Contact Method &#x2192; Terms &#x2192; Confirm</p>
         <h2>Job Details</h2>
         <h:form>
             <h:panelGrid  columns="3" columnClasses="cLabels,cFields,cMessages">
                 <h:outputLabel value="Current Job Position"/>
-                <h:inputText id="currentJob" label="currentJob" required="true" value="#{page2Bean.currentJob}"/>
+                <h:inputText id="currentJob" label="currentJob" required="true" value="#{loginBean.homeloan.currentJob}"/>
                 <h:message for="currentJob"/>
-                
+
                 <h:outputLabel value="Salary (per year)"/>
-                <h:inputText id="salary" label="salary" required="true" value="#{page2Bean.salary}"/>
+                <h:inputText id="salary" label="salary" required="true" value="#{loginBean.homeloan.salary}"/>
                 <h:message for="salary"/>
-                
-                <h:commandButton value="Next" action="Page3.xhtml"/>
-                <h:link value="Cancel" outcome="HomePage.xhtml"/>
             </h:panelGrid>
+            <h:commandButton value="Next" action="Page3.xhtml"/>
+            <h:commandButton value="Back" action="Page1.xhtml"/>
+            <h:commandButton value="Cancel" action="#{loginBean.cancelHomeLoan}"/>
         </h:form>
     </h:body>
 </html>

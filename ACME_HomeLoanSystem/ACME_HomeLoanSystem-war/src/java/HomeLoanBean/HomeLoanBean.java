@@ -6,14 +6,12 @@ package HomeLoanBean;
 
 import java.util.Date;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 
 /**
  *
  * @author Howard Tseng
  */
 @Named(value = "homeLoan")
-@RequestScoped
 public class HomeLoanBean {
 
     /**
@@ -22,17 +20,33 @@ public class HomeLoanBean {
     public HomeLoanBean() {
     }
     
+    // page 1
     private String firstName;
     private String lastName;
     private Date DOB;
-    private String addrss;
+    private String address;
     
+    // page 2
     private String currentJob;
     private double salary;
+    
+    // page 3
     private String email;
-    private int phone;
-    private int postcode;
+    private String phone;
+    private String postcode;
+    private int method;
+    
+    // page 4
     private double loan;
+    private boolean agree;
+
+    public boolean isAgree() {
+        return agree;
+    }
+
+    public void setAgree(boolean agree) {
+        this.agree = agree;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -58,17 +72,14 @@ public class HomeLoanBean {
         this.DOB = DOB;
     }
 
-    public String getAddrss() {
-        return addrss;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddrss(String addrss) {
-        this.addrss = addrss;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    
-    
-    
     public String getCurrentJob() {
         return currentJob;
     }
@@ -93,20 +104,28 @@ public class HomeLoanBean {
         this.email = email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public int getPostcode() {
+    public String getPostcode() {
         return postcode;
     }
 
-    public void setPostcode(int postcode) {
+    public void setPostcode(String postcode) {
         this.postcode = postcode;
+    }
+
+    public int getMethod() {
+        return method;
+    }
+
+    public void setMethod(int method) {
+        this.method = method;
     }
 
     public double getLoan() {
@@ -116,6 +135,4 @@ public class HomeLoanBean {
     public void setLoan(double loan) {
         this.loan = loan;
     }
-    
-    
 }

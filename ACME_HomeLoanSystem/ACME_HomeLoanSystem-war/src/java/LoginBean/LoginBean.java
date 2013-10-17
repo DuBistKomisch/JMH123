@@ -4,7 +4,9 @@
  */
 package LoginBean;
 
-import javax.faces.bean.SessionScoped;
+import HomeLoanBean.HomeLoanBean;
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 
@@ -14,7 +16,7 @@ import javax.inject.Named;
  */
 @Named(value = "loginBean")
 @SessionScoped
-public class LoginBean {
+public class LoginBean implements Serializable {
 
     /**
      * Creates a new instance of LoginBean
@@ -25,6 +27,12 @@ public class LoginBean {
     private String username;
     private String password;
 
+    public String getPassword() {
+        return password;
+    }
+    
+    private HomeLoanBean homeloan;
+
     public String getUsername() {
         return username;
     }
@@ -33,13 +41,38 @@ public class LoginBean {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public HomeLoanBean getHomeloan() {
+        return homeloan;
+    }
     
+    public String submit() {
+        boolean authenticated = true;
+        if (authenticated)
+            return "HomePage";
+        else
+            return "Login";
+    }
     
+    public String createHomeLoan()
+    {
+        homeloan = new HomeLoanBean();
+        return "Page1";
+    }
+    
+    public String cancelHomeLoan()
+    {
+        homeloan = null;
+        return "HomePage";
+    }
+    
+    public String confirmHomeLoan()
+    {
+        // TODO
+        homeloan = null;
+        return "HomePage";
+    }
 }

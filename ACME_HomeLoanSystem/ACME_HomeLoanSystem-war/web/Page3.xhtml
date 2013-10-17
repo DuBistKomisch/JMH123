@@ -13,35 +13,35 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <h1>Create Home Loan Wizard</h1>
-        <p>Job Details &#x2192; <b>Contact Method</b> &#x2192; Terms &#x2192; Confirm</p>
+        <p>Customer Details &#x2192; Job Details &#x2192; <b>Contact Method</b> &#x2192; Terms &#x2192; Confirm</p>
         <h2>Contact Method</h2>
         <h:form>
             <h:panelGrid columns="3" columnClasses="cLabels,cFields,cMessages">
                 <h:outputLabel value="E-Mail"/>
-                <h:inputText id="email" label="email" required="true" value="#{page3Bean.email}">
+                <h:inputText id="email" label="email" required="true" value="#{loginBean.homeloan.email}">
                     <f:validator validatorId="emailValidator"/>
                 </h:inputText>
                 <h:message for="email"/>
 
                 <h:outputLabel value="Phone Number"/> 
-                <h:inputText id="phone" label="phone" required="true" value="#{page3Bean.phone}"/>
+                <h:inputText id="phone" label="phone" required="true" value="#{loginBean.homeloan.phone}"/>
                 <h:message for="phone"/>
 
                 <h:outputLabel value="Postcode"/>
-                <h:inputText id="postcode" label="postcode" required="true" value="#{page3Bean.postcode}"/>
+                <h:inputText id="postcode" label="postcode" required="true" value="#{loginBean.homeloan.postcode}"/>
                 <h:message for="postcode"/>
 
                 <h:outputLabel value="Preferred Method"/>
-                <h:selectOneRadio id="method" required="true" value="#{page3Bean.method}">
+                <h:selectOneRadio id="method" required="true" value="#{loginBean.homeloan.method}">
                     <f:selectItem itemValue="0" itemLabel="Email" />
                     <f:selectItem itemValue="1" itemLabel="Phone" />
                     <f:selectItem itemValue="2" itemLabel="Mail" />
                 </h:selectOneRadio>
                 <h:message for="method"/>
-
-                <h:commandButton value="Next" action="Page4.xhtml"/>
-                <h:link value="Cancel" outcome="HomePage.xhtml"/>
             </h:panelGrid>
+            <h:commandButton value="Next" action="Page4.xhtml"/>
+            <h:commandButton value="Back" action="Page2.xhtml"/>
+            <h:commandButton value="Cancel" action="#{loginBean.cancelHomeLoan}"/>
         </h:form>
     </h:body>
 </html>
