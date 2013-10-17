@@ -22,4 +22,6 @@ public interface SavingBeanRemote {
     public ArrayList<Saving> viewBalance(int customerId) throws DataLayerException;
 
     public void viewTransactionsHistory() throws DataLayerException;
+    
+    public double stats() throws DataLayerException;
 }

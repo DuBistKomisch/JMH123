@@ -99,4 +99,10 @@ public class SavingBean implements SavingBeanRemote {
         // TODO implement
         throw new DataLayerException();
     }
+
+    @Override
+    public double stats() throws DataLayerException {
+        SavingDAO dao = new RDBSavingDAO(connection);
+        return dao.stats();
+    }
 }

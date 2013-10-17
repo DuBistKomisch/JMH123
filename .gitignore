@@ -51,3 +51,6 @@ ACME_BankingSystem/ACME_BankingSystem-war/nbproject/*
 /ACME_HomeLoanSystem/ACME_HomeLoanSystem-war/dist/
 /JSPApp/build/
 /JSPApp/dist/
+/ACME_Investors/nbproject/private/
+/ACME_Investors/build/
+/ACME_Investors/dist/
