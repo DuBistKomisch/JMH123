@@ -4,12 +4,14 @@ import acme_banking_system.data_access.Customer;
 import acme_banking_system.data_access.CustomerDAO;
 import acme_banking_system.data_access.RDBCustomerDAO;
 import acme_banking_system.data_access.RDBSavingDAO;
+import acme_banking_system.data_access.Saving;
 import acme_banking_system.data_access.SavingDAO;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
 import acme_banking_system.exceptions.LoggedInStateException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
@@ -86,5 +88,11 @@ public class CustomerSession implements CustomerSessionRemote {
     public void makeRepayment(String accNum, double amount) throws BusinessException, DataLayerException {
         SavingDAO dao = new RDBSavingDAO(connection);
         dao.withdraw(1, accNum, amount, "Home Loan repayment");
+    }
+
+    @Override
+    public List<Saving> getSavings(int C_ID) throws DataLayerException {
+        SavingDAO dao = new RDBSavingDAO(connection);
+        return dao.getCustomerSavings(C_ID);
     }
 }

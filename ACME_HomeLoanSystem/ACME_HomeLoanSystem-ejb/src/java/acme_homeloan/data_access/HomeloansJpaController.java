@@ -14,6 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -106,6 +107,7 @@ public class HomeloansJpaController implements Serializable {
     private List<Homeloans> findHomeloansEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
+            em.getTransaction().begin();
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Homeloans.class));
             Query q = em.createQuery(cq);
@@ -113,7 +115,9 @@ public class HomeloansJpaController implements Serializable {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
             }
-            return q.getResultList();
+            List<Homeloans> hll = q.getResultList();
+            em.getTransaction().commit();
+            return hll;
         } finally {
             em.close();
         }
@@ -145,4 +149,17 @@ public class HomeloansJpaController implements Serializable {
         }
     }
     
+    public List<Homeloans> findHomeloansByCid(int id) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            TypedQuery<Homeloans> query = em.createNamedQuery("Homeloans.findByCId", Homeloans.class);
+            query.setParameter("cId", id);
+            List<Homeloans> hll = query.getResultList();
+            em.getTransaction().commit();
+            return hll;
+        } finally {
+            em.close();
+        }
+    }
 }

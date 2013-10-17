@@ -6,6 +6,7 @@ package acme_homeloan.beans;
 
 import acme_banking_system.beans.CustomerSessionRemote;
 import acme_banking_system.data_access.Customer;
+import acme_banking_system.data_access.Saving;
 import acme_banking_system.exceptions.BusinessException;
 import acme_banking_system.exceptions.DataLayerException;
 import acme_banking_system.exceptions.LoggedInStateException;
@@ -13,9 +14,9 @@ import acme_homeloan.data_access.Customerdetails;
 import acme_homeloan.data_access.CustomerdetailsJpaController;
 import acme_homeloan.data_access.Homeloans;
 import acme_homeloan.data_access.HomeloansJpaController;
-import acme_homeloan.data_access.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.ejb.NoSuchEJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -38,6 +39,8 @@ public class LoginBean implements Serializable {
     private Customer customer;
     private String S_ID;
     private BigDecimal amount;
+    private List<Homeloans> homeloans;
+    private List<Saving> savings;
     private CustomerdetailsJpaController cjc;
     private HomeloansJpaController hjc;
     private static CustomerSessionRemote customerSession;
@@ -90,6 +93,14 @@ public class LoginBean implements Serializable {
 
     public Customerdetails getCustomerdetails() {
         return customerdetails;
+    }
+    
+    public List<Homeloans> getHomeloans() {
+        return homeloans;
+    }
+    
+    public List<Saving> getSavings() {
+        return savings;
     }
 
     private static void getCustomerSession() throws NamingException {
@@ -185,6 +196,20 @@ public class LoginBean implements Serializable {
         homeloan = null;
         S_ID = "";
         amount = null;
+        return "HomePage";
+    }
+    
+    public String startListing() throws BusinessException, DataLayerException {
+        int C_ID = customerSession.getCustomer().getId();
+        homeloans = hjc.findHomeloansByCid(C_ID);
+        savings = customerSession.getSavings(C_ID);
+        System.out.println(savings);
+        return "ListAccounts";
+    }
+    
+    public String doneListing() {
+        homeloans = null;
+        savings = null;
         return "HomePage";
     }
 }
