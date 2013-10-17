@@ -17,7 +17,7 @@ and open the template in the editor.
         <h:form>
             <h:panelGrid columns="3"  columnClasses="cLabels,cFields,cMessages">
                 <h:outputLabel value="Loan Amount"/>
-                <h:inputText id="loan" label="loan" required="true" value="#{loginBean.homeloan.loan}"/>
+                <h:inputText id="loan" label="loan" required="true" value="#{loginBean.homeloan.amountborrowed}"/>
                 <h:message for="loan"/>
 
                 <h:outputLabel value="Terms and Conditions"/>
@@ -34,8 +34,7 @@ and open the template in the editor.
                 <h:message for="null"/>
 
                 <h:outputLabel value="Agree"/>
-                <h:selectBooleanCheckbox id="agree" required="true" value="#{loginBean.homeloan.agree}"/>
-                <h:message for="agree"/>
+                <p><input type="checkbox" id="agree" required="true"/></p>
             </h:panelGrid>
             <h:commandButton value="Next" action="HomeLoanConfirm.xhtml"/>
             <h:commandButton value="Back" action="Page3.xhtml"/>

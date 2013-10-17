@@ -18,21 +18,21 @@ and open the template in the editor.
         <h:form>
             <h:panelGrid columns="3" columnClasses="cLabels,cFields,cMessages">
                 <h:outputLabel value="E-Mail"/>
-                <h:inputText id="email" label="email" required="true" value="#{loginBean.homeloan.email}">
+                <h:inputText id="email" label="email" required="true" value="#{loginBean.customerdetails.email}">
                     <f:validator validatorId="emailValidator"/>
                 </h:inputText>
                 <h:message for="email"/>
 
                 <h:outputLabel value="Phone Number"/> 
-                <h:inputText id="phone" label="phone" required="true" value="#{loginBean.homeloan.phone}"/>
+                <h:inputText id="phone" label="phone" required="true" value="#{loginBean.customerdetails.phone}"/>
                 <h:message for="phone"/>
 
                 <h:outputLabel value="Postcode"/>
-                <h:inputText id="postcode" label="postcode" required="true" value="#{loginBean.homeloan.postcode}"/>
+                <h:inputText id="postcode" label="postcode" required="true" value="#{loginBean.customerdetails.postcode}"/>
                 <h:message for="postcode"/>
 
                 <h:outputLabel value="Preferred Method"/>
-                <h:selectOneRadio id="method" required="true" value="#{loginBean.homeloan.method}">
+                <h:selectOneRadio id="method" required="true" value="#{loginBean.customerdetails.method}">
                     <f:selectItem itemValue="0" itemLabel="Email" />
                     <f:selectItem itemValue="1" itemLabel="Phone" />
                     <f:selectItem itemValue="2" itemLabel="Mail" />

@@ -18,46 +18,43 @@ and open the template in the editor.
         <h:form>
             <h:panelGrid columns="2"  columnClasses="cLabels,cFields">
                 <h:outputLabel value="First Name"/>
-                <h:inputText id="firstName" required="true" disabled="true" value="#{loginBean.homeloan.firstName}"/>
+                <h:inputText id="firstName" required="true" disabled="true" value="#{loginBean.customer.firstName}"/>
 
                 <h:outputLabel value="Last Name"/>
-                <h:inputText id="lastName" required="true" disabled="true" value="#{loginBean.homeloan.lastName}"/>
+                <h:inputText id="lastName" required="true" disabled="true" value="#{loginBean.customer.lastName}"/>
 
                 <h:outputLabel value="DOB"/>
-                <h:inputText id="DOB" label="DOB" required="true" disabled="true" value="#{loginBean.homeloan.DOB}"/>
+                <h:inputText id="DOB" label="DOB" required="true" disabled="true" value="#{loginBean.customer.dateOfBirth}"/>
 
                 <h:outputLabel value="Address"/>
-                <h:inputText id="address" label="address" required="true" disabled="true" value="#{loginBean.homeloan.address}"/>
+                <h:inputText id="address" label="address" required="true" disabled="true" value="#{loginBean.customer.address}"/>
 
                 <h:outputLabel value="Current Job Position"/>
-                <h:inputText id="currentJob" label="currentJob" required="true" disabled="true" value="#{loginBean.homeloan.currentJob}"/>
+                <h:inputText id="currentJob" label="currentJob" required="true" disabled="true" value="#{loginBean.customerdetails.currentjob}"/>
 
                 <h:outputLabel value="Salary (per year)"/>
-                <h:inputText id="salary" label="salary" required="true" disabled="true" value="#{loginBean.homeloan.salary}"/>
+                <h:inputText id="salary" label="salary" required="true" disabled="true" value="#{loginBean.customerdetails.salary}"/>
 
                 <h:outputLabel value="E-Mail"/>
-                <h:inputText id="email" label="email" required="true" disabled="true" value="#{loginBean.homeloan.email}">
+                <h:inputText id="email" label="email" required="true" disabled="true" value="#{loginBean.customerdetails.email}">
                     <f:validator validatorId="emailValidator"/>
                 </h:inputText>
 
                 <h:outputLabel value="Phone Number"/> 
-                <h:inputText id="phone" label="phone" required="true" disabled="true" value="#{loginBean.homeloan.phone}"/>
+                <h:inputText id="phone" label="phone" required="true" disabled="true" value="#{loginBean.customerdetails.phone}"/>
 
                 <h:outputLabel value="Postcode"/>
-                <h:inputText id="postcode" label="postcode" required="true" disabled="true" value="#{loginBean.homeloan.postcode}"/>
+                <h:inputText id="postcode" label="postcode" required="true" disabled="true" value="#{loginBean.customerdetails.postcode}"/>
 
                 <h:outputLabel value="Preferred Method"/>
-                <h:selectOneRadio id="method" required="true" disabled="true" value="#{loginBean.homeloan.method}">
+                <h:selectOneRadio id="method" required="true" disabled="true" value="#{loginBean.customerdetails.method}">
                     <f:selectItem itemValue="0" itemLabel="Email" />
                     <f:selectItem itemValue="1" itemLabel="Phone" />
                     <f:selectItem itemValue="2" itemLabel="Mail" />
                 </h:selectOneRadio>
 
                 <h:outputLabel value="Loan Amount"/>
-                <h:inputText id="loan" label="loan" required="true" disabled="true" value="#{loginBean.homeloan.loan}"/>
-                
-                <h:outputLabel value="Agree"/>
-                <h:selectBooleanCheckbox id="agree" required="true" disabled="true" value="#{loginBean.homeloan.agree}"/>
+                <h:inputText id="loan" label="loan" required="true" disabled="true" value="#{loginBean.homeloan.amountborrowed}"/>
             </h:panelGrid>
             <h:commandButton value="Confirm" action="#{loginBean.confirmHomeLoan}"/>
             <h:commandButton value="Back" action="Page4.xhtml"/>

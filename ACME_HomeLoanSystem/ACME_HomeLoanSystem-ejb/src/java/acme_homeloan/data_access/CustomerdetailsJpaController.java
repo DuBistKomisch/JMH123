@@ -20,9 +20,9 @@ import javax.transaction.UserTransaction;
  *
  * @author Howard Tseng
  */
-public class Page3JpaController implements Serializable {
+public class CustomerdetailsJpaController implements Serializable {
 
-    public Page3JpaController(UserTransaction utx, EntityManagerFactory emf) {
+    public CustomerdetailsJpaController(UserTransaction utx, EntityManagerFactory emf) {
         this.utx = utx;
         this.emf = emf;
     }
@@ -33,12 +33,12 @@ public class Page3JpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Page3 page3) throws RollbackFailureException, Exception {
+    public void create(Customerdetails customerdetails) throws RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            em.persist(page3);
+            em.persist(customerdetails);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -54,12 +54,12 @@ public class Page3JpaController implements Serializable {
         }
     }
 
-    public void edit(Page3 page3) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Customerdetails customerdetails) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            page3 = em.merge(page3);
+            customerdetails = em.merge(customerdetails);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -69,9 +69,9 @@ public class Page3JpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = page3.getId();
-                if (findPage3(id) == null) {
-                    throw new NonexistentEntityException("The page3 with id " + id + " no longer exists.");
+                Integer id = customerdetails.getId();
+                if (findCustomerdetails(id) == null) {
+                    throw new NonexistentEntityException("The customerdetails with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -87,14 +87,14 @@ public class Page3JpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Page3 page3;
+            Customerdetails customerdetails;
             try {
-                page3 = em.getReference(Page3.class, id);
-                page3.getId();
+                customerdetails = em.getReference(Customerdetails.class, id);
+                customerdetails.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The page3 with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The customerdetails with id " + id + " no longer exists.", enfe);
             }
-            em.remove(page3);
+            em.remove(customerdetails);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -110,19 +110,19 @@ public class Page3JpaController implements Serializable {
         }
     }
 
-    public List<Page3> findPage3Entities() {
-        return findPage3Entities(true, -1, -1);
+    public List<Customerdetails> findCustomerdetailsEntities() {
+        return findCustomerdetailsEntities(true, -1, -1);
     }
 
-    public List<Page3> findPage3Entities(int maxResults, int firstResult) {
-        return findPage3Entities(false, maxResults, firstResult);
+    public List<Customerdetails> findCustomerdetailsEntities(int maxResults, int firstResult) {
+        return findCustomerdetailsEntities(false, maxResults, firstResult);
     }
 
-    private List<Page3> findPage3Entities(boolean all, int maxResults, int firstResult) {
+    private List<Customerdetails> findCustomerdetailsEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Page3.class));
+            cq.select(cq.from(Customerdetails.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -134,20 +134,20 @@ public class Page3JpaController implements Serializable {
         }
     }
 
-    public Page3 findPage3(Integer id) {
+    public Customerdetails findCustomerdetails(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Page3.class, id);
+            return em.find(Customerdetails.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getPage3Count() {
+    public int getCustomerdetailsCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Page3> rt = cq.from(Page3.class);
+            Root<Customerdetails> rt = cq.from(Customerdetails.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

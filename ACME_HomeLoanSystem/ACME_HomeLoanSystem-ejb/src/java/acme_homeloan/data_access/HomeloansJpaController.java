@@ -20,9 +20,9 @@ import javax.transaction.UserTransaction;
  *
  * @author Howard Tseng
  */
-public class Page2JpaController implements Serializable {
+public class HomeloansJpaController implements Serializable {
 
-    public Page2JpaController(UserTransaction utx, EntityManagerFactory emf) {
+    public HomeloansJpaController(UserTransaction utx, EntityManagerFactory emf) {
         this.utx = utx;
         this.emf = emf;
     }
@@ -33,12 +33,12 @@ public class Page2JpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Page2 page2) throws RollbackFailureException, Exception {
+    public void create(Homeloans homeloans) throws RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            em.persist(page2);
+            em.persist(homeloans);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -54,12 +54,12 @@ public class Page2JpaController implements Serializable {
         }
     }
 
-    public void edit(Page2 page2) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void edit(Homeloans homeloans) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            page2 = em.merge(page2);
+            homeloans = em.merge(homeloans);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -69,9 +69,9 @@ public class Page2JpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = page2.getId();
-                if (findPage2(id) == null) {
-                    throw new NonexistentEntityException("The page2 with id " + id + " no longer exists.");
+                Integer id = homeloans.getAccnum();
+                if (findHomeloans(id) == null) {
+                    throw new NonexistentEntityException("The homeloans with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -87,14 +87,14 @@ public class Page2JpaController implements Serializable {
         try {
             utx.begin();
             em = getEntityManager();
-            Page2 page2;
+            Homeloans homeloans;
             try {
-                page2 = em.getReference(Page2.class, id);
-                page2.getId();
+                homeloans = em.getReference(Homeloans.class, id);
+                homeloans.getAccnum();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The page2 with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The homeloans with id " + id + " no longer exists.", enfe);
             }
-            em.remove(page2);
+            em.remove(homeloans);
             utx.commit();
         } catch (Exception ex) {
             try {
@@ -110,19 +110,19 @@ public class Page2JpaController implements Serializable {
         }
     }
 
-    public List<Page2> findPage2Entities() {
-        return findPage2Entities(true, -1, -1);
+    public List<Homeloans> findHomeloansEntities() {
+        return findHomeloansEntities(true, -1, -1);
     }
 
-    public List<Page2> findPage2Entities(int maxResults, int firstResult) {
-        return findPage2Entities(false, maxResults, firstResult);
+    public List<Homeloans> findHomeloansEntities(int maxResults, int firstResult) {
+        return findHomeloansEntities(false, maxResults, firstResult);
     }
 
-    private List<Page2> findPage2Entities(boolean all, int maxResults, int firstResult) {
+    private List<Homeloans> findHomeloansEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Page2.class));
+            cq.select(cq.from(Homeloans.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -134,20 +134,20 @@ public class Page2JpaController implements Serializable {
         }
     }
 
-    public Page2 findPage2(Integer id) {
+    public Homeloans findHomeloans(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Page2.class, id);
+            return em.find(Homeloans.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getPage2Count() {
+    public int getHomeloansCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Page2> rt = cq.from(Page2.class);
+            Root<Homeloans> rt = cq.from(Homeloans.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

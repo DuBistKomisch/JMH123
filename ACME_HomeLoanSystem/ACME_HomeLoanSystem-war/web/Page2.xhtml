@@ -18,11 +18,11 @@ and open the template in the editor.
         <h:form>
             <h:panelGrid  columns="3" columnClasses="cLabels,cFields,cMessages">
                 <h:outputLabel value="Current Job Position"/>
-                <h:inputText id="currentJob" label="currentJob" required="true" value="#{loginBean.homeloan.currentJob}"/>
+                <h:inputText id="currentJob" label="currentJob" required="true" value="#{loginBean.customerdetails.currentjob}"/>
                 <h:message for="currentJob"/>
 
                 <h:outputLabel value="Salary (per year)"/>
-                <h:inputText id="salary" label="salary" required="true" value="#{loginBean.homeloan.salary}"/>
+                <h:inputText id="salary" label="salary" required="true" value="#{loginBean.customerdetails.salary}"/>
                 <h:message for="salary"/>
             </h:panelGrid>
             <h:commandButton value="Next" action="Page3.xhtml"/>

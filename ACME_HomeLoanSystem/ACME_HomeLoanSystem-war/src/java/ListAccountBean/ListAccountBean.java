@@ -4,8 +4,7 @@
  */
 package ListAccountBean;
 
-import HomeLoanBean.HomeLoanBean;
-
+import acme_homeloan.data_access.Homeloans;
 import java.util.ArrayList;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -25,7 +24,7 @@ public class ListAccountBean {
     }
     
     private ArrayList<Object> savings = new ArrayList<Object>();
-    private ArrayList<HomeLoanBean> loan = new ArrayList<HomeLoanBean>();
+    private ArrayList<Homeloans> loan = new ArrayList<Homeloans>();
     
 
     
@@ -43,13 +42,13 @@ public class ListAccountBean {
         return null;
     }
     
-    public void setLoanlist(HomeLoanBean object){
+    public void setLoanlist(Homeloans object){
      loan.add(object);
     }
     
-    HomeLoanBean sloan;
+    Homeloans sloan;
     
-    public HomeLoanBean LoanList(){
+    public Homeloans LoanList(){
         for (int i=0; i < loan.size(); i++) {
          sloan = loan.get(i);
          return sloan;

@@ -1,5 +1,0 @@
-JMH123
-HomeLoan
-HomeLoanPage2
-HomeLoanPage3
-HomeLoanPage4

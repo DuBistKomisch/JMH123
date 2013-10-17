@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package LoginBean;
+package acme_homeloan.beans;
 
-import HomeLoanBean.HomeLoanBean;
+import acme_banking_system.data_access.Customer;
+import acme_homeloan.data_access.Customerdetails;
+import acme_homeloan.data_access.Homeloans;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -26,12 +28,26 @@ public class LoginBean implements Serializable {
     
     private String username;
     private String password;
+    
+    private Homeloans homeloan;
+    private Customerdetails customerdetails;
+    private Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Homeloans getHomeloan() {
+        return homeloan;
+    }
+
+    public Customerdetails getCustomerdetails() {
+        return customerdetails;
+    }
 
     public String getPassword() {
         return password;
     }
-    
-    private HomeLoanBean homeloan;
 
     public String getUsername() {
         return username;
@@ -44,10 +60,6 @@ public class LoginBean implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public HomeLoanBean getHomeloan() {
-        return homeloan;
-    }
     
     public String submit() {
         boolean authenticated = true;
@@ -57,15 +69,23 @@ public class LoginBean implements Serializable {
             return "Login";
     }
     
+    public String logout() {
+        return "Login";
+    }
+    
     public String createHomeLoan()
     {
-        homeloan = new HomeLoanBean();
+        homeloan = new Homeloans();
+        customerdetails = new Customerdetails();
+        customer = new Customer(); // TODO get from system 1
         return "Page1";
     }
     
     public String cancelHomeLoan()
     {
         homeloan = null;
+        customerdetails = null;
+        customer = null;
         return "HomePage";
     }
     
@@ -73,6 +93,8 @@ public class LoginBean implements Serializable {
     {
         // TODO
         homeloan = null;
+        customerdetails = null;
+        customer = null;
         return "HomePage";
     }
 }

@@ -18,19 +18,19 @@ and open the template in the editor.
         <h:form>
             <h:panelGrid  columns="3" columnClasses="cLabels,cFields,cMessages">
                 <h:outputLabel value="First Name"/>
-                <h:inputText id="firstName" required="true" disabled="true" value="#{loginBean.homeloan.firstName}"/>
+                <h:inputText id="firstName" required="true" disabled="true" value="#{loginBean.customer.firstName}"/>
                 <h:message for="firstName"/>
 
                 <h:outputLabel value="Last Name"/>
-                <h:inputText id="lastName" required="true" disabled="true" value="#{loginBean.homeloan.lastName}"/>
+                <h:inputText id="lastName" required="true" disabled="true" value="#{loginBean.customer.lastName}"/>
                 <h:message for="lastName"/>
 
                 <h:outputLabel value="DOB"/>
-                <h:inputText id="DOB" label="DOB" required="true" disabled="true" value="#{loginBean.homeloan.DOB}"/>
+                <h:inputText id="DOB" label="DOB" required="true" disabled="true" value="#{loginBean.customer.dateOfBirth}"/>
                 <h:message for="DOB"/>
 
                 <h:outputLabel value="Address"/>
-                <h:inputText id="address" label="address" required="true" disabled="true" value="#{loginBean.homeloan.address}"/>
+                <h:inputText id="address" label="address" required="true" disabled="true" value="#{loginBean.customer.address}"/>
                 <h:message for="address"/>
             </h:panelGrid>
             <h:commandButton value="Next" action="Page2.xhtml"/>
