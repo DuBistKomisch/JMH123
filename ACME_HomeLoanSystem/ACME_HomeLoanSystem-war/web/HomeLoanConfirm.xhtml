@@ -6,11 +6,14 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
-    <head>
+    <h:head>
         <title>Home Loan Confirmation</title>
-    </head>
-    <body>
-        <h2>Confirmation Page</h2>
+        <h:outputStylesheet library="css" name="styles.css"/>
+    </h:head>
+    <h:body>
+        <h1>Create Home Loan Wizard</h1>
+        <p>Job Details &#x2192; Contact Method &#x2192; Terms &#x2192; <b>Confirm</b></p>
+        <h2>Confirm</h2>
         <h:form>
         <h:panelGrid columns="2">
             <h:outputText value="First Name: "/>
@@ -48,5 +51,7 @@ and open the template in the editor.
         </h:panelGrid>
             <h:commandButton value="Back" action="Page4.xhtml"/>
         </h:form>
-    </body>
+        
+        <h:link value="Cancel" outcome="HomePage.xhtml"/>
+    </h:body>
 </html>

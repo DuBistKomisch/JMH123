@@ -10,19 +10,17 @@ and open the template in the editor.
         <title>JMH123 ACME_Banking</title>
         <h:outputStylesheet library="css" name="styles.css"/>
     </h:head>
-    <h1> Withdraw</h1>
-         <h:form> 
-             <h:panelGrid columns="3"> 
-                     
-            <h:outputLabel value="Amount to Repay"/>
-            <h:inputText id="withdraw" label="withdraw" required="true" value="#{withdrawBean.amountRepayed}"/>
-            <h:message for="withdraw"/>
-            
-            
-             
-         </h:panelGrid>
-             <h:commandButton value="Next" action="WithdrawConfirm.xhtml"/>
-           </h:form>
     <h:body>
+        <h1>Withdraw</h1>
+        <h:form> 
+            <h:panelGrid columns="3"> 
+                <h:outputLabel value="Amount to Repay"/>
+                <h:inputText id="withdraw" label="withdraw" required="true" value="#{withdrawBean.amountRepayed}"/>
+                <h:message for="withdraw"/>
+            </h:panelGrid>
+            
+            <h:commandButton value="Next" action="WithdrawConfirm.xhtml"/>
+        </h:form>
+        <h:link value="Cancel" outcome="HomePage.xhtml"/>
     </h:body>
 </html>
