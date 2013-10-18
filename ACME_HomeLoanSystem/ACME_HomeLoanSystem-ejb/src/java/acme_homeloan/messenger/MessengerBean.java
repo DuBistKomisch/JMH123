@@ -143,19 +143,8 @@ public class MessengerBean implements MessengerRemote {
     
     @Override
     public Customer login(String firstname, String lastname) {
-        try {
-            String message = "test";
-            BankingContext.createProducer().send(BankingSystemQueue, message);
-            System.err.println("I am a " + message);
-            Message mess = BankingContext.createConsumer(AnswerBankingSystemQueue).receive(5000);
-            System.err.println("Received " + mess.getBody(String.class).toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-            //        try {
+//                    try {
 //            Asking ask = new Asking();
-//            Message message = null;
-//            Message nmessage = null;
 //            JMSProducer msgSender = BankingContext.createProducer();
 //            try {
 //                msgSender.setJMSReplyTo(AnswerBankingSystemQueue);
@@ -164,35 +153,6 @@ public class MessengerBean implements MessengerRemote {
 //                ask.setLastName(lastname);
 //                msgSender.setProperty("request", true);
 //                msgSender.send(BankingSystemQueue, ask);
-//
-//                JMSConsumer receiver = BankingContext.createConsumer(AnswerBankingSystemQueue);
-//                message = receiver.receive(5000);
-//                if (message != null) {
-//                    try {
-//                        System.out.println(message.getBooleanProperty("found"));
-//                        Customer myCustomer = null;
-//                        ObjectMessage om = (ObjectMessage) message;
-//                        Serializable objectData = om.getObject();
-//                        if (objectData != null) {
-//                            myCustomer = (Customer) objectData;
-//                            System.out.println(myCustomer);
-//                        }
-//                        try {
-//                            return myCustomer;
-//                        } catch (Exception ex) {
-//                            java.util.logging.Logger.getLogger(
-//                                messageSender.class.getName()).log(
-//                                Level.SEVERE, null, ex);
-//                        }
-//                    } catch (Exception e) {
-//                        System.out.println("Exception while login: " + e);
-//                        return null;
-//                    }
-//                } else {
-//                    System.out.println("No message received");
-//                    return null;
-//                }
-//
 //            } catch (Exception e) {
 //                System.out.println(e);
 //            }
